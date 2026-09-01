@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.power",
+  "name": "Minha energia",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Bateria, perfil de energia e estatísticas do sistema",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Energia",
+    "description": "Bateria, perfil de energia e estatísticas do sistema",
+    "category": "System",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.power"
+  }
+}
