@@ -443,5 +443,33 @@
       "ownership_requires_owner_confirmation": true
     },
     "issues": []
+  },
+  "monitor": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-monitor",
+    "plugin_id": "robertlindomar.omarchy-ptbr.monitor",
+    "name": "Tela",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Controle de brilho, escala e monitores",
+    "cloned_from": "omarchy.monitor",
+    "category": "Hardware",
+    "tags": [
+      "display",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "already-submitted",
+    "issue_title": "[Plugin]: Tela",
+    "submission_file": "marketplace/submissions/monitor.md",
+    "existing_issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4260",
+    "checklist": {
+      "public_repo_with_install_remove": true,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": true,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": []
   }
 }

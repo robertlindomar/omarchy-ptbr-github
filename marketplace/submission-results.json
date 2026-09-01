@@ -272,5 +272,10 @@
     "security_review_required": true,
     "listed": false,
     "checked_at": "2026-09-01T06:30:18Z"
+  },
+  "monitor": {
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4260",
+    "status": "submitted",
+    "submitted_at": "2026-09-01T20:29:23Z"
   }
 }
