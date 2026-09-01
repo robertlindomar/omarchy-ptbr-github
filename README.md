@@ -51,6 +51,24 @@ Para republicar ou sincronizar os repositórios individuais a partir deste monor
 ./scripts/publish-plugins.sh weather      # apenas um plugin (slug)
 ```
 
+## Submissão ao Marketplace
+
+Arquivos de submissão e metadados ficam em `marketplace/`. Use:
+
+```bash
+./scripts/submit-marketplace.sh --dry-run     # prepara/atualiza submissões
+./scripts/submit-marketplace.sh weather --dry-run
+./scripts/check-marketplace.sh                # acompanha issues criadas
+```
+
+Para criar issues no marketplace (após revisão e confirmação explícita):
+
+```bash
+./scripts/submit-marketplace.sh --submit      # exige digitar SUBMIT
+```
+
+Repositório de submissões: [omacom/omarchy-plugin-marketplace](https://github.com/omacom/omarchy-plugin-marketplace) (formato em `SUBMISSION.md`).
+
 ## Requisitos
 
 - Omarchy instalado (`/usr/share/omarchy`)

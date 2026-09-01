@@ -1,0 +1,479 @@
+{
+  "agents": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-agents",
+    "plugin_id": "robertlindomar.omarchy-ptbr.agents",
+    "name": "Agentes",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Uso, limites e ritmo do Claude Code, Codex e Fireworks em um painel nativo da barra Omarchy.",
+    "cloned_from": "omarchy.agents",
+    "category": "Developer Tools",
+    "tags": [
+      "ai",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Agentes",
+    "submission_file": "marketplace/submissions/agents.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "audio": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-audio",
+    "plugin_id": "robertlindomar.omarchy-ptbr.audio",
+    "name": "Áudio",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Controle de volume, saída e mixer por aplicativo",
+    "cloned_from": "omarchy.audio",
+    "category": "Hardware",
+    "tags": [
+      "media",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Áudio",
+    "submission_file": "marketplace/submissions/audio.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "bluetooth": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-bluetooth",
+    "plugin_id": "robertlindomar.omarchy-ptbr.bluetooth",
+    "name": "Meu Bluetooth",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Lista de dispositivos Bluetooth com conectar/desconectar",
+    "cloned_from": "omarchy.bluetooth",
+    "category": "Hardware",
+    "tags": [
+      "system",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Meu Bluetooth",
+    "submission_file": "marketplace/submissions/bluetooth.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "clipboard": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-clipboard",
+    "plugin_id": "robertlindomar.omarchy-ptbr.clipboard",
+    "name": "My Clipboard",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "A clipboard manager to view and paste history",
+    "cloned_from": "omarchy.clipboard",
+    "category": "Productivity",
+    "tags": [
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: My Clipboard",
+    "submission_file": "marketplace/submissions/clipboard.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "clock": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-clock",
+    "plugin_id": "robertlindomar.omarchy-ptbr.clock",
+    "name": "Relógio",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Data/hora na barra com popup de calendário",
+    "cloned_from": "omarchy.clock",
+    "category": "Widgets",
+    "tags": [
+      "bar",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Relógio",
+    "submission_file": "marketplace/submissions/clock.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "disk-speedtest": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest",
+    "plugin_id": "robertlindomar.omarchy-ptbr.disk-speedtest",
+    "name": "Teste de velocidade do disco",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Medidores de leitura e gravação do disco. Invocar com: omarchy-shell shell summon omarchy.disk-speedtest",
+    "cloned_from": "omarchy.disk-speedtest",
+    "category": "System",
+    "tags": [
+      "system",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Teste de velocidade do disco",
+    "submission_file": "marketplace/submissions/disk-speedtest.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "indicators": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-indicators",
+    "plugin_id": "robertlindomar.omarchy-ptbr.indicators",
+    "name": "Indicadores",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Indicadores de estado manual na barra",
+    "cloned_from": "omarchy.indicators",
+    "category": "Widgets",
+    "tags": [
+      "bar",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Indicadores",
+    "submission_file": "marketplace/submissions/indicators.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "lock": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-lock",
+    "plugin_id": "robertlindomar.omarchy-ptbr.lock",
+    "name": "My Lock Screen",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Quickshell session lock with separate password and fingerprint PAM flows.",
+    "cloned_from": "omarchy.lock",
+    "category": "System",
+    "tags": [
+      "security",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: My Lock Screen",
+    "submission_file": "marketplace/submissions/lock.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "menu": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-menu",
+    "plugin_id": "robertlindomar.omarchy-ptbr.menu",
+    "name": "Omarchy menu (pt-BR)",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Quickshell-powered Omarchy command menu",
+    "cloned_from": "omarchy.menu",
+    "category": "Desktop",
+    "tags": [
+      "launcher",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Omarchy menu (pt-BR)",
+    "submission_file": "marketplace/submissions/menu.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "network": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-network",
+    "plugin_id": "robertlindomar.omarchy-ptbr.network",
+    "name": "Minha rede",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Lista Wi-Fi e estado da conexão",
+    "cloned_from": "omarchy.network",
+    "category": "System",
+    "tags": [
+      "system",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Minha rede",
+    "submission_file": "marketplace/submissions/network.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "notifications": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-notifications",
+    "plugin_id": "robertlindomar.omarchy-ptbr.notifications",
+    "name": "Notificações",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Daemon de notificações, popups, Não perturbe e histórico",
+    "cloned_from": "omarchy.notifications",
+    "category": "Desktop",
+    "tags": [
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Notificações",
+    "submission_file": "marketplace/submissions/notifications.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "polkit": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-polkit",
+    "plugin_id": "robertlindomar.omarchy-ptbr.polkit",
+    "name": "My Polkit Agent",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Theme-aware authentication dialog for privileged actions.",
+    "cloned_from": "omarchy.polkit",
+    "category": "System",
+    "tags": [
+      "security",
+      "system"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: My Polkit Agent",
+    "submission_file": "marketplace/submissions/polkit.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "power": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-power",
+    "plugin_id": "robertlindomar.omarchy-ptbr.power",
+    "name": "Minha energia",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Bateria, perfil de energia e estatísticas do sistema",
+    "cloned_from": "omarchy.power",
+    "category": "System",
+    "tags": [
+      "power-management",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Minha energia",
+    "submission_file": "marketplace/submissions/power.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "reminders": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-reminders",
+    "plugin_id": "robertlindomar.omarchy-ptbr.reminders",
+    "name": "My Reminders",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Interactive reminder setup flow",
+    "cloned_from": "omarchy.reminders",
+    "category": "Productivity",
+    "tags": [
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: My Reminders",
+    "submission_file": "marketplace/submissions/reminders.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "speedtest": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-speedtest",
+    "plugin_id": "robertlindomar.omarchy-ptbr.speedtest",
+    "name": "Teste de velocidade",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Teste de velocidade da internet com medidores de download e upload",
+    "cloned_from": "omarchy.speedtest",
+    "category": "System",
+    "tags": [
+      "system",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Teste de velocidade",
+    "submission_file": "marketplace/submissions/speedtest.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  },
+  "weather": {
+    "repository": "https://github.com/robertlindomar/omarchy-ptbr-weather",
+    "plugin_id": "robertlindomar.omarchy-ptbr.weather",
+    "name": "Weather",
+    "version": "1.0.0",
+    "author": "Robert Lindomar",
+    "description": "Weather pill with detail popup",
+    "cloned_from": "omarchy.weather",
+    "category": "Widgets",
+    "tags": [
+      "bar",
+      "quickshell"
+    ],
+    "preview": "none",
+    "status": "needs-fix",
+    "issue_title": "[Plugin]: Weather",
+    "submission_file": "marketplace/submissions/weather.md",
+    "existing_issue": null,
+    "checklist": {
+      "public_repo_with_install_remove": false,
+      "license_and_dependencies": true,
+      "install_instructions": true,
+      "removal_instructions": false,
+      "dependencies_documented": true,
+      "ownership_requires_owner_confirmation": true
+    },
+    "issues": [
+      "README sem instruções de remoção/desinstalação"
+    ]
+  }
+}
