@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.disk-speedtest",
+  "name": "Teste de velocidade do disco",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Medidores de leitura e gravação do disco. Invocar com: omarchy-shell shell summon omarchy.disk-speedtest",
+  "kinds": [
+    "panel"
+  ],
+  "entryPoints": {
+    "panel": "Panel.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.disk-speedtest"
+  }
+}
