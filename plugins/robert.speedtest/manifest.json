@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.speedtest",
+  "name": "Teste de velocidade",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Teste de velocidade da internet com medidores de download e upload",
+  "kinds": [
+    "panel"
+  ],
+  "entryPoints": {
+    "panel": "Panel.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.speedtest"
+  }
+}
