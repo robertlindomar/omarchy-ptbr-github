@@ -221,6 +221,27 @@ omarchy plugin enable ${id}
 omarchy-restart-shell
 \`\`\`
 
+## Remoção
+
+\`\`\`bash
+omarchy plugin disable ${id}
+rm -rf ~/.config/omarchy/plugins/${id}
+omarchy-restart-shell
+\`\`\`
+
+Para remover todos os plugins pt-BR de uma vez, use o desinstalador do monorepo:
+
+\`\`\`bash
+cd omarchy-ptbr-github
+./uninstall.sh
+\`\`\`
+
+## Licença e dependências
+
+- **Licença:** MIT (ver \`LICENSE\`). Obra derivada do plugin upstream \`${cloned}\`.
+- **Requisitos:** Omarchy instalado, Hyprland em execução, Quickshell (incluído no Omarchy).
+- **Dependências externas:** nenhuma além do stack Omarchy/Quickshell.
+
 ## Origem
 
 Plugin baseado em: \`${cloned}\`
