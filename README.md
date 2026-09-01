@@ -16,8 +16,40 @@ O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **override
 | Rede / Bluetooth / Energia / Clima / Áudio | `robertlindomar.omarchy-ptbr.network`, `robertlindomar.omarchy-ptbr.bluetooth`, `robertlindomar.omarchy-ptbr.power`, `robertlindomar.omarchy-ptbr.weather`, `robertlindomar.omarchy-ptbr.audio` |
 | Speed test / Disco / Agentes | `robertlindomar.omarchy-ptbr.speedtest`, `robertlindomar.omarchy-ptbr.disk-speedtest`, `robertlindomar.omarchy-ptbr.agents` |
 | Notificações / Calendário | `robertlindomar.omarchy-ptbr.notifications`, `robertlindomar.omarchy-ptbr.clock` |
+| Indicadores da barra | `robertlindomar.omarchy-ptbr.indicators` |
 | Atalhos (SUPER+K) | `omarchy-menu-keybindings` + `keybindings-labels-ptbr.awk` |
 | Capturas de tela | `omarchy-capture-screenshot` |
+
+## Repositórios individuais dos plugins
+
+Cada plugin traduzido também é publicado em um repositório público separado, pronto para futura submissão ao [Omarchy Plugin Marketplace](https://plugins.omarchy.org/).
+
+| Plugin | Repositório | Status |
+|--------|-------------|--------|
+| Agentes | [omarchy-ptbr-agents](https://github.com/robertlindomar/omarchy-ptbr-agents) | ✅ |
+| Áudio | [omarchy-ptbr-audio](https://github.com/robertlindomar/omarchy-ptbr-audio) | ✅ |
+| Bluetooth | [omarchy-ptbr-bluetooth](https://github.com/robertlindomar/omarchy-ptbr-bluetooth) | ✅ |
+| Área de transferência | [omarchy-ptbr-clipboard](https://github.com/robertlindomar/omarchy-ptbr-clipboard) | ✅ |
+| Relógio | [omarchy-ptbr-clock](https://github.com/robertlindomar/omarchy-ptbr-clock) | ✅ |
+| Teste de velocidade (disco) | [omarchy-ptbr-disk-speedtest](https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest) | ✅ |
+| Indicadores | [omarchy-ptbr-indicators](https://github.com/robertlindomar/omarchy-ptbr-indicators) | ✅ |
+| Bloqueio | [omarchy-ptbr-lock](https://github.com/robertlindomar/omarchy-ptbr-lock) | ✅ |
+| Menu | [omarchy-ptbr-menu](https://github.com/robertlindomar/omarchy-ptbr-menu) | ✅ |
+| Rede | [omarchy-ptbr-network](https://github.com/robertlindomar/omarchy-ptbr-network) | ✅ |
+| Notificações | [omarchy-ptbr-notifications](https://github.com/robertlindomar/omarchy-ptbr-notifications) | ✅ |
+| Polkit | [omarchy-ptbr-polkit](https://github.com/robertlindomar/omarchy-ptbr-polkit) | ✅ |
+| Energia | [omarchy-ptbr-power](https://github.com/robertlindomar/omarchy-ptbr-power) | ✅ |
+| Lembretes | [omarchy-ptbr-reminders](https://github.com/robertlindomar/omarchy-ptbr-reminders) | ✅ |
+| Teste de velocidade (rede) | [omarchy-ptbr-speedtest](https://github.com/robertlindomar/omarchy-ptbr-speedtest) | ✅ |
+| Clima | [omarchy-ptbr-weather](https://github.com/robertlindomar/omarchy-ptbr-weather) | ✅ |
+
+Para republicar ou sincronizar os repositórios individuais a partir deste monorepo:
+
+```bash
+./scripts/publish-plugins.sh              # todos os plugins
+./scripts/publish-plugins.sh --dry-run    # simular sem push
+./scripts/publish-plugins.sh weather      # apenas um plugin (slug)
+```
 
 ## Requisitos
 
