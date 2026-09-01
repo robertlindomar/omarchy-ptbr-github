@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.indicators",
+  "name": "Indicadores",
+  "version": "1.0.0",
+  "author": "Robert Lindomar",
+  "description": "Indicadores de estado manual na barra",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Indicators.qml"
+  },
+  "barWidget": {
+    "displayName": "Indicadores",
+    "description": "Indicadores de estado manual na barra",
+    "category": "Status",
+    "allowMultiple": true,
+    "schema": [
+      {
+        "key": "items",
+        "type": "multiselect",
+        "label": "Indicadores",
+        "description": "Escolha quais indicadores este widget deve exibir. Deixe vazio para mostrar todos.",
+        "noSelectionText": "Todos os indicadores",
+        "placeholderText": "Buscar indicadores...",
+        "emptyText": "Nenhum indicador",
+        "options": [
+          {
+            "value": "Dictation",
+            "label": "Ditado",
+            "description": "Status da digitação por voz"
+          },
+          {
+            "value": "ScreenRecording",
+            "label": "Gravação de tela",
+            "description": "Status do gravador de tela por GPU"
+          },
+          {
+            "value": "Reminder",
+            "label": "Lembrete",
+            "description": "Status de lembretes na fila"
+          },
+          {
+            "value": "NightLight",
+            "label": "Luz noturna",
+            "description": "Filtro de luz azul"
+          },
+          {
+            "value": "Dnd",
+            "label": "Não perturbe",
+            "description": "Silenciamento de notificações"
+          },
+          {
+            "value": "StayAwake",
+            "label": "Manter ativo",
+            "description": "Bloqueio por inatividade e proteção de tela"
+          }
+        ]
+      },
+      {
+        "key": "alwaysShow",
+        "type": "boolean",
+        "label": "Sempre exibir",
+        "description": "Mostrar indicadores inativos sem esperar o mouse passar por cima.",
+        "defaultValue": false
+      }
+    ]
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.indicators"
+  }
+}

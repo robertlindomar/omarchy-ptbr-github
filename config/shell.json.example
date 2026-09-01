@@ -3,7 +3,10 @@
     "centerAnchor": "omarchy.clock",
     "layout": {
       "center": [
-        { "id": "omarchy.indicators" },
+        {
+          "id": "robertlindomar.omarchy-ptbr.indicators",
+          "pinned": ["StayAwake", "Dnd", "Reminder"]
+        },
         {
           "id": "robertlindomar.omarchy-ptbr.clock",
           "format": "ddd d MMM HH:mm",

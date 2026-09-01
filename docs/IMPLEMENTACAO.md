@@ -1910,8 +1910,7 @@ omarchy-shell omarchy.agents open
 
 | Item | Onde | Strings |
 |------|------|---------|
-| DND tooltips | `bar/indicators/Dnd.qml` (`omarchy.bar`) | `Allow Notifications` / `Silence Notifications` |
-| Settings Indicators | `bar/widgets/Indicators.manifest.json` | `Do not disturb` |
+| ~~DND tooltips~~ | `indicators/Dnd.qml` | **Traduzido** em `robertlindomar.omarchy-ptbr.indicators` (ver seção Indicadores da barra) |
 | Menu trigger | `omarchy-menu.jsonc` (override usuário) | `Notifications` |
 | Toasts do sistema | `omarchy-notification-send`, apps | conteúdo do remetente |
 
@@ -2141,4 +2140,100 @@ Overrides em `~/.config/hypr/bindings.lua` entram via `hyprctl reload` → `hypr
 cp ~/Documentos/omarchy-ptbr/backups/keybindings-sync-2026-09-01-011638/omarchy-menu-keybindings ~/.local/bin/
 rm -f ~/.cache/omarchy/keybindings-*.records
 ```
+
+---
+
+## Indicadores da barra pt-BR
+
+> Data: 2026-09-01  
+> Widget `omarchy.indicators` clonado e traduzido; ativo na barra central (à esquerda do relógio).
+
+### Composição da região (shell.json → `bar.layout.center`)
+
+| Ordem | ID | Posição relativa ao relógio |
+|-------|-----|----------------------------|
+| 1 | `robertlindomar.omarchy-ptbr.indicators` | **Imediatamente à esquerda** |
+| 2 | `robertlindomar.omarchy-ptbr.clock` | Âncora central |
+| 3 | `omarchy.keyboard-layout` | À direita |
+| 4 | `robertlindomar.omarchy-ptbr.weather` | À direita |
+| 5 | `omarchy.system-update` | À direita |
+
+**Escopo desta entrega:** apenas o widget `indicators` (coluna 1). Os demais itens do centro não fazem parte desta tarefa.
+
+### Indicadores encontrados (`indicators/*.qml`)
+
+| Ícone | Componente | ID interno | Tooltip EN (oficial) | Tradução pt-BR | Arquivo | Clone? |
+|-------|------------|------------|----------------------|----------------|---------|--------|
+| 󰅶 | StayAwake | `StayAwake` | Stay Awake / Allow Idle Lock & Screensaver | Manter ativo / Permitir bloqueio por inatividade e proteção de tela | `indicators/StayAwake.qml` | **novo** |
+| 󰂛 | Dnd | `Dnd` | Silence Notifications / Allow Notifications | Silenciar notificações / Permitir notificações | `indicators/Dnd.qml` | **novo** |
+| 󰔎 | NightLight | `NightLight` | Night Light / Day Light | Luz noturna / Luz diurna | `indicators/NightLight.qml` | **novo** |
+| 󰻂 | ScreenRecording | `ScreenRecording` | Screen Recording / Stop recording | Gravação de tela / Parar gravação | `indicators/ScreenRecording.qml` | **novo** |
+| 󰍬 | Dictation | `Dictation` | Dictate / recording, transcribing | Ditado / Gravando, Transcrevendo | `indicators/Dictation.qml` | **novo** |
+| 󰢌 | Reminder | `Reminder` | (via script JSON) | Criar lembrete / N lembretes | `indicators/Reminder.qml` | **novo** (tooltip via override existente) |
+
+### Stay Awake
+
+| Campo | Valor |
+|-------|-------|
+| Origem | `/usr/share/omarchy/shell/plugins/bar/indicators/StayAwake.qml` |
+| Plugin | `robertlindomar.omarchy-ptbr.indicators` (`clonedFrom: omarchy.indicators`) |
+| Tradução inativo | `Stay Awake` → **Manter ativo** |
+| Tradução ativo | `Allow Idle Lock & Screensaver` → **Permitir bloqueio por inatividade e proteção de tela** |
+| Lógica alterada? | **Não** — `idleService.setIdleEnabled`, `stayAwake`, IPC `omarchy.idle` intactos |
+| Script externo | `omarchy-toggle-idle` ainda retorna JSON em inglês (usado fora da barra; não alterado) |
+
+### Outros indicadores
+
+| Status | Itens |
+|--------|-------|
+| Traduzidos no clone | StayAwake, Dnd, NightLight, ScreenRecording, Dictation |
+| Já pt-BR (override `omarchy-reminder`) | Reminder (`Criar lembrete`, `1 lembrete`, `N lembretes`) |
+| Sem texto fixo na barra | — |
+| Pendentes (fora do escopo à esquerda do relógio) | `omarchy.keyboard-layout`, `omarchy.system-update` |
+
+### Arquivos
+
+| Tipo | Caminhos |
+|------|----------|
+| Clone novo | `plugins/robertlindomar.omarchy-ptbr.indicators/` (`manifest.json`, `Indicators.qml`, `indicators/*.qml`) |
+| Correção de path | `Indicators.qml`: `../indicators/` → `indicators/` (oficial usa `bar/widgets/` + `bar/indicators/` como irmãos; no clone ficam no mesmo diretório) |
+| Reutilizados | `overrides/bin/omarchy-reminder` (tooltips do indicador Reminder) |
+| Config | `config/shell.json.example`, `install.sh`, `uninstall.sh`, `scripts/verify-install.sh` |
+| Backup | `~/Documentos/omarchy-ptbr/backups/bar-indicators-2026-09-01-022047/shell.json` |
+
+### Integridade
+
+| Verificação | Resultado |
+|-------------|-----------|
+| `/usr/share/omarchy` modificado? | **NÃO** |
+| Ordem da barra alterada? | **NÃO** (só troca de ID do widget indicators) |
+| Comandos/cliques alterados? | **NÃO** |
+| Comportamento alterado? | **NÃO** |
+
+### Testes
+
+```bash
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.indicators
+./scripts/verify-install.sh
+omarchy-restart-shell
+```
+
+| Teste | Resultado |
+|-------|-----------|
+| validate (16 plugins) | OK |
+| restart shell | OK |
+| tooltips visuais | Pendente confirmação manual (passar mouse sobre cada ícone) |
+| logs QML | Sem erros reportados no restart |
+
+### Status
+
+- Todos os indicadores do widget à esquerda do relógio: **traduzidos** (tooltips fixos no clone + Reminder via override)
+- **Sempre visíveis** (sem hover): `StayAwake`, `Dnd`, `Reminder` via `shell.json` → `pinned`
+- **No hover**: Dictation, NightLight, ScreenRecording (demais indicadores)
+- Configuração:
+  ```json
+  { "id": "robertlindomar.omarchy-ptbr.indicators", "pinned": ["StayAwake", "Dnd", "Reminder"] }
+  ```
+- Implementação: blocos `pinned`/`hover` em `Indicators.qml` + `pinnedRevealHost` (proxy com `revealInactiveIndicators: true`)
+- Pendências: `keyboard-layout` e `system-update` ficam para outra tarefa (à direita do relógio)
 

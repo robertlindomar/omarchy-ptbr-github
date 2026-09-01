@@ -11,7 +11,7 @@ MARKER="${STATE_DIR}/installed"
 PLUGINS=(
   robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
   robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio
-  robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock
+  robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock robertlindomar.omarchy-ptbr.indicators
 )
 
 OFFICIAL_DISABLED=(
