@@ -1,1 +1,192 @@
-{}
+{
+  "submitted_at": "2026-09-01T06:19:50Z",
+  "marketplace_repo": "omacom/omarchy-plugin-marketplace",
+  "summary": {
+    "ready_before_submit": 16,
+    "issues_created": 16,
+    "failures": 0,
+    "skipped_by_script": 1,
+    "skipped_recovered_manually": 1,
+    "duplicates_avoided": 0
+  },
+  "agents": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.agents",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4057",
+    "issue_number": 4057,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "audio": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.audio",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4058",
+    "issue_number": 4058,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "bluetooth": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.bluetooth",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4059",
+    "issue_number": 4059,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "clipboard": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.clipboard",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4060",
+    "issue_number": 4060,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "clock": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.clock",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4061",
+    "issue_number": 4061,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "disk-speedtest": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.disk-speedtest",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4062",
+    "issue_number": 4062,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted"
+  },
+  "indicators": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.indicators",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4063",
+    "issue_number": 4063,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "lock": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.lock",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4064",
+    "issue_number": 4064,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "menu": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.menu",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4065",
+    "issue_number": 4065,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "network": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.network",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4066",
+    "issue_number": 4066,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "notifications": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.notifications",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4067",
+    "issue_number": 4067,
+    "state": "open",
+    "labels": [],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "polkit": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.polkit",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4068",
+    "issue_number": 4068,
+    "state": "open",
+    "labels": [
+      "submission"
+    ],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "power": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.power",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4069",
+    "issue_number": 4069,
+    "state": "open",
+    "labels": [],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "reminders": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.reminders",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4070",
+    "issue_number": 4070,
+    "state": "open",
+    "labels": [],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  },
+  "speedtest": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.speedtest",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4072",
+    "issue_number": 4072,
+    "state": "open",
+    "labels": [],
+    "status": "submitted",
+    "note": "criado manualmente após falso positivo de duplicata com disk-speedtest (#4062)"
+  },
+  "weather": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.weather",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071",
+    "issue_number": 4071,
+    "state": "open",
+    "labels": [],
+    "status": "submitted",
+    "note": "labels ainda em processamento no momento da captura"
+  }
+}

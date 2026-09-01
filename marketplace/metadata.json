@@ -13,21 +13,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Agentes",
     "submission_file": "marketplace/submissions/agents.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4057",
+    "issue_number": 4057
   },
   "audio": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-audio",
@@ -43,21 +43,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Áudio",
     "submission_file": "marketplace/submissions/audio.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4058",
+    "issue_number": 4058
   },
   "bluetooth": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-bluetooth",
@@ -73,21 +73,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Meu Bluetooth",
     "submission_file": "marketplace/submissions/bluetooth.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4059",
+    "issue_number": 4059
   },
   "clipboard": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clipboard",
@@ -102,21 +102,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: My Clipboard",
     "submission_file": "marketplace/submissions/clipboard.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4060",
+    "issue_number": 4060
   },
   "clock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clock",
@@ -132,21 +132,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Relógio",
     "submission_file": "marketplace/submissions/clock.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4061",
+    "issue_number": 4061
   },
   "disk-speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest",
@@ -162,21 +162,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Teste de velocidade do disco",
     "submission_file": "marketplace/submissions/disk-speedtest.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4062",
+    "issue_number": 4062
   },
   "indicators": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-indicators",
@@ -192,21 +192,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Indicadores",
     "submission_file": "marketplace/submissions/indicators.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4063",
+    "issue_number": 4063
   },
   "lock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-lock",
@@ -222,21 +222,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: My Lock Screen",
     "submission_file": "marketplace/submissions/lock.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4064",
+    "issue_number": 4064
   },
   "menu": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-menu",
@@ -252,21 +252,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Omarchy menu (pt-BR)",
     "submission_file": "marketplace/submissions/menu.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4065",
+    "issue_number": 4065
   },
   "network": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-network",
@@ -282,21 +282,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Minha rede",
     "submission_file": "marketplace/submissions/network.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4066",
+    "issue_number": 4066
   },
   "notifications": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-notifications",
@@ -311,21 +311,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Notificações",
     "submission_file": "marketplace/submissions/notifications.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4067",
+    "issue_number": 4067
   },
   "polkit": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-polkit",
@@ -341,21 +341,21 @@
       "system"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: My Polkit Agent",
     "submission_file": "marketplace/submissions/polkit.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4068",
+    "issue_number": 4068
   },
   "power": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-power",
@@ -371,21 +371,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Minha energia",
     "submission_file": "marketplace/submissions/power.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4069",
+    "issue_number": 4069
   },
   "reminders": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-reminders",
@@ -400,21 +400,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: My Reminders",
     "submission_file": "marketplace/submissions/reminders.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4070",
+    "issue_number": 4070
   },
   "speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-speedtest",
@@ -430,21 +430,21 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Teste de velocidade",
     "submission_file": "marketplace/submissions/speedtest.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4072",
+    "issue_number": 4072
   },
   "weather": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-weather",
@@ -460,20 +460,20 @@
       "quickshell"
     ],
     "preview": "none",
-    "status": "needs-fix",
+    "status": "submitted",
     "issue_title": "[Plugin]: Weather",
     "submission_file": "marketplace/submissions/weather.md",
     "existing_issue": null,
     "checklist": {
-      "public_repo_with_install_remove": false,
+      "public_repo_with_install_remove": true,
       "license_and_dependencies": true,
       "install_instructions": true,
-      "removal_instructions": false,
+      "removal_instructions": true,
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": [
-      "README sem instruções de remoção/desinstalação"
-    ]
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071",
+    "issue_number": 4071
   }
 }
