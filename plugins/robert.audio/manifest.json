@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.audio",
+  "name": "Áudio",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Controle de volume, saída e mixer por aplicativo",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Áudio",
+    "description": "Controle de volume, saída e mixer por aplicativo",
+    "category": "Audio",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.audio"
+  }
+}
