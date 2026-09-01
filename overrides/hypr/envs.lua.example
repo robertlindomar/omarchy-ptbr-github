@@ -1,0 +1,14 @@
+-- Omarchy PT-BR: ~/.local/bin overrides must precede $OMARCHY_PATH/bin.
+-- default.hypr.envs prepends /usr/share/omarchy/bin first; fix order here.
+local home = os.getenv("HOME") or ""
+local user_bin = home .. "/.local/bin"
+local kept = {}
+
+for entry in (os.getenv("PATH") or "/usr/local/bin:/usr/bin"):gmatch("[^:]+") do
+  if entry ~= user_bin then
+    table.insert(kept, entry)
+  end
+end
+
+table.insert(kept, 1, user_bin)
+hl.env("PATH", table.concat(kept, ":"))
