@@ -76,6 +76,7 @@ friendly_name() {
     power) echo "Energia" ;;
     weather) echo "Clima" ;;
     audio) echo "Áudio" ;;
+    monitor) echo "Tela" ;;
     speedtest) echo "Teste de velocidade (rede)" ;;
     disk-speedtest) echo "Teste de velocidade (disco)" ;;
     agents) echo "Agentes" ;;

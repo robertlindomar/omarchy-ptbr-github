@@ -30,7 +30,7 @@
         { "id": "robertlindomar.omarchy-ptbr.bluetooth" },
         { "id": "robertlindomar.omarchy-ptbr.network" },
         { "id": "robertlindomar.omarchy-ptbr.audio" },
-        { "id": "omarchy.monitor" },
+        { "id": "robertlindomar.omarchy-ptbr.monitor" },
         { "id": "robertlindomar.omarchy-ptbr.power" }
       ]
     }

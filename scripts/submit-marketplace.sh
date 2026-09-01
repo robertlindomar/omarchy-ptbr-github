@@ -61,7 +61,7 @@ slug_from_repo() { printf '%s' "${1#omarchy-ptbr-}"; }
 suggest_category() {
   case "$1" in
     agents) echo "Developer Tools" ;;
-    audio|bluetooth) echo "Hardware" ;;
+    audio|bluetooth|monitor) echo "Hardware" ;;
     clipboard|reminders) echo "Productivity" ;;
     clock|indicators|weather) echo "Widgets" ;;
     disk-speedtest|lock|network|polkit|power|speedtest) echo "System" ;;
@@ -74,6 +74,7 @@ suggest_tags() {
   case "$1" in
     agents) echo "ai, quickshell" ;;
     audio) echo "media, quickshell" ;;
+    monitor) echo "display, quickshell" ;;
     bluetooth) echo "system, quickshell" ;;
     clipboard|notifications|reminders) echo "quickshell" ;;
     clock|indicators|weather) echo "bar, quickshell" ;;

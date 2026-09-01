@@ -1,0 +1,27 @@
+### Repository URL
+
+https://github.com/robertlindomar/omarchy-ptbr-monitor
+
+### Category
+
+Hardware
+
+### Tags
+
+display, quickshell
+
+### Suggest a missing tag
+
+_No response_
+
+### Maintainer notes
+
+Tradução pt-BR não oficial derivada do plugin upstream `omarchy.monitor`. Requer Omarchy com Quickshell. Ao habilitar este clone, o plugin oficial correspondente é desabilitado automaticamente pelo Omarchy.
+
+### Submission checklist
+
+- [x] The repository is public and contains installation and removal instructions.
+- [x] I have documented the plugin license and any external dependencies.
+- [ ] I confirm that I own or have permission to submit this plugin and its preview assets.
+- [x] The plugin does not overwrite user configuration without explicit consent.
+- [x] I understand that approval is for listing and is not a security review.

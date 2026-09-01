@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.monitor",
+  "name": "Tela",
+  "version": "1.0.0",
+  "author": "Robert Lindomar",
+  "description": "Controle de brilho, escala e monitores",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Tela",
+    "description": "Controle de brilho, escala e monitores",
+    "category": "System",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.monitor"
+  }
+}
