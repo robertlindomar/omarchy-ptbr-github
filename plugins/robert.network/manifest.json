@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.network",
+  "name": "Minha rede",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Lista Wi-Fi e estado da conexão",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Rede",
+    "description": "Lista Wi-Fi e estado da conexão",
+    "category": "Network",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.network"
+  }
+}
