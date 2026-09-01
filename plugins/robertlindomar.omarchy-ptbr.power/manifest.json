@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.power",
+  "id": "robertlindomar.omarchy-ptbr.power",
   "name": "Minha energia",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Bateria, perfil de energia e estatísticas do sistema",
   "kinds": [
     "bar-widget"

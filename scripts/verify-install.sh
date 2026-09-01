@@ -6,9 +6,9 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FAIL=0
 
 PLUGINS=(
-  robert.menu robert.lock robert.polkit robert.clipboard robert.reminders
-  robert.network robert.bluetooth robert.power robert.weather robert.audio
-  robert.speedtest robert.disk-speedtest robert.agents robert.notifications robert.clock
+  robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
+  robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio
+  robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock
 )
 
 ok() { printf '  [OK] %s\n' "$*"; }
@@ -22,7 +22,7 @@ printf '=== Verificação Omarchy PT-BR ===\n\n'
 for plugin in "${PLUGINS[@]}"; do
   if [[ -d "$HOME/.config/omarchy/plugins/$plugin" ]]; then
     ok "Plugin presente: $plugin"
-    if omarchy plugin validate "$plugin" >/dev/null 2>&1; then
+    if omarchy plugin validate "$HOME/.config/omarchy/plugins/$plugin" >/dev/null 2>&1; then
       ok "Validação: $plugin"
     else
       bad "Validação falhou: $plugin"

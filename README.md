@@ -8,14 +8,14 @@ O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **override
 
 | Área | Clone / override |
 |------|------------------|
-| Menu principal | `robert.menu` + `extensions/omarchy-menu.jsonc` |
-| Tela de bloqueio | `robert.lock` |
-| Polkit | `robert.polkit` |
-| Área de transferência | `robert.clipboard` |
-| Lembretes | `robert.reminders` + `omarchy-reminder` |
-| Rede / Bluetooth / Energia / Clima / Áudio | `robert.network`, `robert.bluetooth`, `robert.power`, `robert.weather`, `robert.audio` |
-| Speed test / Disco / Agentes | `robert.speedtest`, `robert.disk-speedtest`, `robert.agents` |
-| Notificações / Calendário | `robert.notifications`, `robert.clock` |
+| Menu principal | `robertlindomar.omarchy-ptbr.menu` + `extensions/omarchy-menu.jsonc` |
+| Tela de bloqueio | `robertlindomar.omarchy-ptbr.lock` |
+| Polkit | `robertlindomar.omarchy-ptbr.polkit` |
+| Área de transferência | `robertlindomar.omarchy-ptbr.clipboard` |
+| Lembretes | `robertlindomar.omarchy-ptbr.reminders` + `omarchy-reminder` |
+| Rede / Bluetooth / Energia / Clima / Áudio | `robertlindomar.omarchy-ptbr.network`, `robertlindomar.omarchy-ptbr.bluetooth`, `robertlindomar.omarchy-ptbr.power`, `robertlindomar.omarchy-ptbr.weather`, `robertlindomar.omarchy-ptbr.audio` |
+| Speed test / Disco / Agentes | `robertlindomar.omarchy-ptbr.speedtest`, `robertlindomar.omarchy-ptbr.disk-speedtest`, `robertlindomar.omarchy-ptbr.agents` |
+| Notificações / Calendário | `robertlindomar.omarchy-ptbr.notifications`, `robertlindomar.omarchy-ptbr.clock` |
 | Atalhos (SUPER+K) | `omarchy-menu-keybindings` + `keybindings-labels-ptbr.awk` |
 | Capturas de tela | `omarchy-capture-screenshot` |
 

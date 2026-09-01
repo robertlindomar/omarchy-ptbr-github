@@ -51,21 +51,21 @@ while IFS=$'\t' read -r clone official; do
   [[ -z $clone ]] && continue
   compare_plugin "$clone" "$official"
 done <<'MAP'
-robert.menu	omarchy.menu
-robert.lock	omarchy.lock
-robert.polkit	omarchy.polkit
-robert.clipboard	omarchy.clipboard
-robert.reminders	omarchy.reminders
-robert.network	omarchy.network
-robert.bluetooth	omarchy.bluetooth
-robert.power	omarchy.power
-robert.weather	omarchy.weather
-robert.audio	omarchy.audio
-robert.speedtest	omarchy.speedtest
-robert.disk-speedtest	omarchy.disk-speedtest
-robert.agents	omarchy.agents
-robert.notifications	omarchy.notifications
-robert.clock	omarchy.clock
+robertlindomar.omarchy-ptbr.menu	omarchy.menu
+robertlindomar.omarchy-ptbr.lock	omarchy.lock
+robertlindomar.omarchy-ptbr.polkit	omarchy.polkit
+robertlindomar.omarchy-ptbr.clipboard	omarchy.clipboard
+robertlindomar.omarchy-ptbr.reminders	omarchy.reminders
+robertlindomar.omarchy-ptbr.network	omarchy.network
+robertlindomar.omarchy-ptbr.bluetooth	omarchy.bluetooth
+robertlindomar.omarchy-ptbr.power	omarchy.power
+robertlindomar.omarchy-ptbr.weather	omarchy.weather
+robertlindomar.omarchy-ptbr.audio	omarchy.audio
+robertlindomar.omarchy-ptbr.speedtest	omarchy.speedtest
+robertlindomar.omarchy-ptbr.disk-speedtest	omarchy.disk-speedtest
+robertlindomar.omarchy-ptbr.agents	omarchy.agents
+robertlindomar.omarchy-ptbr.notifications	omarchy.notifications
+robertlindomar.omarchy-ptbr.clock	omarchy.clock
 MAP
 
 log "Relatório salvo em: $REPORT"

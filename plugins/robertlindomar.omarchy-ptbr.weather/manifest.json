@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.weather",
+  "id": "robertlindomar.omarchy-ptbr.weather",
   "name": "Weather",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Weather pill with detail popup",
   "kinds": [
     "bar-widget"

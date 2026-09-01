@@ -1,6 +1,6 @@
 # Compatibilidade Omarchy PT-BR
 
-Gerado em: 2026-09-01T01:37:30-03:00
+Gerado em: 2026-09-01T02:07:00-03:00
 
 ## Versão upstream testada
 
@@ -46,19 +46,19 @@ af58d98507b745efc437747f1288670b638d9450c973769722ab5a34b6b2b87e  /usr/share/oma
 ## Hashes dos clones pt-BR
 
 ```
-f0a0d14adab3fffda5a4e4341811bd1768c91be4a0aca1f638ae73c07426b035  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.agents/manifest.json
-309a0b1f1e0f8fb81be2780f8cf789c2e3d61a141432fc2d91792fdf2522a9a7  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.audio/manifest.json
-2595d7e486475cc8669f8bba3591ff83e1286104d7e3ef010b6da89442daf2f3  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.bluetooth/manifest.json
-919a36ba67705a4b6fcafb311a338bb57216f61dd0e58a1b4f6831280d17ffed  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.clipboard/manifest.json
-d8c1429d771c8a9d4fe2610e62f53b6e6049444688a7a822c540694a8577fd3a  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.clock/manifest.json
-e0213c15b58152ddae94b8075c83ac8c1b1870021c0dbab8105785c3f63ff337  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.disk-speedtest/manifest.json
-9c04079e256d7ad335a8d4897165ea9ea29df269a03017e727cee9da652aef55  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.lock/manifest.json
-e56d6ce57fb7e4a595014f799f618df57e41395978ad6cf367226e99300dd85c  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.menu/manifest.json
-6ef0d8d32f08d6a9a4f7a2e9f46fb2d072fa76ab89ddba6cc3bf08db0c0bd2a6  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.network/manifest.json
-252cae188d86679c35bef64802d67e25bd383985f28e3b0c3e09e744345180ee  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.notifications/manifest.json
-d01b439bc45b068a684cd8fc958d619038137d8a0339ed30fed06d30cb9df173  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.polkit/manifest.json
-a79a83443707f6033ecf942e2bc2a1f5a90a9e16d1c18163280fbf68e521c37e  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.power/manifest.json
-64cd46537eb72227248e6a29ba4b0e2abaae2e22f65f2b44424ef84deea3c9e7  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.reminders/manifest.json
-31d659542060883347b7dd2e55f8e1433194c5a259f0c58a5322665e82483dc7  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.speedtest/manifest.json
-442a88b041e120ce255273649dd8f4751e172ce83c2dc3a9482bc65859b2f70a  /home/robert/Documentos/omarchy-ptbr-github/plugins/robert.weather/manifest.json
+98a61e3067c10cd8c9b426d15b8348e8a6ee73894cd80cc132049695c7630ff4  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.agents/manifest.json
+de13162384f2698667c8aadf191dba1266fa542716ed54b6f3a244914b3ee9e4  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.audio/manifest.json
+31cbda21492ab900f35b44c1f27d488ae6c6f773b34e64e32ff7e82423ca0c83  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.bluetooth/manifest.json
+bf525300d3f3ba340a8f6c382c307e00b9eda62d1efe1e87c02f53926ed74882  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.clipboard/manifest.json
+6ce2e7b6cbda25a36ae1f1c934dba72553fa4196f6c8f2fbf509dd9b6988710b  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.clock/manifest.json
+0e904205fcfb7a06029b43a2db28763985456f146839000ea761e1bd821a9dc8  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.disk-speedtest/manifest.json
+384e9ff42cb6ad5bb52a2cb5c4274c69bb681d7448603050c304e94d8175333d  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.lock/manifest.json
+c911a7d4e18b6c58e07d1b0e9c21cb6e46b7d82e2a825f4d22c28e6d20afa691  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.menu/manifest.json
+8e49ff9340e76a9146e52ec801c1a8c3d427693b88e232ab32a63b783ac209a2  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.network/manifest.json
+3f1222abca13638ba115defb0150b4d3d51c9adc5e5fd3c3155cf4f01c58a62c  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.notifications/manifest.json
+b86278af63ef5fe836ba86e60f2c45296ac384b534ae4183b918125a00209caf  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.polkit/manifest.json
+20f753633990b4bf23a0eb50573c1947d650f11d003063e23e309a521d85678c  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.power/manifest.json
+5ac9d508d0010a04fbfbe820d6a4b896c4c414cda59b7264d4b5866dc52c2df9  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.reminders/manifest.json
+770c39bf99fbe0822e80a89d6be1146b89ad96ed119cd3c69dd0fcd69ec206e7  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.speedtest/manifest.json
+6886e2cb2085ff1ac3356396230023c93724da87935a4b8882a12ad815604c65  /home/robert/Documentos/omarchy-ptbr-github/plugins/robertlindomar.omarchy-ptbr.weather/manifest.json
 ```

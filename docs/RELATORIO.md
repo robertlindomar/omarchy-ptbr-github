@@ -13,7 +13,7 @@
 | Plugins oficiais (manifest.json) | **29** |
 | Bar widgets (`.manifest.json`) | **8** |
 | **Total de módulos com ID** | **37** |
-| Clone pessoal | **1** (`robert.menu`) |
+| Clone pessoal | **1** (`robertlindomar.omarchy-ptbr.menu`) |
 | IDs duplicados em `plugins/` | **0** (backup movido para fora) |
 | Plugins com strings user-facing | **~25** |
 | Strings traduzíveis (estimativa) | **~350–450** |
@@ -26,7 +26,7 @@
 |------------|--------|
 | Labels do menu (`omarchy-menu.jsonc`) | ✅ ~320 overrides pt-BR |
 | `omarchy.menu` oficial | ❌ disabled |
-| `robert.menu` (clone) | ✅ enabled — entry point **`Menu-v2.qml`** |
+| `robertlindomar.omarchy-ptbr.menu` (clone) | ✅ enabled — entry point **`Menu-v2.qml`** |
 | UI chrome do menu (6 strings) | ❌ ainda em inglês |
 | Patch `MenuModel.js` (merge) | ✅ no clone |
 
@@ -87,7 +87,7 @@
 
 | ID | Path | clonedFrom | Entry points | Estado |
 |----|------|------------|--------------|--------|
-| robert.menu | ~/.config/omarchy/plugins/robert.menu/ | omarchy.menu | menu=**Menu-v2.qml**; barWidget=BarWidget.qml | enabled |
+| robertlindomar.omarchy-ptbr.menu | ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu/ | omarchy.menu | menu=**Menu-v2.qml**; barWidget=BarWidget.qml | enabled |
 
 **Arquivos:** Menu-v2.qml, Menu.qml (cópia), MenuModel.js (patched), BarWidget.qml, manifest.json
 
@@ -127,9 +127,9 @@
 
 ## 5. Relatório por plugin (prioritários)
 
-### robert.menu — PRIORIDADE 1
+### robertlindomar.omarchy-ptbr.menu — PRIORIDADE 1
 
-- **PATH:** `~/.config/omarchy/plugins/robert.menu/`
+- **PATH:** `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu/`
 - **ENTRY:** `Menu-v2.qml`
 - **TEXTOS:** ~320 labels pt-BR (extensions) + **6 UI chrome EN**
 - **Exemplos EN restantes:** "Nothing here yet", "No matches for…", "Input"/"Select", "Do you want to uninstall…?", "Uninstall", "Go" (root label em MenuModel.js)
@@ -243,7 +243,7 @@ Ver `GLOSSARIO.md` completo.
 
 | Plugin | Strings | pt-BR | EN | Estratégia | Risco | Prioridade |
 |--------|---------|-------|-----|------------|-------|------------|
-| robert.menu | ~326 | parcial | 6 UI | clone-patch | médio | **1** |
+| robertlindomar.omarchy-ptbr.menu | ~326 | parcial | 6 UI | clone-patch | médio | **1** |
 | omarchy.lock | ~9 | não | sim | clone | baixo-médio | **1** |
 | omarchy.polkit | ~5 | não | sim | clone | médio | **1** |
 | omarchy.clipboard | ~10 | não | sim | clone | baixo | **1** |
@@ -264,7 +264,7 @@ Ver `GLOSSARIO.md` completo.
 
 ### Clonar (tradução visual)
 
-- `robert.menu` — ✅ já clonado; só patch UI
+- `robertlindomar.omarchy-ptbr.menu` — ✅ já clonado; só patch UI
 - `omarchy.lock`, `omarchy.polkit`, `omarchy.clipboard`, `omarchy.reminders`
 - Painéis: network, bluetooth, power, weather, audio, monitor, tailscale, clock, dropbox
 - `omarchy.bar` (Tray + tooltips) — opcional fase 2
@@ -272,7 +272,7 @@ Ver `GLOSSARIO.md` completo.
 
 ### NÃO clonar
 
-- `omarchy.menu` — substituído por `robert.menu`
+- `omarchy.menu` — substituído por `robertlindomar.omarchy-ptbr.menu`
 - `omarchy.background`, `omarchy.battery`, `omarchy.idle`, `omarchy.nightlight`
 - `omarchy.dev-gallery` — dev only
 - `omarchy.notifications` — texto vem de apps externas
@@ -300,7 +300,7 @@ Detecta: novos/removidos manifests, mudanças em strings QML/JS, hash do menu de
 **Manual adicional:**
 ```bash
 git diff --no-index /path/to/snapshot-old/strings-qml-js.txt /path/to/snapshot-new/strings-qml-js.txt
-diff -ru ~/.config/omarchy/plugins/robert.menu /usr/share/omarchy/shell/plugins/menu
+diff -ru ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu /usr/share/omarchy/shell/plugins/menu
 ```
 
 ---
@@ -308,7 +308,7 @@ diff -ru ~/.config/omarchy/plugins/robert.menu /usr/share/omarchy/shell/plugins/
 ## 11. ROADMAP proposto
 
 ### FASE 1 — Baixo risco, alto impacto imediato
-1. Finalizar 6 strings UI em `robert.menu` (Menu-v2.qml + MenuModel.js "Go")
+1. Finalizar 6 strings UI em `robertlindomar.omarchy-ptbr.menu` (Menu-v2.qml + MenuModel.js "Go")
 2. Clonar e traduzir: lock, polkit, clipboard, reminders
 3. Definir glossário final (decisões pendentes em GLOSSARIO.md)
 

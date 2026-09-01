@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.clipboard",
+  "id": "robertlindomar.omarchy-ptbr.clipboard",
   "name": "My Clipboard",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "A clipboard manager to view and paste history",
   "kinds": [
     "overlay"

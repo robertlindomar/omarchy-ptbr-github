@@ -5,7 +5,7 @@
       "center": [
         { "id": "omarchy.indicators" },
         {
-          "id": "robert.clock",
+          "id": "robertlindomar.omarchy-ptbr.clock",
           "format": "ddd d MMM HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm",
@@ -13,33 +13,33 @@
           "lifeExpectancy": 80
         },
         { "id": "omarchy.keyboard-layout" },
-        { "id": "robert.weather" },
+        { "id": "robertlindomar.omarchy-ptbr.weather" },
         { "id": "omarchy.system-update" }
       ],
       "left": [
-        { "id": "robert.menu" },
+        { "id": "robertlindomar.omarchy-ptbr.menu" },
         { "id": "omarchy.workspaces" }
       ],
       "right": [
         { "id": "omarchy.tray" },
         { "id": "omarchy.tailscale" },
-        { "id": "robert.agents" },
-        { "id": "robert.bluetooth" },
-        { "id": "robert.network" },
-        { "id": "robert.audio" },
+        { "id": "robertlindomar.omarchy-ptbr.agents" },
+        { "id": "robertlindomar.omarchy-ptbr.bluetooth" },
+        { "id": "robertlindomar.omarchy-ptbr.network" },
+        { "id": "robertlindomar.omarchy-ptbr.audio" },
         { "id": "omarchy.monitor" },
-        { "id": "robert.power" }
+        { "id": "robertlindomar.omarchy-ptbr.power" }
       ]
     }
   },
   "plugins": [
-    { "id": "robert.lock" },
-    { "id": "robert.polkit" },
-    { "id": "robert.clipboard" },
-    { "id": "robert.reminders" },
-    { "id": "robert.speedtest" },
-    { "id": "robert.disk-speedtest" },
-    { "id": "robert.notifications" }
+    { "id": "robertlindomar.omarchy-ptbr.lock" },
+    { "id": "robertlindomar.omarchy-ptbr.polkit" },
+    { "id": "robertlindomar.omarchy-ptbr.clipboard" },
+    { "id": "robertlindomar.omarchy-ptbr.reminders" },
+    { "id": "robertlindomar.omarchy-ptbr.speedtest" },
+    { "id": "robertlindomar.omarchy-ptbr.disk-speedtest" },
+    { "id": "robertlindomar.omarchy-ptbr.notifications" }
   ],
   "disabledPlugins": [
     "omarchy.menu",
@@ -52,13 +52,13 @@
     "omarchy.notifications"
   ],
   "cloneSourceRestores": [
-    "robert.menu",
-    "robert.lock",
-    "robert.polkit",
-    "robert.clipboard",
-    "robert.reminders",
-    "robert.speedtest",
-    "robert.disk-speedtest",
-    "robert.notifications"
+    "robertlindomar.omarchy-ptbr.menu",
+    "robertlindomar.omarchy-ptbr.lock",
+    "robertlindomar.omarchy-ptbr.polkit",
+    "robertlindomar.omarchy-ptbr.clipboard",
+    "robertlindomar.omarchy-ptbr.reminders",
+    "robertlindomar.omarchy-ptbr.speedtest",
+    "robertlindomar.omarchy-ptbr.disk-speedtest",
+    "robertlindomar.omarchy-ptbr.notifications"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.clock",
+  "id": "robertlindomar.omarchy-ptbr.clock",
   "name": "Relógio",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Data/hora na barra com popup de calendário",
   "kinds": [
     "bar-widget"

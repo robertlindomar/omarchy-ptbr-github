@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.audio",
+  "id": "robertlindomar.omarchy-ptbr.audio",
   "name": "Áudio",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Controle de volume, saída e mixer por aplicativo",
   "kinds": [
     "bar-widget"

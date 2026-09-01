@@ -7,9 +7,9 @@ STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy-ptbr"
 BACKUP_ROOT="${STATE_DIR}/backups"
 
 PLUGINS=(
-  robert.menu robert.lock robert.polkit robert.clipboard robert.reminders
-  robert.network robert.bluetooth robert.power robert.weather robert.audio
-  robert.speedtest robert.disk-speedtest robert.agents robert.notifications robert.clock
+  robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
+  robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio
+  robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock
 )
 
 OFFICIAL=(

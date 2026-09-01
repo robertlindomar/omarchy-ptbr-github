@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.notifications",
+  "id": "robertlindomar.omarchy-ptbr.notifications",
   "name": "Notificações",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Daemon de notificações, popups, Não perturbe e histórico",
   "kinds": [
     "service"

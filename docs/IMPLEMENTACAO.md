@@ -1,11 +1,11 @@
 # Implementação — Omarchy PT-BR Fase 1A
 
 > Data: 2026-08-31  
-> Escopo: `robert.menu` (tradução) + `robert.lock` (clone preparado, **não ativado**)
+> Escopo: `robertlindomar.omarchy-ptbr.menu` (tradução) + `robertlindomar.omarchy-ptbr.lock` (clone preparado, **não ativado**)
 
 ---
 
-## robert.menu
+## robertlindomar.omarchy-ptbr.menu
 
 ### Entry point confirmado
 
@@ -16,11 +16,11 @@
 }
 ```
 
-Fonte: `~/.config/omarchy/plugins/robert.menu/manifest.json`
+Fonte: `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu/manifest.json`
 
 ### IDs duplicados
 
-- Busca em `~/.config/omarchy/plugins/**/manifest.json`: **apenas um** `robert.menu`
+- Busca em `~/.config/omarchy/plugins/**/manifest.json`: **apenas um** `robertlindomar.omarchy-ptbr.menu`
 - Backup anterior fora de `plugins/` (conforme auditoria)
 
 ### Arquivos alterados
@@ -49,7 +49,7 @@ Fonte: `~/.config/omarchy/plugins/robert.menu/manifest.json`
 
 ### Backup
 
-`~/Documentos/omarchy-ptbr/backups/robert.menu-2026-08-31-201747/`
+`~/Documentos/omarchy-ptbr/backups/robertlindomar.omarchy-ptbr.menu-2026-08-31-201747/`
 
 Diffs salvos no mesmo diretório:
 - `diff-menu-v2`
@@ -59,7 +59,7 @@ Diffs salvos no mesmo diretório:
 
 | Teste | Resultado |
 |-------|-----------|
-| `omarchy plugin validate robert.menu` | OK (sem erros) |
+| `omarchy plugin validate robertlindomar.omarchy-ptbr.menu` | OK (sem erros) |
 | Entry point `Menu-v2.qml` no manifest | OK |
 | IDs duplicados em `plugins/` | Nenhum |
 | Strings EN remanescentes em runtime | Apenas comentário linha 249 (não visível) |
@@ -89,7 +89,7 @@ omarchy-shell shell reloadPlugins
 
 ---
 
-## robert.lock
+## robertlindomar.omarchy-ptbr.lock
 
 ### Plugin oficial
 
@@ -122,15 +122,15 @@ omarchy-shell shell reloadPlugins
 
 ### Estratégia de clone
 
-- Clone manual em `~/.config/omarchy/plugins/robert.lock/`
-- ID: `robert.lock`
+- Clone manual em `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.lock/`
+- ID: `robertlindomar.omarchy-ptbr.lock`
 - `clonedFrom: omarchy.lock`
 - **Não ativado** — `omarchy.lock` continua ativo
 
 ### Arquivos clonados
 
 ```
-robert.lock/
+robertlindomar.omarchy-ptbr.lock/
 ├── manifest.json
 ├── Service.qml
 └── LockView.qml
@@ -150,16 +150,16 @@ robert.lock/
 2. `_syncServices()` em `shell.qml` carrega **cada** service habilitado.
 3. Lock é acionado via IPC `omarchy-shell lock lock` (target `"lock"`), **não** por ID de plugin.
 4. `resolveEnabledId()` roteia summons de plugins clonados, mas o lock usa IPC fixo `"lock"`.
-5. **Risco crítico:** se `omarchy.lock` e `robert.lock` estiverem **ambos habilitados**, dois `IpcHandler` com target `"lock"` e dois `WlSessionLock` podem conflitar.
+5. **Risco crítico:** se `omarchy.lock` e `robertlindomar.omarchy-ptbr.lock` estiverem **ambos habilitados**, dois `IpcHandler` com target `"lock"` e dois `WlSessionLock` podem conflitar.
 
 ### Ativação (NÃO executada — aguardar teste manual)
 
 ```bash
 # 1. Verificar que o clone existe e valida
-omarchy plugin validate ~/.config/omarchy/plugins/robert.lock
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.lock
 
 # 2. Ativar clone (desabilita omarchy.lock automaticamente)
-omarchy plugin enable robert.lock
+omarchy plugin enable robertlindomar.omarchy-ptbr.lock
 
 # 3. Recarregar shell
 omarchy-restart-shell
@@ -167,7 +167,7 @@ omarchy-restart-shell
 
 # 4. Verificar estado
 jq '.disabledPlugins, .plugins' ~/.config/omarchy/shell.json
-# Esperado: "omarchy.lock" em disabledPlugins; robert.lock em plugins[]
+# Esperado: "omarchy.lock" em disabledPlugins; robertlindomar.omarchy-ptbr.lock em plugins[]
 
 # 5. Teste SEGURO — preview visual (não bloqueia sessão)
 omarchy-shell lock preview
@@ -181,7 +181,7 @@ omarchy-system-lock
 ### Reversão
 
 ```bash
-omarchy plugin disable robert.lock   # restaura omarchy.lock se cloneSourceRestores
+omarchy plugin disable robertlindomar.omarchy-ptbr.lock   # restaura omarchy.lock se cloneSourceRestores
 omarchy-restart-shell
 ```
 
@@ -198,7 +198,7 @@ omarchy-restart-shell
 
 | Teste | Resultado |
 |-------|-----------|
-| `omarchy plugin validate robert.lock` | OK |
+| `omarchy plugin validate robertlindomar.omarchy-ptbr.lock` | OK |
 | Strings EN no clone | Nenhuma |
 | Imports/caminhos relativos | OK (LockView local + qs.*) |
 | Ativação | **Não executada** (por design) |
@@ -217,7 +217,7 @@ omarchy-restart-shell
 
 ---
 
-## robert.polkit (Fase 1B)
+## robertlindomar.omarchy-ptbr.polkit (Fase 1B)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -299,8 +299,8 @@ PolkitAgent {
 
 | Campo | Valor |
 |-------|-------|
-| Caminho | `~/.config/omarchy/plugins/robert.polkit/` |
-| ID | `robert.polkit` |
+| Caminho | `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.polkit/` |
+| ID | `robertlindomar.omarchy-ptbr.polkit` |
 | `clonedFrom` | `omarchy.polkit` |
 
 Arquivos clonados: `manifest.json`, `PolkitAgent.qml`, `PolkitModel.js`
@@ -309,22 +309,22 @@ Arquivos clonados: `manifest.json`, `PolkitAgent.qml`, `PolkitModel.js`
 
 | Pergunta | Resposta |
 |----------|----------|
-| `enable robert.polkit` desabilita `omarchy.polkit`? | **Sim** — `PluginRegistry.setEnabled` adiciona oficial a `disabledPlugins[]` |
+| `enable robertlindomar.omarchy-ptbr.polkit` desabilita `omarchy.polkit`? | **Sim** — `PluginRegistry.setEnabled` adiciona oficial a `disabledPlugins[]` |
 | Dois agentes simultâneos? | **Risco alto** — ambos registram `path: "/org/omarchy/PolkitAgent"`; log avisa *"another agent may be running"* |
 | IPC targets conflitantes? | Não há IpcHandler; conflito é no **registro DBus Polkit** |
 | Risco de ficar sem autenticação? | Médio — se clone falhar ao carregar, `pkexec`/sudo gráfico pode não ter agente |
-| Reversão | `omarchy plugin disable robert.polkit` → restaura `omarchy.polkit` via `cloneSourceRestores` |
+| Reversão | `omarchy plugin disable robertlindomar.omarchy-ptbr.polkit` → restaura `omarchy.polkit` via `cloneSourceRestores` |
 
 ### Ativação (não executada)
 
 ```bash
-omarchy plugin validate ~/.config/omarchy/plugins/robert.polkit
-omarchy plugin enable robert.polkit
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.polkit
+omarchy plugin enable robertlindomar.omarchy-ptbr.polkit
 omarchy-restart-shell
 
 # Verificar
 jq '.disabledPlugins, .plugins' ~/.config/omarchy/shell.json
-# Esperado: "omarchy.polkit" em disabledPlugins; robert.polkit em plugins[]
+# Esperado: "omarchy.polkit" em disabledPlugins; robertlindomar.omarchy-ptbr.polkit em plugins[]
 ```
 
 ### Teste manual seguro (após ativar)
@@ -341,7 +341,7 @@ pkexec true
 ### Rollback
 
 ```bash
-omarchy plugin disable robert.polkit
+omarchy plugin disable robertlindomar.omarchy-ptbr.polkit
 omarchy-restart-shell
 # omarchy.polkit deve voltar a disabledPlugins sem entrada (restaurado)
 ```
@@ -350,7 +350,7 @@ omarchy-restart-shell
 
 | Teste | Resultado |
 |-------|-----------|
-| `omarchy plugin validate robert.polkit` | OK |
+| `omarchy plugin validate robertlindomar.omarchy-ptbr.polkit` | OK |
 | Diff vs oficial | Apenas traduções (+ comentário em PolkitModel.js) |
 | IDs duplicados | Nenhum |
 | Strings EN no clone | Nenhuma |
@@ -363,7 +363,7 @@ omarchy-restart-shell
 
 ---
 
-## robert.clipboard (Fase 1C)
+## robertlindomar.omarchy-ptbr.clipboard (Fase 1C)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -446,13 +446,13 @@ Imagens: `~/.local/state/omarchy/clipboard-images/`
 | Dois overlays simultâneos? | **Risco alto** — duplicam watchers `wl-paste` no mesmo `capture.sh` |
 | IPC target? | Nenhum `IpcHandler`; toggle via `shell toggle omarchy.clipboard` |
 | Shortcut | `SUPER+CTRL+V` → `omarchy-shell shell toggle omarchy.clipboard` (roteado ao clone via `resolveEnabledId`) |
-| Rollback | `omarchy plugin disable robert.clipboard` + restart shell |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.clipboard` + restart shell |
 
 ### Ativação (não executada)
 
 ```bash
-omarchy plugin validate ~/.config/omarchy/plugins/robert.clipboard
-omarchy plugin enable robert.clipboard
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.clipboard
+omarchy plugin enable robertlindomar.omarchy-ptbr.clipboard
 omarchy-restart-shell
 ```
 
@@ -476,12 +476,12 @@ Validar: abertura, busca, vazio, sem resultados, texto, imagem, Enter/Shift+Ente
 
 ## Próximo passo recomendado
 
-1. Ativar e testar `robert.reminders`
+1. Ativar e testar `robertlindomar.omarchy-ptbr.reminders`
 2. Fase 2: painéis (network, bluetooth, etc.) ou `shell/Ui/`
 
 ---
 
-## robert.reminders (Fase 1D)
+## robertlindomar.omarchy-ptbr.reminders (Fase 1D)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -524,15 +524,15 @@ Plugin **não formata datas** — fluxo em 2 passos (minutos + mensagem). Horár
 
 ### Abertura / resolveEnabledId
 
-- `omarchy-reminder -i` → `omarchy-shell shell summon omarchy.reminders` → `resolveEnabledId` → `robert.reminders` quando ativo
+- `omarchy-reminder -i` → `omarchy-shell shell summon omarchy.reminders` → `resolveEnabledId` → `robertlindomar.omarchy-ptbr.reminders` quando ativo
 - Atalho barra: clique no indicador 󰢌 (sem lembretes → `-i`)
 - Hyprland: `SUPER+CTRL+ALT+R` → `omarchy-reminder show` (lista, não overlay)
 
 ### Ativação (não executada)
 
 ```bash
-omarchy plugin validate ~/.config/omarchy/plugins/robert.reminders
-omarchy plugin enable robert.reminders
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.reminders
+omarchy plugin enable robertlindomar.omarchy-ptbr.reminders
 omarchy-restart-shell
 omarchy-reminder -i   # teste do overlay traduzido
 ```
@@ -540,7 +540,7 @@ omarchy-reminder -i   # teste do overlay traduzido
 ### Rollback
 
 ```bash
-omarchy plugin disable robert.reminders
+omarchy plugin disable robertlindomar.omarchy-ptbr.reminders
 omarchy-restart-shell
 ```
 
@@ -608,7 +608,7 @@ PATH=/usr/share/omarchy/bin:…:~/.local/bin:…
 
 **Correções aplicadas:**
 
-1. `robert.reminders/ReminderFlow.qml` — `reminderBin = HOME + "/.local/bin/omarchy-reminder"` (caminho absoluto ao override)
+1. `robertlindomar.omarchy-ptbr.reminders/ReminderFlow.qml` — `reminderBin = HOME + "/.local/bin/omarchy-reminder"` (caminho absoluto ao override)
 2. `~/.config/hypr/envs.lua` — reordena PATH para `~/.local/bin` antes de `$OMARCHY_PATH/bin` (indicador da barra, atalhos Hyprland)
 3. `~/.config/hypr/hyprland.lua` — `require("hypr.envs")` após defaults Omarchy
 
@@ -634,7 +634,7 @@ Lógica, argumentos, paths, units, `.message`, JSON keys e integração com `oma
 | Tipo | Clone traduzido (executável) |
 | Recursão | N/A — não delega ao original |
 
-### Ajuste complementar: `robert.reminders`
+### Ajuste complementar: `robertlindomar.omarchy-ptbr.reminders`
 
 O overlay original usava `root.omarchyPath + "/bin/omarchy-reminder"` (oficial). Tentativa com `["omarchy-reminder"]` falhou na sessão gráfica porque o PATH do Hyprland prioriza `/usr/share/omarchy/bin`.
 
@@ -710,7 +710,7 @@ hash -r   # se hashing estiver habilitado no shell
 type -a omarchy-reminder   # deve voltar para /usr/share/omarchy/bin/…
 ```
 
-Reverter `robert.reminders/ReminderFlow.qml` para caminho absoluto apenas se quiser desativar o override mas manter o clone do overlay.
+Reverter `robertlindomar.omarchy-ptbr.reminders/ReminderFlow.qml` para caminho absoluto apenas se quiser desativar o override mas manter o clone do overlay.
 
 ### Diff exato (resumo)
 
@@ -729,7 +729,7 @@ Ver arquivo completo em `backups/omarchy-reminder-bin-2026-08-31/omarchy-reminde
 
 ---
 
-## robert.network (Fase 2A)
+## robertlindomar.omarchy-ptbr.network (Fase 2A)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -820,15 +820,15 @@ O painel usa `qs.Ui` (`KeyboardPanel`, `PanelKeyCatcher`, `Button`, etc.) sem te
 |------|---------|
 | Indicador | **Mesmo plugin** — `Panel.qml` contém `BarIconButton` + popup |
 | Strings próprias | Ícone derivado de `Model.connectionIcon()` (sem texto) |
-| Clone separado? | **Não** — `robert.network` substitui `omarchy.network` inteiro |
-| Abertura | `SUPER+CTRL+W` → `omarchy-shell shell toggle omarchy.network` → `resolveEnabledId` → `robert.network` quando ativo; clique no ícone 󰤨/󰈀 na barra |
+| Clone separado? | **Não** — `robertlindomar.omarchy-ptbr.network` substitui `omarchy.network` inteiro |
+| Abertura | `SUPER+CTRL+W` → `omarchy-shell shell toggle omarchy.network` → `resolveEnabledId` → `robertlindomar.omarchy-ptbr.network` quando ativo; clique no ícone 󰤨/󰈀 na barra |
 
 ### Clone
 
 | Campo | Valor |
 |-------|-------|
-| Caminho | `~/.config/omarchy/plugins/robert.network/` |
-| ID | `robert.network` |
+| Caminho | `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.network/` |
+| ID | `robertlindomar.omarchy-ptbr.network` |
 | `clonedFrom` | `omarchy.network` |
 | Arquivos | `manifest.json`, `Panel.qml`, `Model.js` |
 | Alterações | metadata + strings visuais + `dnsProviderLabel`/`dnsProviderTooltip` |
@@ -840,8 +840,8 @@ O painel usa `qs.Ui` (`KeyboardPanel`, `PanelKeyCatcher`, `Button`, etc.) sem te
 | Risco oficial + clone | **Baixo** — `plugin enable` desabilita `omarchy.network` via `clonedFrom` |
 | DBus/listeners duplicados | **Não** — uma instância ativa |
 | Polling duplicado | **Não** |
-| Ativação | `omarchy plugin enable robert.network` + `omarchy-restart-shell` |
-| Rollback | `omarchy plugin disable robert.network` + `omarchy-restart-shell` |
+| Ativação | `omarchy plugin enable robertlindomar.omarchy-ptbr.network` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.network` + `omarchy-restart-shell` |
 
 ### Testes
 
@@ -849,7 +849,7 @@ O painel usa `qs.Ui` (`KeyboardPanel`, `PanelKeyCatcher`, `Button`, etc.) sem te
 |-------|--------|
 | `omarchy plugin validate` | ✓ passou |
 | QML/JS/imports | ✓ estrutura idêntica ao oficial |
-| IDs duplicados | ✓ apenas `robert.network` em plugins/ |
+| IDs duplicados | ✓ apenas `robertlindomar.omarchy-ptbr.network` em plugins/ |
 | Teste visual | **Pendente** (manual) |
 | Abrir painel | `SUPER+CTRL+W` ou clique no ícone de rede na barra |
 
@@ -879,7 +879,7 @@ O painel usa `qs.Ui` (`KeyboardPanel`, `PanelKeyCatcher`, `Button`, etc.) sem te
 
 ---
 
-## robert.bluetooth (Fase 2B)
+## robertlindomar.omarchy-ptbr.bluetooth (Fase 2B)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -965,8 +965,8 @@ Usa `KeyboardPanel`, `PanelKeyCatcher`, `ToggleSwitch` — sem `Cancel`/`Confirm
 | Risco oficial + clone | **Baixo** — `clonedFrom` desabilita oficial |
 | DBus watchers duplicados | **Não** |
 | Pairing agent duplicado | **Não** |
-| Ativação | `omarchy plugin enable robert.bluetooth` + `omarchy-restart-shell` |
-| Rollback | `omarchy plugin disable robert.bluetooth` + `omarchy-restart-shell` |
+| Ativação | `omarchy plugin enable robertlindomar.omarchy-ptbr.bluetooth` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.bluetooth` + `omarchy-restart-shell` |
 
 ### Testes
 
@@ -1003,7 +1003,7 @@ Usa `KeyboardPanel`, `PanelKeyCatcher`, `ToggleSwitch` — sem `Cancel`/`Confirm
 
 ---
 
-## robert.power (Fase 2C)
+## robertlindomar.omarchy-ptbr.power (Fase 2C)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -1088,8 +1088,8 @@ Comando `omarchy-powerprofiles-set ac|battery <id>` usa IDs originais.
 |----------|----------|
 | Risco oficial + clone | **Baixo** |
 | DBus/polling duplicado | **Não** |
-| Ativação | `omarchy plugin enable robert.power` + `omarchy-restart-shell` |
-| Rollback | `omarchy plugin disable robert.power` + `omarchy-restart-shell` |
+| Ativação | `omarchy plugin enable robertlindomar.omarchy-ptbr.power` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.power` + `omarchy-restart-shell` |
 
 ### Teste manual
 
@@ -1117,7 +1117,7 @@ Comando `omarchy-powerprofiles-set ac|battery <id>` usa IDs originais.
 
 ---
 
-## robert.weather (Fase 2D)
+## robertlindomar.omarchy-ptbr.weather (Fase 2D)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -1132,14 +1132,14 @@ omarchy-plugin-validate: plugin id 'omarchy.weather' uses the reserved omarchy.*
 
 | Item | Antes (incorreto) | Depois (corrigido) |
 |------|-------------------|---------------------|
-| `id` | `omarchy.weather` | `robert.weather` |
+| `id` | `omarchy.weather` | `robertlindomar.omarchy-ptbr.weather` |
 | `omarchy.clonedFrom` | *(ausente)* | `omarchy.weather` |
 | Demais campos | preservados | preservados |
 
-- **Backup do manifest incorreto:** `~/Documentos/omarchy-ptbr/backups/robert.weather-manifest-before-fix-2026-08-31-215402.json`
-- **Padrão usado:** igual a `robert.lock`, `robert.network`, etc. — bloco `"omarchy": { "clonedFrom": "…" }` no final do JSON
+- **Backup do manifest incorreto:** `~/Documentos/omarchy-ptbr/backups/robertlindomar.omarchy-ptbr.weather-manifest-before-fix-2026-08-31-215402.json`
+- **Padrão usado:** igual a `robertlindomar.omarchy-ptbr.lock`, `robertlindomar.omarchy-ptbr.network`, etc. — bloco `"omarchy": { "clonedFrom": "…" }` no final do JSON
 - **Validate após correção:** OK (sem erro de namespace reservado)
-- **`resolveEnabledId`:** com `clonedFrom: omarchy.weather`, chamadas ao ID oficial são roteadas para `robert.weather` quando o clone estiver habilitado (`PluginRegistry.qml`)
+- **`resolveEnabledId`:** com `clonedFrom: omarchy.weather`, chamadas ao ID oficial são roteadas para `robertlindomar.omarchy-ptbr.weather` quando o clone estiver habilitado (`PluginRegistry.qml`)
 
 ### Plugin oficial
 
@@ -1203,7 +1203,7 @@ O painel **não exibe** labels textuais de condição (`Clear`, `Rain`, etc.) �
 ### Barra
 
 - `BarWidget.qml`: ícone + temp opcional; tooltip suprimido
-- **Clone separado?** Não — `robert.weather` substitui widget inteiro
+- **Clone separado?** Não — `robertlindomar.omarchy-ptbr.weather` substitui widget inteiro
 - Abertura: clique no ícone; `SUPER+CTRL+ALT+W` → notificação; meio = refresh
 
 ### Segurança
@@ -1212,8 +1212,8 @@ O painel **não exibe** labels textuais de condição (`Clear`, `Rain`, etc.) �
 |----------|----------|
 | Risco oficial + clone | **Baixo** |
 | Requests duplicadas | **Não** (uma instância) |
-| Ativação | `omarchy plugin enable robert.weather` + `omarchy-restart-shell` |
-| Rollback | `omarchy plugin disable robert.weather` + `omarchy-restart-shell` |
+| Ativação | `omarchy plugin enable robertlindomar.omarchy-ptbr.weather` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.weather` + `omarchy-restart-shell` |
 
 ### Teste manual
 
@@ -1240,7 +1240,7 @@ O painel **não exibe** labels textuais de condição (`Clear`, `Rain`, etc.) �
 
 ---
 
-## robert.audio (Fase 2E)
+## robertlindomar.omarchy-ptbr.audio (Fase 2E)
 
 > Data: 2026-08-31  
 > Clone preparado e traduzido; **não ativado**
@@ -1327,8 +1327,8 @@ Não há UI de seleção de profile/porta no painel — apenas lista de sinks/so
 | Risco oficial + clone | **Baixo** |
 | Watchers/subscriptions duplicados | **Não** (uma instância) |
 | PipeWire alterado | **Não** |
-| Ativação | `omarchy plugin enable robert.audio` + `omarchy-restart-shell` |
-| Rollback | `omarchy plugin disable robert.audio` + `omarchy-restart-shell` |
+| Ativação | `omarchy plugin enable robertlindomar.omarchy-ptbr.audio` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.audio` + `omarchy-restart-shell` |
 
 ### Teste manual (após ativação)
 
@@ -1351,7 +1351,7 @@ Não há UI de seleção de profile/porta no painel — apenas lista de sinks/so
 
 ### Status
 
-- **Manifest conferido no disco:** `id=robert.audio`, `clonedFrom=omarchy.audio`
+- **Manifest conferido no disco:** `id=robertlindomar.omarchy-ptbr.audio`, `clonedFrom=omarchy.audio`
 - **`omarchy plugin validate`:** OK
 - **Pronto para ativação manual**
 - **Não ativado** nesta execução
@@ -1396,7 +1396,7 @@ Demais componentes (`Panel`, `TextField`, `Dropdown`, `Button`, etc.) — **sem*
 
 - **strings:** `cancelText` (default `Cancel`), `confirmText` (default `Confirm`), `message` (vazio — caller define)
 - **consumers oficiais:** `clipboard/Clipboard.qml`, `menu/Menu.qml`
-- **clones:** `robert.clipboard`, `robert.menu` (`Menu-v2.qml`)
+- **clones:** `robertlindomar.omarchy-ptbr.clipboard`, `robertlindomar.omarchy-ptbr.menu` (`Menu-v2.qml`)
 - **risco:** **ALTO** se override global; **BAIXO** via properties no caller
 - **estratégia:** passar `cancelText`/`confirmText` nos clones (**lote 1 aplicado**)
 
@@ -1412,7 +1412,7 @@ Demais componentes (`Panel`, `TextField`, `Dropdown`, `Button`, etc.) — **sem*
 
 **~45 arquivos** no shell oficial (bar, todos os painéis, clipboard, menu, lock, polkit, osd, etc.).
 
-**Clones atuais que importam `qs.Ui`:** `robert.menu`, `robert.lock`, `robert.polkit`, `robert.clipboard`, `robert.reminders`, `robert.network`, `robert.bluetooth`, `robert.power`, `robert.weather`, `robert.audio`.
+**Clones atuais que importam `qs.Ui`:** `robertlindomar.omarchy-ptbr.menu`, `robertlindomar.omarchy-ptbr.lock`, `robertlindomar.omarchy-ptbr.polkit`, `robertlindomar.omarchy-ptbr.clipboard`, `robertlindomar.omarchy-ptbr.reminders`, `robertlindomar.omarchy-ptbr.network`, `robertlindomar.omarchy-ptbr.bluetooth`, `robertlindomar.omarchy-ptbr.power`, `robertlindomar.omarchy-ptbr.weather`, `robertlindomar.omarchy-ptbr.audio`.
 
 Benefício imediato do lote 1: **clipboard** e **menu** (ConfirmDialog).
 
@@ -1431,18 +1431,18 @@ Benefício imediato do lote 1: **clipboard** e **menu** (ConfirmDialog).
 
 | Arquivo | Alteração |
 |---------|-----------|
-| `robert.clipboard/Clipboard.qml` | `cancelText: "Cancelar"` |
-| `robert.menu/Menu-v2.qml` | `cancelText: "Cancelar"` |
+| `robertlindomar.omarchy-ptbr.clipboard/Clipboard.qml` | `cancelText: "Cancelar"` |
+| `robertlindomar.omarchy-ptbr.menu/Menu-v2.qml` | `cancelText: "Cancelar"` |
 
 **Backup:** `~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/`
 
 ### Rollback lote 1
 
 ```bash
-cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robert.clipboard-Clipboard.qml.bak \
-   ~/.config/omarchy/plugins/robert.clipboard/Clipboard.qml
-cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robert.menu-Menu-v2.qml.bak \
-   ~/.config/omarchy/plugins/robert.menu/Menu-v2.qml
+cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robertlindomar.omarchy-ptbr.clipboard-Clipboard.qml.bak \
+   ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.clipboard/Clipboard.qml
+cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robertlindomar.omarchy-ptbr.menu-Menu-v2.qml.bak \
+   ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu/Menu-v2.qml
 omarchy-restart-shell
 ```
 
@@ -1508,7 +1508,7 @@ Demais componentes (`Panel`, `TextField`, `Dropdown`, `Button`, etc.) — **sem*
 
 - **strings:** `cancelText` (default `Cancel`), `confirmText` (default `Confirm`), `message` (vazio — caller define)
 - **consumers oficiais:** `clipboard/Clipboard.qml`, `menu/Menu.qml`
-- **clones:** `robert.clipboard`, `robert.menu` (`Menu-v2.qml`)
+- **clones:** `robertlindomar.omarchy-ptbr.clipboard`, `robertlindomar.omarchy-ptbr.menu` (`Menu-v2.qml`)
 - **risco:** **ALTO** se override global; **BAIXO** via properties no caller
 - **estratégia:** passar `cancelText`/`confirmText` nos clones (**lote 1 aplicado**)
 
@@ -1524,7 +1524,7 @@ Demais componentes (`Panel`, `TextField`, `Dropdown`, `Button`, etc.) — **sem*
 
 **~45 arquivos** no shell oficial (bar, todos os painéis, clipboard, menu, lock, polkit, osd, etc.).
 
-**Clones atuais que importam `qs.Ui`:** `robert.menu`, `robert.lock`, `robert.polkit`, `robert.clipboard`, `robert.reminders`, `robert.network`, `robert.bluetooth`, `robert.power`, `robert.weather`, `robert.audio`.
+**Clones atuais que importam `qs.Ui`:** `robertlindomar.omarchy-ptbr.menu`, `robertlindomar.omarchy-ptbr.lock`, `robertlindomar.omarchy-ptbr.polkit`, `robertlindomar.omarchy-ptbr.clipboard`, `robertlindomar.omarchy-ptbr.reminders`, `robertlindomar.omarchy-ptbr.network`, `robertlindomar.omarchy-ptbr.bluetooth`, `robertlindomar.omarchy-ptbr.power`, `robertlindomar.omarchy-ptbr.weather`, `robertlindomar.omarchy-ptbr.audio`.
 
 Benefício imediato do lote 1: **clipboard** e **menu** (ConfirmDialog).
 
@@ -1543,18 +1543,18 @@ Benefício imediato do lote 1: **clipboard** e **menu** (ConfirmDialog).
 
 | Arquivo | Alteração |
 |---------|-----------|
-| `robert.clipboard/Clipboard.qml` | `cancelText: "Cancelar"` |
-| `robert.menu/Menu-v2.qml` | `cancelText: "Cancelar"` |
+| `robertlindomar.omarchy-ptbr.clipboard/Clipboard.qml` | `cancelText: "Cancelar"` |
+| `robertlindomar.omarchy-ptbr.menu/Menu-v2.qml` | `cancelText: "Cancelar"` |
 
 **Backup:** `~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/`
 
 ### Rollback lote 1
 
 ```bash
-cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robert.clipboard-Clipboard.qml.bak \
-   ~/.config/omarchy/plugins/robert.clipboard/Clipboard.qml
-cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robert.menu-Menu-v2.qml.bak \
-   ~/.config/omarchy/plugins/robert.menu/Menu-v2.qml
+cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robertlindomar.omarchy-ptbr.clipboard-Clipboard.qml.bak \
+   ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.clipboard/Clipboard.qml
+cp ~/Documentos/omarchy-ptbr/backups/shell-ui-2026-08-31-220459/robertlindomar.omarchy-ptbr.menu-Menu-v2.qml.bak \
+   ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.menu/Menu-v2.qml
 omarchy-restart-shell
 ```
 
@@ -1582,7 +1582,7 @@ diff -ru ~/Documentos/omarchy-ptbr/backups/shell-ui-*/omarchy-Ui-official-snapsh
 
 ---
 
-## robert.speedtest (Fase 3B)
+## robertlindomar.omarchy-ptbr.speedtest (Fase 3B)
 
 > Data: 2026-09-01  
 > Clone preparado e traduzido; **não ativado**
@@ -1614,12 +1614,12 @@ diff -ru ~/Documentos/omarchy-ptbr/backups/shell-ui-*/omarchy-Ui-official-snapsh
 
 ### Disk speedtest
 
-- Concluído em **Fase 3C** — ver `robert.disk-speedtest` abaixo
+- Concluído em **Fase 3C** — ver `robertlindomar.omarchy-ptbr.disk-speedtest` abaixo
 
 ### Ativação
 
 ```bash
-omarchy plugin enable robert.speedtest && omarchy-restart-shell
+omarchy plugin enable robertlindomar.omarchy-ptbr.speedtest && omarchy-restart-shell
 omarchy-shell shell summon omarchy.speedtest
 ```
 
@@ -1629,7 +1629,7 @@ omarchy-shell shell summon omarchy.speedtest
 
 ---
 
-## robert.disk-speedtest (Fase 3C)
+## robertlindomar.omarchy-ptbr.disk-speedtest (Fase 3C)
 
 > Data: 2026-09-01  
 > Clone preparado e traduzido; **não ativado** · benchmark **não executado**
@@ -1659,7 +1659,7 @@ omarchy-shell shell summon omarchy.speedtest
 
 ### SpeedTestOverlay
 
-- Mesma estratégia do `robert.speedtest`: `SpeedTestOverlayPtbr.qml` duplicado (sem infra compartilhada)
+- Mesma estratégia do `robertlindomar.omarchy-ptbr.speedtest`: `SpeedTestOverlayPtbr.qml` duplicado (sem infra compartilhada)
 - Oficial `shell/Ui/` **não modificado**
 
 ### Strings traduzidas
@@ -1688,7 +1688,7 @@ ls /dev/shm/omarchy-disk-speedtest-* 2>/dev/null
 ### Ativação
 
 ```bash
-omarchy plugin enable robert.disk-speedtest && omarchy-restart-shell
+omarchy plugin enable robertlindomar.omarchy-ptbr.disk-speedtest && omarchy-restart-shell
 omarchy-shell shell summon omarchy.disk-speedtest
 ```
 
@@ -1698,7 +1698,7 @@ omarchy-shell shell summon omarchy.disk-speedtest
 
 ---
 
-## robert.agents (Fase 3D)
+## robertlindomar.omarchy-ptbr.agents (Fase 3D)
 
 > Data: 2026-09-01  
 > Clone preparado e traduzido; **não ativado**
@@ -1807,7 +1807,7 @@ BarIconButton → Panel (KeyboardPanel)
 |------|---------|
 | Indicador | Glyphs `󱚣`; `active` quando limite ≥ 90% ou saldo ≤ 10% |
 | Tooltip | Nenhum texto dedicado |
-| Clone separado? | Não — `robert.agents` substitui widget inteiro |
+| Clone separado? | Não — `robertlindomar.omarchy-ptbr.agents` substitui widget inteiro |
 
 ### `shell/Ui/`
 
@@ -1819,8 +1819,8 @@ BarIconButton → Panel (KeyboardPanel)
 
 | Campo | Valor |
 |-------|-------|
-| Caminho | `~/.config/omarchy/plugins/robert.agents/` |
-| ID | `robert.agents` |
+| Caminho | `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.agents/` |
+| ID | `robertlindomar.omarchy-ptbr.agents` |
 | clonedFrom | `omarchy.agents` |
 | Manifest conferido | Sim (`jq` + validate OK) |
 | Arquivos alterados | `manifest.json`, `Panel.qml`, `Main.qml` |
@@ -1834,16 +1834,16 @@ BarIconButton → Panel (KeyboardPanel)
 | Prompts internos alterados? | **Não** |
 | Providers/modelos/API keys alterados? | **Não** |
 | Comandos/args alterados? | **Não** |
-| Rollback | `omarchy plugin disable robert.agents` + `omarchy-restart-shell` |
+| Rollback | `omarchy plugin disable robertlindomar.omarchy-ptbr.agents` + `omarchy-restart-shell` |
 
 ### Testes
 
 ```bash
 # Validar (já OK)
-omarchy plugin validate ~/.config/omarchy/plugins/robert.agents
+omarchy plugin validate ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.agents
 
 # Ativar (manual)
-omarchy plugin enable robert.agents && omarchy-restart-shell
+omarchy plugin enable robertlindomar.omarchy-ptbr.agents && omarchy-restart-shell
 
 # Abrir painel (se widget visível na barra)
 omarchy-shell omarchy.agents toggle
@@ -1867,7 +1867,7 @@ omarchy-shell omarchy.agents open
 
 ---
 
-## robert.notifications (Fase 4A)
+## robertlindomar.omarchy-ptbr.notifications (Fase 4A)
 
 > Data: 2026-09-01  
 > Clone preparado e traduzido; **não ativado**
@@ -1924,21 +1924,21 @@ omarchy-shell omarchy.agents open
 
 | Campo | Valor |
 |-------|-------|
-| Caminho | `~/.config/omarchy/plugins/robert.notifications/` |
+| Caminho | `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.notifications/` |
 | clonedFrom | `omarchy.notifications` |
 | Alterações | `manifest.json`, `Service.qml` (1 string) |
 
 ### Teste manual
 
 ```bash
-omarchy plugin enable robert.notifications && omarchy-restart-shell
+omarchy plugin enable robertlindomar.omarchy-ptbr.notifications && omarchy-restart-shell
 notify-send "Teste" "Corpo da notificação"   # conteúdo permanece como enviado
 omarchy-shell notifications showHistory       # se vazio: toast "Nenhuma notificação recente"
 ```
 
 ---
 
-## robert.clock (Fase 4A)
+## robertlindomar.omarchy-ptbr.clock (Fase 4A)
 
 > Data: 2026-09-01  
 > Clone preparado e traduzido; **não ativado**
@@ -1995,7 +1995,7 @@ O oficial força `Qt.locale("en_US")` em `Panel.qml` (comentário: *"The interfa
 
 | Campo | Valor |
 |-------|-------|
-| Caminho | `~/.config/omarchy/plugins/robert.clock/` |
+| Caminho | `~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.clock/` |
 | clonedFrom | `omarchy.clock` |
 | Alterações | `manifest.json`, `Panel.qml`, `BarWidget.qml` |
 | `moduleName` / `ipcTarget` | `omarchy.clock` (preservado) |
@@ -2003,7 +2003,7 @@ O oficial força `Qt.locale("en_US")` em `Panel.qml` (comentário: *"The interfa
 ### Teste manual
 
 ```bash
-omarchy plugin enable robert.clock && omarchy-restart-shell
+omarchy plugin enable robertlindomar.omarchy-ptbr.clock && omarchy-restart-shell
 # Clicar no relógio na barra → calendário
 # Conferir: hero, dias da semana, mês, tooltips, rótulo da barra
 # Teclas: [ ] mês, { } ano, t hoje, w alternar início da semana
@@ -2013,7 +2013,7 @@ omarchy-shell omarchy.clock toggle
 ### Rollback
 
 ```bash
-omarchy plugin disable robert.notifications robert.clock && omarchy-restart-shell
+omarchy plugin disable robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock && omarchy-restart-shell
 ```
 
 ---

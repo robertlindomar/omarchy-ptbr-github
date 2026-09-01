@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.menu",
+  "id": "robertlindomar.omarchy-ptbr.menu",
   "name": "Omarchy menu (pt-BR)",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Quickshell-powered Omarchy command menu",
   "kinds": [
     "menu",

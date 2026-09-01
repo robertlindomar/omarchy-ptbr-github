@@ -9,9 +9,9 @@ BACKUP_DIR="${STATE_DIR}/backups/$(date +%Y%m%d-%H%M%S)"
 MARKER="${STATE_DIR}/installed"
 
 PLUGINS=(
-  robert.menu robert.lock robert.polkit robert.clipboard robert.reminders
-  robert.network robert.bluetooth robert.power robert.weather robert.audio
-  robert.speedtest robert.disk-speedtest robert.agents robert.notifications robert.clock
+  robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
+  robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio
+  robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock
 )
 
 OFFICIAL_DISABLED=(
@@ -53,6 +53,11 @@ command -v omarchy >/dev/null 2>&1 || die "Omarchy não encontrado. Instale o Om
 
 log "Omarchy base: $(cat /usr/share/omarchy/version 2>/dev/null || echo desconhecida)"
 
+if [[ $DRY_RUN -eq 0 ]] && compgen -G "$HOME/.config/omarchy/plugins/robert.*" >/dev/null; then
+  log "Detectados plugins robert.* legados — migrando para ${NAMESPACE:-robertlindomar.omarchy-ptbr}.*"
+  "$ROOT/scripts/migrate-plugin-ids.sh" --apply --live-only
+fi
+
 if [[ $DRY_RUN -eq 0 ]]; then
   mkdir -p "$BACKUP_DIR" "$STATE_DIR"
 fi
@@ -81,7 +86,7 @@ install_plugins() {
     printf '[dry-run] rsync %s -> %s\n' "$src/" "$dst/"
   else
     rsync -a --delete "$src/" "$dst/"
-    omarchy plugin validate "$plugin" || die "Validação falhou: $plugin"
+    omarchy plugin validate "$dst" || die "Validação falhou: $plugin"
   fi
   done
 }

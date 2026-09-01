@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.polkit",
+  "id": "robertlindomar.omarchy-ptbr.polkit",
   "name": "My Polkit Agent",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Theme-aware authentication dialog for privileged actions.",
   "kinds": [
     "service"

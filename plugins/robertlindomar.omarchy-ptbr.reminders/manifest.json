@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.reminders",
+  "id": "robertlindomar.omarchy-ptbr.reminders",
   "name": "My Reminders",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Interactive reminder setup flow",
   "kinds": [
     "overlay"

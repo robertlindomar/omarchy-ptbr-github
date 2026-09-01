@@ -21,7 +21,7 @@ Varredura em `plugins/`, `overrides/`, `extensions/`, scripts e configs.
 | `bindings.lua` pessoal | **Excluído** (atalhos são configuração do usuário) |
 | Backups `.bak` / histórico | **Excluídos** |
 | `extensions/omarchy-menu.jsonc` | Apenas labels pt-BR (sem credenciais) |
-| `robert.agents/README.md` | Menciona `FIREWORKS_API_KEY` como **documentação upstream** — não contém valores |
+| `robertlindomar.omarchy-ptbr.agents/README.md` | Menciona `FIREWORKS_API_KEY` como **documentação upstream** — não contém valores |
 
 ## Arquivos excluídos da publicação
 

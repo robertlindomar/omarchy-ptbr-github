@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.bluetooth",
+  "id": "robertlindomar.omarchy-ptbr.bluetooth",
   "name": "Meu Bluetooth",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Lista de dispositivos Bluetooth com conectar/desconectar",
   "kinds": [
     "bar-widget"

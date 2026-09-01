@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "robert.speedtest",
+  "id": "robertlindomar.omarchy-ptbr.speedtest",
   "name": "Teste de velocidade",
   "version": "1.0.0",
-  "author": "Omarchy",
+  "author": "Robert Lindomar",
   "description": "Teste de velocidade da internet com medidores de download e upload",
   "kinds": [
     "panel"
