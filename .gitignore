@@ -1,0 +1,14 @@
+backups/
+*.log
+*.tmp
+*.bak
+.DS_Store
+.cache/
+__pycache__/
+secrets/
+.env
+.env.*
+*.swp
+*~
+docs/UPDATE-REPORT-*.md
+.local/

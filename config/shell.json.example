@@ -1,0 +1,64 @@
+{
+  "bar": {
+    "centerAnchor": "omarchy.clock",
+    "layout": {
+      "center": [
+        { "id": "omarchy.indicators" },
+        {
+          "id": "robert.clock",
+          "format": "ddd d MMM HH:mm",
+          "formatAlt": "d MMMM 'W'ww yyyy",
+          "verticalFormat": "HH\n—\nmm",
+          "birthYear": 0,
+          "lifeExpectancy": 80
+        },
+        { "id": "omarchy.keyboard-layout" },
+        { "id": "robert.weather" },
+        { "id": "omarchy.system-update" }
+      ],
+      "left": [
+        { "id": "robert.menu" },
+        { "id": "omarchy.workspaces" }
+      ],
+      "right": [
+        { "id": "omarchy.tray" },
+        { "id": "omarchy.tailscale" },
+        { "id": "robert.agents" },
+        { "id": "robert.bluetooth" },
+        { "id": "robert.network" },
+        { "id": "robert.audio" },
+        { "id": "omarchy.monitor" },
+        { "id": "robert.power" }
+      ]
+    }
+  },
+  "plugins": [
+    { "id": "robert.lock" },
+    { "id": "robert.polkit" },
+    { "id": "robert.clipboard" },
+    { "id": "robert.reminders" },
+    { "id": "robert.speedtest" },
+    { "id": "robert.disk-speedtest" },
+    { "id": "robert.notifications" }
+  ],
+  "disabledPlugins": [
+    "omarchy.menu",
+    "omarchy.lock",
+    "omarchy.polkit",
+    "omarchy.clipboard",
+    "omarchy.reminders",
+    "omarchy.speedtest",
+    "omarchy.disk-speedtest",
+    "omarchy.notifications"
+  ],
+  "cloneSourceRestores": [
+    "robert.menu",
+    "robert.lock",
+    "robert.polkit",
+    "robert.clipboard",
+    "robert.reminders",
+    "robert.speedtest",
+    "robert.disk-speedtest",
+    "robert.notifications"
+  ]
+}
