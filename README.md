@@ -25,6 +25,10 @@ O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **override
 - Hyprland em execução
 - `bash`, `rsync`, `jq` (recomendado para merge de `shell.json`)
 
+## Desenvolvimento local
+
+O projeto ativo fica em `~/Documentos/omarchy-ptbr-github/`. Backups antigos da fase de desenvolvimento estão em `archive/legacy-*/` (não versionados no Git).
+
 ## Instalação
 
 ```bash
