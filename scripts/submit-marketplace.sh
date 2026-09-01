@@ -13,6 +13,7 @@ MARKETPLACE_REPO="${MARKETPLACE_REPO:-omacom/omarchy-plugin-marketplace}"
 SUBMISSION_DOC_SHA="${SUBMISSION_DOC_SHA:-846ee8f7cade3fbd6e0e5bd917f5878a17dcb273}"
 
 DO_SUBMIT=0
+TEST_DEDUP=0
 FILTER=""
 
 declare -a READY=()
@@ -34,6 +35,7 @@ Prepara submissões ao Omarchy Plugin Marketplace.
 
   --dry-run   Prepara arquivos e mostra resumo (padrão)
   --submit    Cria issues para plugins status=ready (exige digitar SUBMIT)
+  --test-dedup  Executa testes da detecção de duplicatas (sem submeter)
   slug        Apenas omarchy-ptbr-<slug> (ex.: weather)
 EOF
 }
@@ -42,6 +44,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) ;;
     --submit) DO_SUBMIT=1 ;;
+    --test-dedup) TEST_DEDUP=1 ;;
     -h|--help) usage; exit 0 ;;
     *) FILTER="$1" ;;
   esac
@@ -119,16 +122,231 @@ preview_info() {
   if [[ -n "$f" ]]; then printf '%s' "$f"; else printf 'none'; fi
 }
 
-search_existing_submission() {
-  local repo_url="$1" plugin_id="$2" plugin_name="$3" hits
-  for q in "$repo_url" "$plugin_id" "[Plugin]: $plugin_name"; do
-    hits="$(gh search issues "$q" --repo "$MARKETPLACE_REPO" --limit 3 --json url 2>/dev/null || echo '[]')"
-    if [[ "$(echo "$hits" | jq 'length')" -gt 0 ]]; then
-      echo "$hits" | jq -r '.[0].url'
+# --- Detecção de submissões existentes (URL exata > plugin ID > título exato) ---
+
+declare -gA ISSUE_BY_NORM_URL=()
+declare -gA ISSUE_BY_PLUGIN_ID=()
+declare -gA ISSUE_BY_EXACT_TITLE=()
+SUBMISSION_INDEX_LOADED=0
+
+normalize_repo_url() {
+  local url="$1"
+  local scheme host path
+  url="${url//[[:space:]]/}"
+  url="${url%/}"
+  url="${url%.git}"
+  if [[ "$url" =~ ^(https?://)([^/]+)(/.*)?$ ]]; then
+    scheme="${BASH_REMATCH[1]}"
+    host="${BASH_REMATCH[2],}"
+    path="${BASH_REMATCH[3]}"
+    printf '%s%s%s' "$scheme" "$host" "${path:-}"
+  else
+    printf '%s' "$url"
+  fi
+}
+
+extract_repo_url_from_body() {
+  local body="$1" line found=0
+  while IFS= read -r line; do
+    if [[ "$found" -eq 1 ]]; then
+      line="${line#"${line%%[![:space:]]*}"}"
+      line="${line%"${line##*[![:space:]]}"}"
+      [[ -z "$line" || "$line" == _No\ response_* ]] && continue
+      [[ "$line" =~ ^### ]] && break
+      printf '%s' "$line"
       return 0
     fi
-  done
+    [[ "$line" == "### Repository URL" ]] && found=1
+  done <<< "$body"
   return 1
+}
+
+extract_plugin_ids_from_body() {
+  local body="$1"
+  printf '%s' "$body" | rg -o 'robertlindomar\.omarchy-ptbr\.[a-z0-9-]+' | sort -u
+}
+
+load_submission_issue_index() {
+  local i count url title body repo_from_body norm pid
+  [[ "$SUBMISSION_INDEX_LOADED" -eq 1 ]] && return 0
+
+  ISSUE_BY_NORM_URL=()
+  ISSUE_BY_PLUGIN_ID=()
+  ISSUE_BY_EXACT_TITLE=()
+
+  local issues_json
+  issues_json="$(gh api "repos/$MARKETPLACE_REPO/issues?state=all&per_page=100" --paginate \
+    --jq '[.[] | select(.pull_request == null) | select(.body != null) | select(.body | test("robertlindomar/omarchy-ptbr-")) | {url: .html_url, title, body}]' 2>/dev/null \
+    | jq -s 'add' 2>/dev/null || echo '[]')"
+
+  count="$(echo "$issues_json" | jq 'length')"
+  for ((i = 0; i < count; i++)); do
+    url="$(echo "$issues_json" | jq -r ".[$i].url")"
+    title="$(echo "$issues_json" | jq -r ".[$i].title")"
+    body="$(echo "$issues_json" | jq -r ".[$i].body // \"\"")"
+    [[ "$url" == null || -z "$url" ]] && continue
+
+    repo_from_body="$(extract_repo_url_from_body "$body" || true)"
+    if [[ -n "$repo_from_body" ]]; then
+      norm="$(normalize_repo_url "$repo_from_body")"
+      ISSUE_BY_NORM_URL["$norm"]="$url"
+    fi
+    while IFS= read -r pid; do
+      [[ -n "$pid" ]] && ISSUE_BY_PLUGIN_ID["$pid"]="$url"
+    done < <(extract_plugin_ids_from_body "$body")
+    ISSUE_BY_EXACT_TITLE["$title"]="$url"
+  done
+
+  SUBMISSION_INDEX_LOADED=1
+}
+
+find_issue_by_repo_url() {
+  local repo_url="$1"
+  local norm
+  norm="$(normalize_repo_url "$repo_url")"
+  printf '%s' "${ISSUE_BY_NORM_URL[$norm]:-}"
+}
+
+find_issue_by_plugin_id() {
+  local plugin_id="$1"
+  printf '%s' "${ISSUE_BY_PLUGIN_ID[$plugin_id]:-}"
+}
+
+find_issue_by_exact_title() {
+  local plugin_name="$1"
+  printf '%s' "${ISSUE_BY_EXACT_TITLE["[Plugin]: $plugin_name"]:-}"
+}
+
+search_existing_submission() {
+  local repo_url="$1" plugin_id="$2" plugin_name="$3"
+  local match
+
+  load_submission_issue_index
+
+  # 1) URL exata do repositório (seção ### Repository URL)
+  match="$(find_issue_by_repo_url "$repo_url")"
+  if [[ -n "$match" ]]; then
+    printf '%s' "$match"
+    return 0
+  fi
+
+  # 2) manifest.id exato (somente ocorrência completa no corpo)
+  match="$(find_issue_by_plugin_id "$plugin_id")"
+  if [[ -n "$match" ]]; then
+    printf '%s' "$match"
+    return 0
+  fi
+
+  # 3) título exato — nunca substring de nome
+  match="$(find_issue_by_exact_title "$plugin_name")"
+  if [[ -n "$match" ]]; then
+    printf '%s' "$match"
+    return 0
+  fi
+
+  return 1
+}
+
+run_dedup_tests() {
+  local pass=0 fail=0 tmpdir body speed_url disk_url weather_url
+  speed_url="https://github.com/robertlindomar/omarchy-ptbr-speedtest"
+  disk_url="https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest"
+  weather_url="https://github.com/robertlindomar/omarchy-ptbr-weather"
+
+  assert_eq() {
+    local name="$1" got="$2" want="$3"
+    if [[ "$got" == "$want" ]]; then
+      log "TEST OK: $name"
+      pass=$((pass + 1))
+    else
+      warn "TEST FALHOU: $name (got='$got' want='$want')"
+      fail=$((fail + 1))
+    fi
+  }
+
+  assert_ne() {
+    local name="$1" got="$2" unwanted="$3"
+    if [[ "$got" != "$unwanted" && -n "$got" ]]; then
+      log "TEST OK: $name"
+      pass=$((pass + 1))
+    elif [[ -z "$got" ]]; then
+      log "TEST OK: $name (sem match)"
+      pass=$((pass + 1))
+    else
+      warn "TEST FALHOU: $name (match indevido='$got')"
+      fail=$((fail + 1))
+    fi
+  }
+
+  log "=== Testes de detecção de duplicatas ==="
+
+  # Normalização de URL
+  assert_eq "normalize URL trailing slash" \
+    "$(normalize_repo_url "${weather_url}/")" "$weather_url"
+  assert_eq "normalize URL .git" \
+    "$(normalize_repo_url "${weather_url}.git")" "$weather_url"
+
+  # Caso 1: speedtest vs disk-speedtest — URLs normalizadas distintas
+  assert_ne "speedtest vs disk-speedtest (URL)" \
+    "$(normalize_repo_url "$speed_url")" "$(normalize_repo_url "$disk_url")"
+
+  tmpdir="$(mktemp -d)"
+  body="$(cat <<EOF
+### Repository URL
+
+$speed_url
+
+### Category
+
+System
+EOF
+)"
+  printf '%s' "$body" >"$tmpdir/speedtest.md"
+  body="$(cat <<EOF
+### Repository URL
+
+$disk_url
+
+### Category
+
+System
+EOF
+)"
+  printf '%s' "$body" >"$tmpdir/disk.md"
+
+  SUBMISSION_INDEX_LOADED=1
+  ISSUE_BY_NORM_URL=()
+  ISSUE_BY_PLUGIN_ID=()
+  ISSUE_BY_EXACT_TITLE=()
+  ISSUE_BY_NORM_URL["$(normalize_repo_url "$disk_url")"]="https://github.com/omacom/omarchy-plugin-marketplace/issues/4062"
+  ISSUE_BY_EXACT_TITLE["[Plugin]: Teste de velocidade do disco"]="https://github.com/omacom/omarchy-plugin-marketplace/issues/4062"
+
+  assert_eq "speedtest não duplica disk-speedtest" \
+    "$(find_issue_by_repo_url "$speed_url")" ""
+  assert_ne "speedtest distinto de issue do disco" \
+    "$(search_existing_submission "$speed_url" "robertlindomar.omarchy-ptbr.speedtest" "Teste de velocidade" || true)" \
+    "https://github.com/omacom/omarchy-plugin-marketplace/issues/4062"
+
+  # Caso 2: mesma URL weather
+  ISSUE_BY_NORM_URL["$(normalize_repo_url "$weather_url")"]="https://github.com/omacom/omarchy-plugin-marketplace/issues/4071"
+  assert_eq "mesma URL weather" \
+    "$(find_issue_by_repo_url "$weather_url")" \
+    "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071"
+
+  # Caso 3: mesmo plugin ID
+  ISSUE_BY_PLUGIN_ID["robertlindomar.omarchy-ptbr.weather"]="https://github.com/omacom/omarchy-plugin-marketplace/issues/4071"
+  assert_eq "mesmo manifest.id" \
+    "$(find_issue_by_plugin_id "robertlindomar.omarchy-ptbr.weather")" \
+    "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071"
+
+  # Caso 4: nome parecido, URL diferente
+  ISSUE_BY_EXACT_TITLE["[Plugin]: Teste de velocidade do disco"]="https://github.com/omacom/omarchy-plugin-marketplace/issues/4062"
+  assert_eq "título parecido não bate por substring" \
+    "$(find_issue_by_exact_title "Teste de velocidade")" ""
+
+  rm -rf "$tmpdir"
+  log "Testes: $pass ok, $fail falhas"
+  [[ "$fail" -eq 0 ]]
 }
 
 is_listed_in_registry() {
@@ -297,6 +515,9 @@ prepare_all() {
   log "MARKETPLACE_REPO=$MARKETPLACE_REPO"
   log "SUBMISSION.md blob SHA: $SUBMISSION_DOC_SHA"
 
+  load_submission_issue_index
+  log "Índice de submissões carregado: ${#ISSUE_BY_NORM_URL[@]} URLs, ${#ISSUE_BY_PLUGIN_ID[@]} IDs"
+
   mapfile -t REPOS < <(discover_repos)
   log "Plugins descobertos: ${#REPOS[@]}"
   echo '{}' >"$METADATA_FILE"
@@ -316,6 +537,13 @@ prepare_all() {
   printf '| Plugin | ID | Categoria | Tags | Preview | Status |\n'
   printf '|---|---|---|---|---|---|\n'
   jq -r 'to_entries[] | "| \(.key) | \(.value.plugin_id) | \(.value.category) | \(.value.tags | join(", ")) | \(.value.preview) | \(.value.status) |"' "$METADATA_FILE"
+
+  log ""
+  log "already-submitted: $(jq '[.[] | select(.status == "already-submitted")] | length' "$METADATA_FILE")"
+  log "ready: $(jq '[.[] | select(.status == "ready")] | length' "$METADATA_FILE")"
+  log "needs-fix: $(jq '[.[] | select(.status == "needs-fix")] | length' "$METADATA_FILE")"
+  log "already-listed: $(jq '[.[] | select(.status == "already-listed")] | length' "$METADATA_FILE")"
+  log "blocked: ${#BLOCKED[@]}"
 }
 
 submit_all() {
@@ -359,7 +587,9 @@ submit_all() {
   done
 }
 
-if [[ $DO_SUBMIT -eq 1 ]]; then
+if [[ $TEST_DEDUP -eq 1 ]]; then
+  run_dedup_tests
+elif [[ $DO_SUBMIT -eq 1 ]]; then
   submit_all
 else
   prepare_all

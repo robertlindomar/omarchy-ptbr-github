@@ -1,14 +1,6 @@
 {
-  "submitted_at": "2026-09-01T06:19:50Z",
+  "checked_at": "2026-09-01T06:30:18Z",
   "marketplace_repo": "omacom/omarchy-plugin-marketplace",
-  "summary": {
-    "ready_before_submit": 16,
-    "issues_created": 16,
-    "failures": 0,
-    "skipped_by_script": 1,
-    "skipped_recovered_manually": 1,
-    "duplicates_avoided": 0
-  },
   "agents": {
     "plugin_id": "robertlindomar.omarchy-ptbr.agents",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4057",
@@ -19,7 +11,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "audio": {
     "plugin_id": "robertlindomar.omarchy-ptbr.audio",
@@ -31,7 +28,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "bluetooth": {
     "plugin_id": "robertlindomar.omarchy-ptbr.bluetooth",
@@ -43,7 +45,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "clipboard": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clipboard",
@@ -55,7 +62,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "clock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clock",
@@ -67,7 +79,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "disk-speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.disk-speedtest",
@@ -79,7 +96,12 @@
       "validated",
       "security-review-required"
     ],
-    "status": "submitted"
+    "status": "submitted",
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "indicators": {
     "plugin_id": "robertlindomar.omarchy-ptbr.indicators",
@@ -92,7 +114,11 @@
       "security-review-required"
     ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "lock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.lock",
@@ -105,7 +131,11 @@
       "security-review-required"
     ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "menu": {
     "plugin_id": "robertlindomar.omarchy-ptbr.menu",
@@ -118,7 +148,11 @@
       "security-review-required"
     ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "network": {
     "plugin_id": "robertlindomar.omarchy-ptbr.network",
@@ -131,16 +165,28 @@
       "security-review-required"
     ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "notifications": {
     "plugin_id": "robertlindomar.omarchy-ptbr.notifications",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4067",
     "issue_number": 4067,
     "state": "open",
-    "labels": [],
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "polkit": {
     "plugin_id": "robertlindomar.omarchy-ptbr.polkit",
@@ -148,45 +194,83 @@
     "issue_number": 4068,
     "state": "open",
     "labels": [
-      "submission"
+      "submission",
+      "validated",
+      "security-review-required"
     ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "power": {
     "plugin_id": "robertlindomar.omarchy-ptbr.power",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4069",
     "issue_number": 4069,
     "state": "open",
-    "labels": [],
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "reminders": {
     "plugin_id": "robertlindomar.omarchy-ptbr.reminders",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4070",
     "issue_number": 4070,
     "state": "open",
-    "labels": [],
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.speedtest",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4072",
     "issue_number": 4072,
     "state": "open",
-    "labels": [],
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
     "status": "submitted",
-    "note": "criado manualmente após falso positivo de duplicata com disk-speedtest (#4062)"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   },
   "weather": {
     "plugin_id": "robertlindomar.omarchy-ptbr.weather",
     "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071",
     "issue_number": 4071,
     "state": "open",
-    "labels": [],
+    "labels": [
+      "submission",
+      "validated",
+      "security-review-required"
+    ],
     "status": "submitted",
-    "note": "labels ainda em processamento no momento da captura"
+    "status_class": "SECURITY_REVIEW",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-01T06:30:18Z"
   }
 }
