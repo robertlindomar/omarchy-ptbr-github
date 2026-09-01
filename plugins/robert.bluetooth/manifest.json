@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "robert.bluetooth",
+  "name": "Meu Bluetooth",
+  "version": "1.0.0",
+  "author": "Omarchy",
+  "description": "Lista de dispositivos Bluetooth com conectar/desconectar",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Bluetooth",
+    "description": "Lista de dispositivos Bluetooth com conectar/desconectar",
+    "category": "Network",
+    "allowMultiple": false
+  },
+  "omarchy": {
+    "clonedFrom": "omarchy.bluetooth"
+  }
+}
