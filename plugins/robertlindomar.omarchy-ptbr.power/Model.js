@@ -9,13 +9,27 @@ function selectProfileIndex(index, delta, profiles) {
   return clampIndex(index + delta, values.length)
 }
 
+var MAX_LINES = 256
+var MAX_LINE_CHARS = 4096
+var MAX_PROFILES = 16
+var MAX_KEY_CHARS = 64
+var MAX_VALUE_CHARS = 256
+
+function capLine(line) {
+  var s = String(line || "")
+  return s.length <= MAX_LINE_CHARS ? s : s.slice(0, MAX_LINE_CHARS)
+}
+
 function parseKeyValue(raw) {
-  var next = {}
+  var next = Object.create(null)
   var lines = String(raw || "").split("\n")
-  for (var i = 0; i < lines.length; i++) {
-    var idx = lines[i].indexOf("\t")
+  var limit = Math.min(lines.length, MAX_LINES)
+  for (var i = 0; i < limit; i++) {
+    var line = capLine(lines[i])
+    var idx = line.indexOf("\t")
     if (idx <= 0) continue
-    next[lines[i].substring(0, idx)] = lines[i].substring(idx + 1).trim()
+    var key = line.substring(0, idx).slice(0, MAX_KEY_CHARS)
+    next[key] = line.substring(idx + 1).trim().slice(0, MAX_VALUE_CHARS)
   }
   return next
 }
@@ -24,12 +38,15 @@ function parseProfiles(raw, previousIndex) {
   var lines = String(raw || "").split("\n")
   var list = []
   var active = ""
-  for (var i = 0; i < lines.length; i++) {
-    var line = lines[i].trim()
+  var limit = Math.min(lines.length, MAX_LINES)
+  for (var i = 0; i < limit && list.length < MAX_PROFILES; i++) {
+    var line = capLine(lines[i]).trim()
     if (!line) continue
     var parts = line.split("\t")
-    list.push(parts[0])
-    if (parts[1] === "1") active = parts[0]
+    var name = String(parts[0] || "").slice(0, MAX_KEY_CHARS)
+    if (!name) continue
+    list.push(name)
+    if (parts[1] === "1") active = name
   }
   return {
     profiles: list,

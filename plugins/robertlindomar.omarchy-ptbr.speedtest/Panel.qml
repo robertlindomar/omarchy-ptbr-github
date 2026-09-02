@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell.Io
 import qs.Commons
 import qs.Ui
+import "SecurityBounds.js" as Bounds
 
 // The shared gauge-cluster overlay (SpeedTestOverlay) dressed for the
 // internet speed test: download and upload dials in Mbps, titled with the
@@ -33,8 +34,10 @@ Item {
   readonly property real downloadValue: toMbps(downloadMbps)
   readonly property real uploadValue: toMbps(uploadMbps)
 
+  property int stdoutLineCount: 0
+
   function toMbps(raw) {
-    var value = parseFloat(raw)
+    var value = Bounds.parseBoundedFloat(raw, 100000)
     return isFinite(value) && value > 0 ? value : 0
   }
 
@@ -70,15 +73,38 @@ Item {
   function refreshConnectionName() {
     root.connectionName = ""
     statusProc.running = false
+    statusWatchdog.stop()
     statusProc.running = true
+    statusWatchdog.start()
   }
 
   function updateSpeedTestLine(line) {
-    var value = parseFloat(line)
-    if (!isFinite(value) || value < 0) return
+    if (stdoutLineCount >= Bounds.MAX_STDOUT_LINES) return
+    stdoutLineCount += 1
+    var value = Bounds.parseBoundedFloat(Bounds.capText(line, Bounds.MAX_LINE_CHARS), 100000)
+    if (!isFinite(value)) return
 
     if (phase === "down") downloadMbps = String(value)
     else if (phase === "up") uploadMbps = String(value)
+  }
+
+  Timer {
+    id: speedWatchdog
+    interval: Bounds.PROCESS_TIMEOUT_MS
+    repeat: false
+    onTriggered: {
+      if (!speedTestProc.running) return
+      root.expectedStop = true
+      root.error = Bounds.capText(root.stderrText, Bounds.MAX_FIELD_CHARS) || "Teste de velocidade expirou"
+      speedTestProc.running = false
+    }
+  }
+
+  Timer {
+    id: statusWatchdog
+    interval: 30000
+    repeat: false
+    onTriggered: { if (statusProc.running) statusProc.running = false }
   }
 
   function runSpeedTest() {
@@ -88,6 +114,8 @@ Item {
       if (expectedStop) pendingRun = true
       return
     }
+    stdoutLineCount = 0
+    speedWatchdog.stop()
     error = ""
     downloadMbps = ""
     uploadMbps = ""
@@ -102,6 +130,7 @@ Item {
     speedTestProc.command = ["omarchy-network-speedtest", nextPhase]
     speedTestProc.running = true
     phaseTimer.restart()
+    speedWatchdog.start()
   }
 
   function stopPhase() {
@@ -134,12 +163,15 @@ Item {
     stderr: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
-        root.stderrText = String(text || "").trim()
-        if (root.error !== "" && root.stderrText !== "") root.error = root.stderrText
+        var raw = String(text || "")
+        if (raw.length > Bounds.MAX_STDERR_BYTES) raw = raw.slice(0, Bounds.MAX_STDERR_BYTES)
+        root.stderrText = raw.trim()
+        if (root.error !== "" && root.stderrText !== "") root.error = Bounds.capText(root.stderrText, Bounds.MAX_FIELD_CHARS)
       }
     }
     onExited: function(exitCode) {
       phaseTimer.stop()
+      speedWatchdog.stop()
 
       if (root.pendingRun) {
         root.pendingRun = false
@@ -149,7 +181,7 @@ Item {
       }
 
       if (!root.expectedStop && exitCode !== 0) {
-        root.error = root.stderrText || "Teste de velocidade falhou"
+        root.error = Bounds.capText(root.stderrText, Bounds.MAX_FIELD_CHARS) || "Teste de velocidade falhou"
         root.phase = ""
         root.running = false
         return
@@ -175,11 +207,15 @@ Item {
     stdout: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
-        var fields = String(text || "").trim().split("\t")
-        if (fields[0] === "wifi") root.connectionName = fields[1] || "Wi-Fi"
-        else if (fields[0] === "ethernet") root.connectionName = "Ethernet"
+        var raw = String(text || "")
+        if (raw.length > Bounds.MAX_STDERR_BYTES) raw = raw.slice(0, Bounds.MAX_STDERR_BYTES)
+        var fields = raw.trim().split("\t")
+        var kind = Bounds.capText(fields[0] || "", 32)
+        if (kind === "wifi") root.connectionName = Bounds.capText(fields[1] || "Wi-Fi", Bounds.MAX_FIELD_CHARS)
+        else if (kind === "ethernet") root.connectionName = "Ethernet"
       }
     }
+    onExited: statusWatchdog.stop()
   }
 
   SpeedTestOverlayPtbr {

@@ -6,7 +6,7 @@ function normalizeEntry(value) {
 
   var type = String(value.type || value.kind || "")
   if (type === "text") {
-    var text = String(value.text || "")
+    var text = capStoredText(String(value.text || ""))
     return text.trim().length > 0 ? { type: "text", text: text } : null
   }
 
@@ -34,7 +34,9 @@ function entryKey(entry) {
 
 function parseHistory(raw) {
   try {
-    var parsed = JSON.parse(String(raw || "[]"))
+    var input = String(raw || "[]")
+    if (input.length > maxHistoryFileChars) input = input.slice(0, maxHistoryFileChars)
+    var parsed = JSON.parse(input)
     var next = []
     if (!Array.isArray(parsed)) return next
 
@@ -157,7 +159,16 @@ function fullText(entry) {
   return String(entry.text || "")
 }
 
-// The picker only ever searches and renders a prefix of an entry, so scan and
+// Per-entry storage cap — displayTextLimit applies only while rendering.
+var storageTextLimit = 8192
+var maxHistoryFileChars = 1048576
+
+function capStoredText(text) {
+  var value = String(text || "")
+  if (value.length <= storageTextLimit) return value
+  var cut = value.lastIndexOf("\n", storageTextLimit)
+  return value.slice(0, cut > 0 ? cut : storageTextLimit)
+}
 // render just that much. A single huge paste otherwise costs hundreds of
 // megabytes of string work on every keystroke and stalls the whole shell.
 // Pasting reads the full entry back from history by index, so nothing is lost.

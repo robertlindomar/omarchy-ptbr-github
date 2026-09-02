@@ -21,7 +21,7 @@ Item {
   readonly property int fieldWidth: 381
   readonly property int fieldHeight: 67
   readonly property int outlineThickness: 3
-  readonly property int fieldFontSize: Math.round(Style.font.heading * 1.125)
+  readonly property int maxPasswordLength: 512
   readonly property int passwordDotFontSize: Math.round(Style.font.heading * 1.33)
   readonly property int passwordDotLetterSpacing: Math.round(Style.font.heading * 0.19)
   // Space to keep clear on each side of the field for the fingerprint icon
@@ -83,7 +83,7 @@ Item {
     font.family: Style.font.family
     font.pixelSize: root.passwordDotFontSize
     font.letterSpacing: root.passwordDotLetterSpacing
-    text: "●".repeat(passwordInput.text.length)
+    text: "●".repeat(Math.min(passwordInput.text.length, root.maxPasswordLength))
   }
 
   Rectangle {
@@ -145,6 +145,7 @@ Item {
         enabled: root.inputEnabled && !root.authenticatingPassword
         readOnly: root.authenticatingPassword
         echoMode: TextInput.Password
+        maximumLength: root.maxPasswordLength
         passwordCharacter: "\u25CF"
         passwordMaskDelay: 0
         color: Color.lock.text
@@ -161,6 +162,11 @@ Item {
         }
 
         onTextChanged: {
+          if (text.length > root.maxPasswordLength) {
+            syncingPasswordText = true
+            text = text.slice(0, root.maxPasswordLength)
+            syncingPasswordText = false
+          }
           if (!root.syncingPasswordText) root.passwordTextEdited(text)
           if (text.length > 0) {
             root.wakeRequested()

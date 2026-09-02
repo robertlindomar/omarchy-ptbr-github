@@ -1,0 +1,261 @@
+{
+  "generatedAt": "2026-09-02T00:00:00Z",
+  "findings": [
+    {
+      "plugin": "agents",
+      "issue": 4057,
+      "finding": "remote-git-execution-unpinned (README monorepo clone + ./install.sh)",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "audio",
+      "issue": 4058,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "audio",
+      "issue": 4058,
+      "finding": "Unbounded StdioCollector / PipeWire model growth",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "bluetooth",
+      "issue": 4059,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "bluetooth",
+      "issue": 4059,
+      "finding": "Unbounded BlueZ/PipeWire collections and helper validation",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "clipboard",
+      "issue": 4060,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "clipboard",
+      "issue": 4060,
+      "finding": "Unbounded clipboard history storage",
+      "file": "ClipboardHistory.js",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "clock",
+      "issue": 4061,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "clock",
+      "issue": 4061,
+      "finding": "Unbounded format strings in bar widget",
+      "file": "BarWidget.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "disk-speedtest",
+      "issue": 4062,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "disk-speedtest",
+      "issue": 4062,
+      "finding": "Unbounded process output / weak teardown",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "indicators",
+      "issue": 4063,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "indicators",
+      "issue": 4063,
+      "finding": "Unbounded settings IDs / helper processes",
+      "file": "Indicators.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "lock",
+      "issue": 4064,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "lock",
+      "issue": 4064,
+      "finding": "Unbounded password input / mask string",
+      "file": "LockView.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "menu",
+      "issue": 4065,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "menu",
+      "issue": 4065,
+      "finding": "Missing disabled: guard (install rows selectable)",
+      "file": "Menu-v2.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "menu",
+      "issue": 4065,
+      "finding": "Unbounded guard/provider subprocess output",
+      "file": "Menu-v2.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "network",
+      "issue": 4066,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "network",
+      "issue": 4066,
+      "finding": "Unbounded StdioCollector / action timeout without kill",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "network",
+      "issue": 4066,
+      "finding": "Missing upstream source commit / translation delta",
+      "file": "manifest.json",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "notifications",
+      "issue": 4067,
+      "finding": "README unpinned install paths",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "notifications",
+      "issue": 4067,
+      "finding": "Unbounded notification model / unsafe persistence / exec argv",
+      "file": "Service.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "polkit",
+      "issue": 4068,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "power",
+      "issue": 4069,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "power",
+      "issue": 4069,
+      "finding": "Unbounded helper stdout / profile parsing",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "PARTIAL_FIX"
+    },
+    {
+      "plugin": "reminders",
+      "issue": 4070,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "reminders",
+      "issue": 4070,
+      "finding": "Unbounded IPC input / argv message / no process supervision",
+      "file": "ReminderFlow.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_MORE_FIXES"
+    },
+    {
+      "plugin": "weather",
+      "issue": 4071,
+      "finding": "README unpinned monorepo install",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "speedtest",
+      "issue": 4072,
+      "finding": "README unpinned install paths",
+      "file": "README.md",
+      "type": "COMMON",
+      "status": "NEEDS_FIX"
+    },
+    {
+      "plugin": "speedtest",
+      "issue": 4072,
+      "finding": "Unbounded process output / incomplete teardown",
+      "file": "Panel.qml",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "PARTIAL_FIX"
+    },
+    {
+      "plugin": "monitor",
+      "issue": 4260,
+      "finding": "Unsupported submission tag 'display'",
+      "file": "marketplace/submissions/monitor.md",
+      "type": "PLUGIN_SPECIFIC",
+      "status": "NEEDS_FIX"
+    }
+  ]
+}

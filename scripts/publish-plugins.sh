@@ -198,43 +198,21 @@ Tipos: ${kinds}. Entry points: ${entry:-n/a}.
 
 ## Instalação
 
-### Pelo Omarchy (recomendado)
-
-1. Clone este repositório em \`~/.config/omarchy/plugins/${id}/\`
-2. Valide: \`omarchy plugin validate ~/.config/omarchy/plugins/${id}\`
-3. Habilite: \`omarchy plugin enable ${id}\`
-4. Reinicie o shell: \`omarchy-restart-shell\`
-
-Ou use o instalador do monorepo principal (inclui todos os plugins):
+### Pelo Omarchy ou Marketplace (recomendado)
 
 \`\`\`bash
-git clone ${MAIN_REPO_URL}.git
-cd omarchy-ptbr-github
-./install.sh
-\`\`\`
-
-### Manual
-
-\`\`\`bash
-git clone https://github.com/${OWNER}/${repo}.git ~/.config/omarchy/plugins/${id}
-omarchy plugin validate ~/.config/omarchy/plugins/${id}
-omarchy plugin enable ${id}
+omarchy plugin add https://github.com/${OWNER}/${repo}.git --enable
 omarchy-restart-shell
 \`\`\`
+
+Ou instale pelo [Marketplace Omarchy](https://plugins.omarchy.org/).
 
 ## Remoção
 
 \`\`\`bash
 omarchy plugin disable ${id}
-rm -rf ~/.config/omarchy/plugins/${id}
+omarchy plugin remove ${id} --yes
 omarchy-restart-shell
-\`\`\`
-
-Para remover todos os plugins pt-BR de uma vez, use o desinstalador do monorepo:
-
-\`\`\`bash
-cd omarchy-ptbr-github
-./uninstall.sh
 \`\`\`
 
 ## Licença e dependências
@@ -247,7 +225,7 @@ cd omarchy-ptbr-github
 
 Plugin baseado em: \`${cloned}\`
 
-Projeto principal: ${MAIN_REPO_URL}
+Projeto comunitário (monorepo): ${MAIN_REPO_URL} — referência do projeto; não execute scripts remotos sem um commit fixo de 40 caracteres.
 
 ## Aviso
 

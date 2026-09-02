@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell.Io
 import qs.Commons
 import qs.Ui
+import "SecurityBounds.js" as Bounds
 
 // The shared gauge-cluster overlay dressed for the disk speed test: read and
 // write dials in MB/s, titled with the model of the disk under test. One
@@ -51,6 +52,20 @@ Item {
     else close()
   }
 
+  property int stdoutLineCount: 0
+
+  Timer {
+    id: procWatchdog
+    interval: Bounds.PROCESS_TIMEOUT_MS
+    repeat: false
+    onTriggered: {
+      if (!proc.running) return
+      root.expectedStop = true
+      root.error = root.stderrText || "Teste de velocidade do disco expirou"
+      proc.running = false
+    }
+  }
+
   function runTest() {
     if (proc.running) {
       // A dismissal's SIGTERM is still in flight; Process.running stays true
@@ -58,6 +73,8 @@ Item {
       if (expectedStop) pendingRun = true
       return
     }
+    procWatchdog.stop()
+    stdoutLineCount = 0
     error = ""
     diskName = ""
     writeMBps = ""
@@ -66,10 +83,11 @@ Item {
     phase = "read"
     running = true
     proc.running = true
+    procWatchdog.start()
   }
 
   function toRate(raw) {
-    var value = parseFloat(raw)
+    var value = Bounds.parseBoundedFloat(raw, 50000)
     return isFinite(value) && value > 0 ? value : 0
   }
 
@@ -77,14 +95,17 @@ Item {
   // "write <MB/s>". The phase follows whichever figure is streaming, and each
   // phase's final line is its steady-state average, which the dial settles on.
   function updateLine(line) {
-    var parts = String(line).trim().split(/\s+/)
+    if (stdoutLineCount >= Bounds.MAX_STDOUT_LINES) return
+    stdoutLineCount += 1
+    var capped = Bounds.capText(line, Bounds.MAX_LINE_CHARS)
+    var parts = capped.trim().split(/\s+/)
     if (parts.length < 2) return
     if (parts[0] === "disk") {
-      diskName = parts.slice(1).join(" ")
+      diskName = Bounds.capText(parts.slice(1).join(" "), Bounds.MAX_FIELD_CHARS)
       return
     }
-    var value = parseFloat(parts[1])
-    if (!isFinite(value) || value < 0) return
+    var value = Bounds.parseBoundedFloat(parts[1], 50000)
+    if (!isFinite(value)) return
     if (parts[0] === "write") {
       phase = "write"
       writeMBps = String(value)
@@ -104,11 +125,14 @@ Item {
     stderr: StdioCollector {
       waitForEnd: true
       onStreamFinished: {
-        root.stderrText = String(text || "").trim()
-        if (root.error !== "" && root.stderrText !== "") root.error = root.stderrText
+        var raw = String(text || "")
+        if (raw.length > Bounds.MAX_STDERR_BYTES) raw = raw.slice(0, Bounds.MAX_STDERR_BYTES)
+        root.stderrText = raw.trim()
+        if (root.error !== "" && root.stderrText !== "") root.error = Bounds.capText(root.stderrText, Bounds.MAX_FIELD_CHARS)
       }
     }
     onExited: function(exitCode) {
+      procWatchdog.stop()
       if (root.pendingRun) {
         root.pendingRun = false
         root.expectedStop = false
@@ -117,7 +141,7 @@ Item {
       }
 
       if (!root.expectedStop && exitCode !== 0) {
-        root.error = root.stderrText || "Teste de velocidade do disco falhou"
+        root.error = Bounds.capText(root.stderrText, Bounds.MAX_FIELD_CHARS) || "Teste de velocidade do disco falhou"
         root.phase = ""
         root.running = false
         return

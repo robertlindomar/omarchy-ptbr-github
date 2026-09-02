@@ -8,7 +8,7 @@ Hardware
 
 ### Tags
 
-display, quickshell
+system, quickshell
 
 ### Suggest a missing tag
 

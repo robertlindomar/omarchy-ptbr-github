@@ -17,19 +17,26 @@ BarWidget {
   property date displayDate: clock.date
 
   readonly property string configuredFormat: vertical
-    ? setting("verticalFormat", "HH\n—\nmm")
-    : setting("format", "dddd HH:mm")
+    ? root.resolvedFormat(setting("verticalFormat", "HH\n—\nmm"), setting("verticalFormatAlt", "dd\nMMM\n'W'ww\n''yy"), true)
+    : root.resolvedFormat(setting("format", "dddd HH:mm"), setting("formatAlt", "d MMMM 'W'ww yyyy"), false)
   readonly property string configuredAltFormat: vertical
     ? setting("verticalFormatAlt", "dd\nMMM\n'W'ww\n''yy")
     : setting("formatAlt", "d MMMM 'W'ww yyyy")
+
+  function resolvedFormat(primary, alternate, isVertical) {
+    var ring = Model.clockFormatRing(primary, alternate, Model.clockFormats(isVertical))
+    var fmt = String(primary || "")
+    if (ring.indexOf(fmt) >= 0) return fmt.slice(0, 64)
+    return String(ring[0] || "HH:mm").slice(0, 64)
+  }
 
   readonly property var formatRing: Model.clockFormatRing(configuredFormat, configuredAltFormat, Model.clockFormats(vertical))
 
   // What the bar shows is what shell.json stores, so a cycled format is the
   // format from then on rather than something that reverts on restart.
   readonly property string activeFormat: configuredFormat
-  readonly property string displayText: formatted(displayDate)
-  readonly property var verticalLines: displayText.split("\n")
+  readonly property string displayText: formatted(displayDate).slice(0, 128)
+  readonly property var verticalLines: displayText.split("\n").slice(0, 8)
 
   function refresh() {
     displayDate = new Date()
@@ -168,7 +175,7 @@ BarWidget {
           required property string modelData
           width: button.width
           height: Style.bar.iconSlot
-          text: modelData
+          text: modelData.slice(0, 64)
           fontFamily: button.fontFamily
           fontSize: modelData.length > 3
             ? button.fontSize * 0.9

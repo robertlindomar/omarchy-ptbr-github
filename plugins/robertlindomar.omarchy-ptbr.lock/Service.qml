@@ -173,8 +173,15 @@ Item {
     if (!blankProcess.running) blankProcess.running = true
   }
 
+  readonly property int maxPasswordLength: 512
+
   function submitPassword(value) {
     var password = String(value || "")
+    if (password.length > root.maxPasswordLength) {
+      root.enteredPassword = ""
+      root.pendingPassword = ""
+      return
+    }
     if (!lockRequested || authenticatingPassword || password.length === 0) return
 
     runWake()
@@ -192,6 +199,10 @@ Item {
 
   function respondToPasswordPrompt() {
     if (!authenticatingPassword || !passwordPam.active || !passwordPam.responseRequired) return
+    if (root.pendingPassword.length > root.maxPasswordLength) {
+      root.handlePasswordFailure()
+      return
+    }
     passwordPam.respond(pendingPassword)
   }
 
