@@ -22,10 +22,8 @@ Matriz derivada das issues #4057–#4072 e #4260. Detalhes estruturados em `secu
 | speedtest | 4072 | README + process bounds | README, Panel.qml | COMMON + SPECIFIC | Parcial (bounds + watchdog) |
 | monitor | 4260 | Tag `display` inválida | submission | SPECIFIC | Tag → `system` |
 
-## Revalidação
+## Revalidação rodada 1 (2026-09-02)
 
-Mecismo oficial (SUBMISSION.md): **editar a issue existente** para disparar validação e baseline novamente no HEAD do repositório. Não criar issue nova.
+Plugins revalidados com baseline **passed**: agents, polkit, weather, lock, clipboard, clock.
 
-## Commits de correção
-
-Registrados em `fixing-commits.json` após push dos repositórios individuais.
+Monitor #4260 **não** revalidado — ownership não confirmado na issue.

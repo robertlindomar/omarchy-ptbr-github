@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-02T14:21:07Z",
+  "checked_at": "2026-09-02T14:28:53Z",
   "marketplace_repo": "omacom/omarchy-plugin-marketplace",
   "agents": {
     "plugin_id": "robertlindomar.omarchy-ptbr.agents",
@@ -9,17 +9,14 @@
     "labels": [
       "submission",
       "validated",
-      "needs-fixes",
-      "manual-setup",
-      "security-needs-fixes",
-      "security-review-required"
+      "manual-setup"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "audio": {
     "plugin_id": "robertlindomar.omarchy-ptbr.audio",
@@ -38,7 +35,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "bluetooth": {
     "plugin_id": "robertlindomar.omarchy-ptbr.bluetooth",
@@ -57,7 +54,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "clipboard": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clipboard",
@@ -66,17 +63,14 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "clock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clock",
@@ -85,16 +79,14 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes"
+      "validated"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "disk-speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.disk-speedtest",
@@ -113,7 +105,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "indicators": {
     "plugin_id": "robertlindomar.omarchy-ptbr.indicators",
@@ -132,7 +124,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "lock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.lock",
@@ -141,17 +133,14 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "menu": {
     "plugin_id": "robertlindomar.omarchy-ptbr.menu",
@@ -170,7 +159,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "monitor": {
     "plugin_id": "robertlindomar.omarchy-ptbr.monitor",
@@ -185,7 +174,7 @@
     "validated": false,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "network": {
     "plugin_id": "robertlindomar.omarchy-ptbr.network",
@@ -204,7 +193,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "notifications": {
     "plugin_id": "robertlindomar.omarchy-ptbr.notifications",
@@ -222,7 +211,7 @@
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "polkit": {
     "plugin_id": "robertlindomar.omarchy-ptbr.polkit",
@@ -231,17 +220,14 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "power": {
     "plugin_id": "robertlindomar.omarchy-ptbr.power",
@@ -259,7 +245,7 @@
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "reminders": {
     "plugin_id": "robertlindomar.omarchy-ptbr.reminders",
@@ -278,7 +264,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.speedtest",
@@ -298,7 +284,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "weather": {
     "plugin_id": "robertlindomar.omarchy-ptbr.weather",
@@ -307,16 +293,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
     "status": "submitted",
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   }
 }

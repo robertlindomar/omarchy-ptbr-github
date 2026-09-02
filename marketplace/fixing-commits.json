@@ -10,7 +10,7 @@
       "issue": 4057,
       "old_sha": "24c4e17d6b38721c36b32525e172b0665babe1b0",
       "fix_sha": "63e7cc75be667b217b7ddc5f1566854fada83b41",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "audio",
@@ -34,7 +34,7 @@
       "issue": 4060,
       "old_sha": "703d68d0f81a87ab75813b83db1354101fb34ef0",
       "fix_sha": "d8624ff0702598d9061f1c2f648485c591ce36f0",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "clock",
@@ -42,7 +42,7 @@
       "issue": 4061,
       "old_sha": "bf8e5c9d841d6661ed8ff8297c738e53e9836839",
       "fix_sha": "48abc8dd0503f2591fa01677a644b28326a2f80a",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "disk-speedtest",
@@ -66,7 +66,7 @@
       "issue": 4064,
       "old_sha": "bdc9a6a594e292e632096f356866e247bd25ed1e",
       "fix_sha": "c705f51540b2ab0590c7d9d1103637c0922908c9",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "menu",
@@ -107,7 +107,7 @@
       "issue": 4068,
       "old_sha": "b7e18674da5fe8cdcc71c9e1a67d6f7d4f36562c",
       "fix_sha": "723042065a2ae53eb80ec59687247f582e5bd252",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "power",
@@ -139,12 +139,14 @@
       "issue": 4071,
       "old_sha": "619cd946c8d4c60115a612562f9f3b4368129066",
       "fix_sha": "95bd766ecd97060a0704019de222ca28c0ad659a",
-      "status": "PUSHED"
+      "status": "REVALIDATED"
     }
   ],
   "revalidation": {
     "mechanism": "Edit existing GitHub issue (title/body) per SUBMISSION.md",
-    "executed": false,
-    "reason": "Aguardando aprovação do usuário"
+    "executed": true,
+    "reason": "Rodada 1: 6 plugins revalidados; baseline passed no bot",
+    "round": 1,
+    "executed_at": "2026-09-02T14:28:53Z"
   }
 }

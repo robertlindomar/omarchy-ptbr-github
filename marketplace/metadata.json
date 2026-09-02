@@ -32,16 +32,13 @@
     "labels": [
       "submission",
       "validated",
-      "needs-fixes",
-      "manual-setup",
-      "security-needs-fixes",
-      "security-review-required"
+      "manual-setup"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "audio": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-audio",
@@ -84,7 +81,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "bluetooth": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-bluetooth",
@@ -127,7 +124,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "clipboard": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clipboard",
@@ -160,16 +157,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "clock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clock",
@@ -203,15 +197,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes"
+      "validated"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "disk-speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest",
@@ -254,7 +246,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "indicators": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-indicators",
@@ -297,7 +289,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "lock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-lock",
@@ -331,16 +323,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "menu": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-menu",
@@ -383,7 +372,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "network": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-network",
@@ -426,7 +415,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "notifications": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-notifications",
@@ -467,7 +456,7 @@
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "polkit": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-polkit",
@@ -501,16 +490,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "power": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-power",
@@ -552,7 +538,7 @@
     "validated": true,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "reminders": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-reminders",
@@ -594,7 +580,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-speedtest",
@@ -638,7 +624,7 @@
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "weather": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-weather",
@@ -672,16 +658,13 @@
     "state": "open",
     "labels": [
       "submission",
-      "validated",
-      "needs-fixes",
-      "security-needs-fixes",
-      "security-review-required"
+      "validated"
     ],
-    "status_class": "NEEDS_FIX",
+    "status_class": "VALIDATED",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   },
   "monitor": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-monitor",
@@ -720,6 +703,6 @@
     "validated": false,
     "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-02T14:21:07Z"
+    "checked_at": "2026-09-02T14:28:53Z"
   }
 }

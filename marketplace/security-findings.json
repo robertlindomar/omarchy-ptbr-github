@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T00:00:00Z",
+  "generatedAt": "2026-09-02T14:28:53Z",
   "findings": [
     {
       "plugin": "agents",
@@ -7,7 +7,7 @@
       "finding": "remote-git-execution-unpinned (README monorepo clone + ./install.sh)",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "audio",
@@ -47,7 +47,7 @@
       "finding": "README unpinned monorepo install",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "clipboard",
@@ -55,7 +55,7 @@
       "finding": "Unbounded clipboard history storage",
       "file": "ClipboardHistory.js",
       "type": "PLUGIN_SPECIFIC",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "clock",
@@ -63,7 +63,7 @@
       "finding": "README unpinned monorepo install",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "clock",
@@ -71,7 +71,7 @@
       "finding": "Unbounded format strings in bar widget",
       "file": "BarWidget.qml",
       "type": "PLUGIN_SPECIFIC",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "disk-speedtest",
@@ -111,7 +111,7 @@
       "finding": "README unpinned monorepo install",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "lock",
@@ -119,7 +119,7 @@
       "finding": "Unbounded password input / mask string",
       "file": "LockView.qml",
       "type": "PLUGIN_SPECIFIC",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "menu",
@@ -191,7 +191,7 @@
       "finding": "README unpinned monorepo install",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "power",
@@ -231,7 +231,7 @@
       "finding": "README unpinned monorepo install",
       "file": "README.md",
       "type": "COMMON",
-      "status": "NEEDS_FIX"
+      "status": "REVALIDATED"
     },
     {
       "plugin": "speedtest",
@@ -257,5 +257,13 @@
       "type": "PLUGIN_SPECIFIC",
       "status": "NEEDS_FIX"
     }
+  ],
+  "round1_revalidated": [
+    "agents",
+    "polkit",
+    "weather",
+    "lock",
+    "clipboard",
+    "clock"
   ]
 }
