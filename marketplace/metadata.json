@@ -25,7 +25,23 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4057",
+    "issue_number": 4057,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "manual-setup",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "audio": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-audio",
@@ -53,7 +69,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4058",
+    "issue_number": 4058,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "bluetooth": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-bluetooth",
@@ -81,7 +112,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4059",
+    "issue_number": 4059,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "clipboard": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clipboard",
@@ -108,7 +154,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4060",
+    "issue_number": 4060,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "clock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-clock",
@@ -136,7 +197,21 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4061",
+    "issue_number": 4061,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": false,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "disk-speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-disk-speedtest",
@@ -164,7 +239,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4062",
+    "issue_number": 4062,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "indicators": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-indicators",
@@ -192,7 +282,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4063",
+    "issue_number": 4063,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "lock": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-lock",
@@ -220,7 +325,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4064",
+    "issue_number": 4064,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "menu": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-menu",
@@ -248,7 +368,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4065",
+    "issue_number": 4065,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "network": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-network",
@@ -276,7 +411,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4066",
+    "issue_number": 4066,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "notifications": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-notifications",
@@ -303,7 +453,21 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4067",
+    "issue_number": 4067,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": false,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "polkit": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-polkit",
@@ -331,7 +495,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4068",
+    "issue_number": 4068,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "power": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-power",
@@ -359,7 +538,21 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4069",
+    "issue_number": 4069,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": false,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "reminders": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-reminders",
@@ -386,7 +579,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4070",
+    "issue_number": 4070,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "speedtest": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-speedtest",
@@ -414,7 +622,23 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4072",
+    "issue_number": 4072,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "manual-setup",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "weather": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-weather",
@@ -442,7 +666,22 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4071",
+    "issue_number": 4071,
+    "state": "open",
+    "labels": [
+      "submission",
+      "validated",
+      "needs-fixes",
+      "security-needs-fixes",
+      "security-review-required"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": true,
+    "security_review_required": true,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "monitor": {
     "repository": "https://github.com/robertlindomar/omarchy-ptbr-monitor",
@@ -470,6 +709,17 @@
       "dependencies_documented": true,
       "ownership_requires_owner_confirmation": true
     },
-    "issues": []
+    "issues": [],
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4260",
+    "issue_number": 4260,
+    "state": "open",
+    "labels": [
+      "needs-fixes"
+    ],
+    "status_class": "NEEDS_FIX",
+    "validated": false,
+    "security_review_required": false,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   }
 }

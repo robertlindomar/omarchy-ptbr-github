@@ -1,0 +1,150 @@
+{
+  "monorepo": {
+    "repo": "robertlindomar/omarchy-ptbr-github",
+    "fix_sha": "f1f9f63e5fba9cb082bfc7f1d20d82c76b205a83"
+  },
+  "plugins": [
+    {
+      "plugin": "agents",
+      "repo": "robertlindomar/omarchy-ptbr-agents",
+      "issue": 4057,
+      "old_sha": "24c4e17d6b38721c36b32525e172b0665babe1b0",
+      "fix_sha": "63e7cc75be667b217b7ddc5f1566854fada83b41",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "audio",
+      "repo": "robertlindomar/omarchy-ptbr-audio",
+      "issue": 4058,
+      "old_sha": "b417a4cedc3df5d2e36c86eda92677c6db71cd09",
+      "fix_sha": "346275a8e70c6908797dcd513c3d34ca90e8f937",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "bluetooth",
+      "repo": "robertlindomar/omarchy-ptbr-bluetooth",
+      "issue": 4059,
+      "old_sha": "0167fa415cc58e4e8c180bf87af9d8c89cad767e",
+      "fix_sha": "c3fa563b1f02481068a46def610edaf2fab84d92",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "clipboard",
+      "repo": "robertlindomar/omarchy-ptbr-clipboard",
+      "issue": 4060,
+      "old_sha": "703d68d0f81a87ab75813b83db1354101fb34ef0",
+      "fix_sha": "d8624ff0702598d9061f1c2f648485c591ce36f0",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "clock",
+      "repo": "robertlindomar/omarchy-ptbr-clock",
+      "issue": 4061,
+      "old_sha": "bf8e5c9d841d6661ed8ff8297c738e53e9836839",
+      "fix_sha": "48abc8dd0503f2591fa01677a644b28326a2f80a",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "disk-speedtest",
+      "repo": "robertlindomar/omarchy-ptbr-disk-speedtest",
+      "issue": 4062,
+      "old_sha": "84af10fb394fb1eb0c1196725f808000595f2b4b",
+      "fix_sha": "d63f0463fe2d21fa405ad862450d8afa9d155513",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "indicators",
+      "repo": "robertlindomar/omarchy-ptbr-indicators",
+      "issue": 4063,
+      "old_sha": "526a1d6a480bb0fbdf5b517d526776838e3f2b63",
+      "fix_sha": "a4c189c5dd39254fbf5efd9d868fb9efe0b7e00d",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "lock",
+      "repo": "robertlindomar/omarchy-ptbr-lock",
+      "issue": 4064,
+      "old_sha": "bdc9a6a594e292e632096f356866e247bd25ed1e",
+      "fix_sha": "c705f51540b2ab0590c7d9d1103637c0922908c9",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "menu",
+      "repo": "robertlindomar/omarchy-ptbr-menu",
+      "issue": 4065,
+      "old_sha": "431fca05a45757eb2cc1002d6b280f73fd5ce823",
+      "fix_sha": "dcff99336d7d5af3118d1c91432317d3d95d98a8",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "monitor",
+      "repo": "robertlindomar/omarchy-ptbr-monitor",
+      "issue": 4260,
+      "old_sha": "cecdf9e8bd046c70044344183c687752df078033",
+      "fix_sha": "2658a35a43a801bf95c0acaa25b7c7fbb1b8c586",
+      "status": "PUSHED",
+      "note": "Issue #4260 failed validation on unsupported tag 'display'; tag fixed to system in submission metadata"
+    },
+    {
+      "plugin": "network",
+      "repo": "robertlindomar/omarchy-ptbr-network",
+      "issue": 4066,
+      "old_sha": "f8640b913fbdff66e5f15016eb153f05a9a08b47",
+      "fix_sha": "eb0e13e0c1d1b9e9fc0a03b3e6787609240484b8",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "notifications",
+      "repo": "robertlindomar/omarchy-ptbr-notifications",
+      "issue": 4067,
+      "old_sha": "a424d3a6247f7e7eff1b55dec7a80a3aa1337f17",
+      "fix_sha": "058f027cfaa6a21d6a7e3f7945c0d717d7fd0f35",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "polkit",
+      "repo": "robertlindomar/omarchy-ptbr-polkit",
+      "issue": 4068,
+      "old_sha": "b7e18674da5fe8cdcc71c9e1a67d6f7d4f36562c",
+      "fix_sha": "723042065a2ae53eb80ec59687247f582e5bd252",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "power",
+      "repo": "robertlindomar/omarchy-ptbr-power",
+      "issue": 4069,
+      "old_sha": "544842544374e8faffdbeda03e9f534c7f391560",
+      "fix_sha": "d9aa82612607df961069cc72b28d430ed870268f",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "reminders",
+      "repo": "robertlindomar/omarchy-ptbr-reminders",
+      "issue": 4070,
+      "old_sha": "18c2a835f1de92ff1a1a13261d892c95e123689c",
+      "fix_sha": "41aa665929a7832ef0c93dcd7a9e4587948e6aee",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "speedtest",
+      "repo": "robertlindomar/omarchy-ptbr-speedtest",
+      "issue": 4072,
+      "old_sha": "2c73a2d4ab2a6d00a00933cf103c8e77e6984f80",
+      "fix_sha": "eb1b0e4615e758c2718963e317eb514ce39fad67",
+      "status": "PUSHED"
+    },
+    {
+      "plugin": "weather",
+      "repo": "robertlindomar/omarchy-ptbr-weather",
+      "issue": 4071,
+      "old_sha": "619cd946c8d4c60115a612562f9f3b4368129066",
+      "fix_sha": "95bd766ecd97060a0704019de222ca28c0ad659a",
+      "status": "PUSHED"
+    }
+  ],
+  "revalidation": {
+    "mechanism": "Edit existing GitHub issue (title/body) per SUBMISSION.md",
+    "executed": false,
+    "reason": "Aguardando aprovação do usuário"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-01T06:30:18Z",
+  "checked_at": "2026-09-02T14:21:07Z",
   "marketplace_repo": "omacom/omarchy-plugin-marketplace",
   "agents": {
     "plugin_id": "robertlindomar.omarchy-ptbr.agents",
@@ -9,14 +9,17 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "manual-setup",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "audio": {
     "plugin_id": "robertlindomar.omarchy-ptbr.audio",
@@ -26,14 +29,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "bluetooth": {
     "plugin_id": "robertlindomar.omarchy-ptbr.bluetooth",
@@ -43,14 +48,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "clipboard": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clipboard",
@@ -60,14 +67,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "clock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.clock",
@@ -77,14 +86,15 @@
     "labels": [
       "submission",
       "validated",
-      "security-review-required"
+      "needs-fixes",
+      "security-needs-fixes"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "disk-speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.disk-speedtest",
@@ -94,14 +104,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "indicators": {
     "plugin_id": "robertlindomar.omarchy-ptbr.indicators",
@@ -111,14 +123,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "lock": {
     "plugin_id": "robertlindomar.omarchy-ptbr.lock",
@@ -128,14 +142,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "menu": {
     "plugin_id": "robertlindomar.omarchy-ptbr.menu",
@@ -145,14 +161,31 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
+  },
+  "monitor": {
+    "plugin_id": "robertlindomar.omarchy-ptbr.monitor",
+    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4260",
+    "issue_number": 4260,
+    "state": "open",
+    "labels": [
+      "needs-fixes"
+    ],
+    "status": "submitted",
+    "status_class": "NEEDS_FIX",
+    "validated": false,
+    "security_review_required": false,
+    "listed": false,
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "network": {
     "plugin_id": "robertlindomar.omarchy-ptbr.network",
@@ -162,14 +195,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "notifications": {
     "plugin_id": "robertlindomar.omarchy-ptbr.notifications",
@@ -179,14 +214,15 @@
     "labels": [
       "submission",
       "validated",
-      "security-review-required"
+      "needs-fixes",
+      "security-needs-fixes"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "polkit": {
     "plugin_id": "robertlindomar.omarchy-ptbr.polkit",
@@ -196,14 +232,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "power": {
     "plugin_id": "robertlindomar.omarchy-ptbr.power",
@@ -213,14 +251,15 @@
     "labels": [
       "submission",
       "validated",
-      "security-review-required"
+      "needs-fixes",
+      "security-needs-fixes"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
-    "security_review_required": true,
+    "security_review_required": false,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "reminders": {
     "plugin_id": "robertlindomar.omarchy-ptbr.reminders",
@@ -230,14 +269,16 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "speedtest": {
     "plugin_id": "robertlindomar.omarchy-ptbr.speedtest",
@@ -247,14 +288,17 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "manual-setup",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   },
   "weather": {
     "plugin_id": "robertlindomar.omarchy-ptbr.weather",
@@ -264,18 +308,15 @@
     "labels": [
       "submission",
       "validated",
+      "needs-fixes",
+      "security-needs-fixes",
       "security-review-required"
     ],
     "status": "submitted",
-    "status_class": "SECURITY_REVIEW",
+    "status_class": "NEEDS_FIX",
     "validated": true,
     "security_review_required": true,
     "listed": false,
-    "checked_at": "2026-09-01T06:30:18Z"
-  },
-  "monitor": {
-    "issue": "https://github.com/omacom/omarchy-plugin-marketplace/issues/4260",
-    "status": "submitted",
-    "submitted_at": "2026-09-01T20:29:23Z"
+    "checked_at": "2026-09-02T14:21:07Z"
   }
 }
