@@ -247,10 +247,32 @@ prepare_workdir() {
   rm -rf "$work"
   mkdir -p "$work"
 
+  # Copia o plugin para a raiz do repo individual.
+  # preview.png (Marketplace) é incluído quando presente na raiz do plugin.
+  # Artefatos temporários / aliases de preview NÃO são publicados.
   rsync -a \
     --exclude='*.bak' --exclude='*.tmp' --exclude='*.log' \
     --exclude='.env' --exclude='.env.*' --exclude='README.md' \
+    --exclude='preview1.png' \
+    --exclude='preview-old.png' \
+    --exclude='preview.bak.png' \
+    --exclude='*-full.png' \
+    --exclude='*-open.png' \
+    --exclude='*-base.png' \
+    --exclude='screenshot*.png' \
+    --exclude='.git' \
     "$plugin_dir/" "$work/"
+
+  # Preview opcional: se existir na fonte, garantir na raiz do repo gerado.
+  # Ausência de preview.png NÃO falha a publicação.
+  if [[ -f "$plugin_dir/preview.png" ]]; then
+    if [[ ! -f "$work/preview.png" ]]; then
+      cp -a "$plugin_dir/preview.png" "$work/preview.png"
+    fi
+    log "preview.png incluído em $repo"
+  else
+    log "preview.png ausente em $slug — publicando sem preview"
+  fi
 
   write_gitignore "$work"
   write_license "$work"
