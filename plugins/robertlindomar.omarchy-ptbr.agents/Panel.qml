@@ -212,7 +212,10 @@ Panel {
     var label = isNaN(parsed.getTime())
       ? String(day.date)
       : dayName(day.date) + " " + (parsed.getMonth() + 1) + "/" + parsed.getDate()
-    var text = label + " · " + usage.formatTokenCount(Number(day.messageCount || 0)) + " tokens"
+    var count = Number(day.messageCount || 0)
+    var text = label + " · " + (provider && provider.usageUnit === "messages"
+      ? count + " mensagens"
+      : usage.formatTokenCount(count) + " tokens")
     // Prompt and session counts only exist for today, so they ride along here
     // instead of taking a section of their own. Billing-API agents never
     // count prompts, and "0 prompts" would read as a quiet day, not a gap.
@@ -511,7 +514,7 @@ Panel {
               anchors.verticalCenter: parent.verticalCenter
               anchors.leftMargin: Style.space(12)
               anchors.rightMargin: Style.space(12)
-              text: root.provider ? String(root.provider.authHelpText || "") : ""
+              text: root.provider ? String(root.provider.usageStatusText || root.provider.authHelpText || "") : ""
               color: root.dim
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
@@ -628,7 +631,7 @@ Panel {
 
             PanelSectionHeader {
               width: parent.width
-              text: "TOKENS POR DIA"
+              text: root.provider && root.provider.usageUnit === "messages" ? "MENSAGENS POR DIA" : "TOKENS POR DIA"
               foreground: root.foreground
               fontFamily: root.fontFamily
             }
@@ -845,7 +848,9 @@ Panel {
     Text {
       id: dayValue
       textFormat: Text.PlainText
-      text: usage.formatTokenCount(dayRow.day ? Number(dayRow.day.messageCount || 0) : 0)
+      text: root.provider && root.provider.usageUnit === "messages"
+        ? String(dayRow.day ? Number(dayRow.day.messageCount || 0) : 0)
+        : usage.formatTokenCount(dayRow.day ? Number(dayRow.day.messageCount || 0) : 0)
       color: dayRow.today ? root.foreground : root.dim
       font.family: root.fontFamily
       font.pixelSize: Style.font.caption

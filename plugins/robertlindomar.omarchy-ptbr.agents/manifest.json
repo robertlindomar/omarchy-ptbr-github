@@ -30,6 +30,9 @@
         "codex": {
           "enabled": true
         },
+        "cursor": {
+          "enabled": true
+        },
         "fireworks": {
           "enabled": true
         }

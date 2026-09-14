@@ -94,7 +94,7 @@ install_plugins() {
 install_bin_overrides() {
   local file
   mkdir -p "$HOME/.local/bin"
-  for file in omarchy-menu-keybindings omarchy-capture-screenshot omarchy-reminder; do
+  for file in omarchy-menu-keybindings omarchy-capture-screenshot omarchy-reminder omarchy-agent-usage-update omarchy-agent-usage-cursor; do
     backup_if_exists "$HOME/.local/bin/$file"
     log "Instalando override bin: $file"
     if [[ $DRY_RUN -eq 1 ]]; then

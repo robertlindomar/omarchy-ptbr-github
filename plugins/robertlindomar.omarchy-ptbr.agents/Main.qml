@@ -14,6 +14,9 @@ Item {
 
   readonly property string home: Quickshell.env("HOME") || ""
   readonly property string usageDir: (Quickshell.env("XDG_STATE_HOME") || home + "/.local/state") + "/omarchy/agents/usage"
+  // The PT-BR installer provides this wrapper. It runs Omarchy's collectors
+  // and adds the Cursor CLI local-history collector without touching /usr.
+  readonly property string usageUpdateCommand: home + "/.local/bin/omarchy-agent-usage-update"
 
   // ------------------------------------------------------------- discovery
 
@@ -144,7 +147,7 @@ Item {
   }
 
   function updateCommand(kind, agentIds) {
-    var command = ["omarchy-agent-usage-update"]
+    var command = [root.usageUpdateCommand]
     if (kind === "force") command.push("--force")
     if (kind === "limits") command.push("--limits-only")
     var providers = settings && settings.providers ? settings.providers : {}
@@ -250,6 +253,7 @@ Item {
       ready: record.ready === true || synced,
       usageStatusText: String(record.usageStatusText || ""),
       authHelpText: String(record.authHelpText || ""),
+      usageUnit: String(record.usageUnit || "tokens"),
 
       // Rate limits and balances stay per-account and are never merged
       // across devices.

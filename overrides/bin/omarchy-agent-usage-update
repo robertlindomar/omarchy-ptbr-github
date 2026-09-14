@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Extends Omarchy's collectors with the local Cursor CLI collector.
+set -uo pipefail
+
+SYSTEM_UPDATE=/usr/bin/omarchy-agent-usage-update
+CURSOR_COLLECTOR="$HOME/.local/bin/omarchy-agent-usage-cursor"
+USAGE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy/agents/usage"
+
+"$SYSTEM_UPDATE" "$@"
+system_status=$?
+
+want_cursor=true
+only_seen=false
+while (($#)); do
+  case "$1" in
+    --force|--limits-only) ;;
+    --except)
+      shift
+      [[ ${1:-} == cursor ]] && want_cursor=false
+      ;;
+    *)
+      only_seen=true
+      [[ $1 == cursor ]] || want_cursor=false
+      ;;
+  esac
+  shift || true
+done
+
+if [[ $want_cursor == true && -x $CURSOR_COLLECTOR ]]; then
+  mkdir -p "$USAGE_DIR"
+  tmp=$(mktemp "$USAGE_DIR/.cursor.XXXXXX")
+  if "$CURSOR_COLLECTOR" > "$tmp" && jq -e . >/dev/null < "$tmp"; then
+    mv "$tmp" "$USAGE_DIR/cursor.json"
+  else
+    rm -f "$tmp"
+    exit 1
+  fi
+fi
+
+exit "$system_status"

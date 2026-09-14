@@ -77,7 +77,37 @@ Item {
 
   // Shared application engine (entries, hidden filters, icons, launch,
   // removal), owned by the shell and also used by the standalone launcher.
-  readonly property var appLibrary: root.shell ? root.shell.appLibrary : null
+  readonly property var appLibrary: root.shell && root.shell.appLibrary ? root.shell.appLibrary : localAppLibrary
+
+  QtObject {
+    id: localAppLibrary
+    signal appsChanged()
+    function sortedEntries(query) {
+      var q = String(query || "").toLowerCase().trim()
+      var entries = DesktopEntries.applications.values || []
+      var rows = []
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i]
+        if (!entry || entry.noDisplay) continue
+        var name = String(entry.name || entry.id || "")
+        if (!name || (q && (name + " " + entry.id + " " + (entry.genericName || "") + " " + (entry.comment || "")).toLowerCase().indexOf(q) < 0)) continue
+        rows.push({ entry: entry, score: 0, key: name.toLowerCase(), name: name.toLowerCase() })
+      }
+      rows.sort(function(a, b) { return a.key.localeCompare(b.key) })
+      return rows
+    }
+    function entryName(entry) { return String(entry.name || entry.id || "") }
+    function entrySubtext(entry) { return String(entry.genericName || "") }
+    function iconSource(icon) { return Quickshell.iconPath(String(icon || "application-x-executable"), true) }
+    function refreshIcons() {}
+    function launch(id, name) { Quickshell.execDetached(["uwsm-app", "--", "gtk-launch", String(id) + ".desktop"]) }
+    function remove(id, name) { Quickshell.execDetached(["omarchy-remove-launcher-entry", String(id), String(name)]) }
+  }
+
+  Connections {
+    target: DesktopEntries.applications
+    function onValuesChanged() { localAppLibrary.appsChanged() }
+  }
   property bool deleteConfirmOpen: false
   property var deleteTarget: null
   onOpenedChanged: if (!opened) { deleteConfirmOpen = false; deleteTarget = null }

@@ -1,0 +1,92 @@
+#!/usr/bin/python3
+"""Emit a local Cursor CLI usage record for the Omarchy agents widget.
+
+Cursor CLI stores transcripts locally but does not expose subscription limits or
+account-wide token totals. This collector therefore reports only verifiable
+local conversation counts.
+"""
+import json
+import os
+from datetime import datetime
+from pathlib import Path
+
+AGENT_ID = "cursor"
+ROOT = Path(os.environ.get("CURSOR_CONFIG_DIR", Path.home() / ".cursor")) / "projects"
+
+
+def local_day(timestamp):
+    return datetime.fromtimestamp(timestamp).astimezone().strftime("%Y-%m-%d")
+
+
+def transcript_files():
+    if not ROOT.is_dir():
+        return []
+    return ROOT.glob("**/agent-transcripts/**/*.jsonl")
+
+
+def assistant_messages(path):
+    count = 0
+    try:
+        with path.open("r", encoding="utf-8", errors="replace") as stream:
+            for line in stream:
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(entry, dict) and entry.get("role") == "assistant":
+                    count += 1
+    except OSError:
+        return 0
+    return count
+
+
+def main():
+    sessions = 0
+    prompts = 0
+    active_dates = set()
+    by_day = {}
+    sessions_by_day = {}
+    for path in transcript_files():
+        count = assistant_messages(path)
+        if count == 0:
+            continue
+        try:
+            day = local_day(path.stat().st_mtime)
+        except OSError:
+            continue
+        sessions += 1
+        prompts += count
+        active_dates.add(day)
+        by_day[day] = by_day.get(day, 0) + count
+        sessions_by_day[day] = sessions_by_day.get(day, 0) + 1
+
+    now = datetime.now().astimezone()
+    today = now.strftime("%Y-%m-%d")
+    recent_days = []
+    for offset in range(6, -1, -1):
+        day = datetime.fromtimestamp(now.timestamp() - offset * 86400, now.tzinfo).strftime("%Y-%m-%d")
+        recent_days.append({"date": day, "messageCount": by_day.get(day, 0)})
+
+    print(json.dumps({
+        "id": AGENT_ID,
+        "name": "Cursor CLI",
+        "ready": ROOT.is_dir(),
+        "tierLabel": "Local",
+        "usageStatusText": "O Cursor CLI não expõe os limites da assinatura. As mensagens são do histórico local e agrupadas pelo último salvamento de cada sessão.",
+        "usageUnit": "messages",
+        "limits": [],
+        "todayPrompts": by_day.get(today, 0),
+        "todaySessions": sessions_by_day.get(today, 0),
+        "todayTotalTokens": 0,
+        "todayTokensByModel": {},
+        "recentDays": recent_days,
+        "totalPrompts": prompts,
+        "totalSessions": sessions,
+        "activeDays": len(active_dates),
+        "modelUsage": {},
+        "hasLocalStats": True,
+        "hasPromptStats": True
+    }, ensure_ascii=False))
+
+if __name__ == "__main__":
+    main()
