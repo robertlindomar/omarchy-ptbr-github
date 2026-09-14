@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.plugin-manager",
+  "name": "Gerenciador de Plugins PT-BR",
+  "version": "1.0.0",
+  "author": "Robert Lindomar",
+  "license": "MIT",
+  "description": "Gerencie plugins instalados do Omarchy usando a interface oficial do shell",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Gerenciador de Plugins",
+    "description": "Ativar/desativar, atualizar, instalar e remover plugins",
+    "category": "Sistema",
+    "allowMultiple": false
+  }
+}

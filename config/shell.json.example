@@ -17,6 +17,7 @@
         },
         { "id": "omarchy.keyboard-layout" },
         { "id": "robertlindomar.omarchy-ptbr.weather" },
+        { "id": "robertlindomar.omarchy-ptbr.plugin-manager" },
         { "id": "omarchy.system-update" }
       ],
       "left": [
