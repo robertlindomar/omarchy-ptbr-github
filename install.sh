@@ -9,6 +9,7 @@ BACKUP_DIR="${STATE_DIR}/backups/$(date +%Y%m%d-%H%M%S)"
 MARKER="${STATE_DIR}/installed"
 
 PLUGINS=(
+  robertlindomar.omarchy-ptbr.omaclock
   robertlindomar.omarchy-ptbr.notification-center robertlindomar.omarchy-ptbr.app-launcher
   robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
   robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio robertlindomar.omarchy-ptbr.monitor

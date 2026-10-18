@@ -30,6 +30,9 @@
         },
         {
           "id": "omarchy.system-update"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.omaclock"
         }
       ],
       "left": [
@@ -101,6 +104,9 @@
     },
     {
       "id": "robertlindomar.omarchy-ptbr.app-launcher"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.omaclock"
     }
   ],
   "disabledPlugins": [
@@ -113,7 +119,8 @@
     "omarchy.disk-speedtest",
     "omarchy.notifications",
     "jankeesvw.notification-center",
-    "tyrsolution.app-launcher"
+    "tyrsolution.app-launcher",
+    "ubeyidah.omaclock"
   ],
   "cloneSourceRestores": [
     "robertlindomar.omarchy-ptbr.menu",
@@ -125,6 +132,7 @@
     "robertlindomar.omarchy-ptbr.disk-speedtest",
     "robertlindomar.omarchy-ptbr.notifications",
     "robertlindomar.omarchy-ptbr.notification-center",
-    "robertlindomar.omarchy-ptbr.app-launcher"
+    "robertlindomar.omarchy-ptbr.app-launcher",
+    "robertlindomar.omarchy-ptbr.omaclock"
   ]
 }

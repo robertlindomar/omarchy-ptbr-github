@@ -40,3 +40,5 @@ Antes de adicionar `LICENSE` na raiz, confirme a licença global do projeto Omar
 
 As cópias PT-BR preservam os arquivos LICENSE originais. O launcher inclui os
 ajustes locais de tradução e favoritos manuais; a central inclui a tradução pt-BR.
+
+- OmaClock: ubeyidah — https://github.com/ubeyidah/omaclock (MIT). Clone PT-BR com tradução do painel e correção da leitura do tamanho. Licenças das fontes incluídas em `fonts/`.

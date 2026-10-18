@@ -7,6 +7,7 @@ STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy-ptbr"
 BACKUP_ROOT="${STATE_DIR}/backups"
 
 PLUGINS=(
+  robertlindomar.omarchy-ptbr.omaclock
   robertlindomar.omarchy-ptbr.notification-center robertlindomar.omarchy-ptbr.app-launcher
   robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
   robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio
@@ -14,6 +15,7 @@ PLUGINS=(
 )
 
 OFFICIAL=(
+  ubeyidah.omaclock
   jankeesvw.notification-center tyrsolution.app-launcher
   omarchy.menu omarchy.lock omarchy.polkit omarchy.clipboard omarchy.reminders
   omarchy.speedtest omarchy.disk-speedtest omarchy.notifications omarchy.clock

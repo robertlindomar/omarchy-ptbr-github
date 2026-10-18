@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.omaclock",
+  "name": "OmaClock PT-BR",
+  "version": "1.3.0",
+  "author": "ubeyidah",
+  "description": "Relógio da área de trabalho com ajustes de tamanho, posição, cor e fonte",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "DesktopClock.qml",
+    "barWidget": "Control.qml"
+  },
+  "barWidget": {
+    "displayName": "OmaClock PT-BR",
+    "description": "Ajustar tamanho, posição, cor e fonte do relógio da área de trabalho",
+    "category": "Status",
+    "allowMultiple": false,
+    "defaultSection": "center",
+    "defaults": {}
+  },
+  "homepage": "https://github.com/ubeyidah/omaclock",
+  "omarchy": {
+    "clonedFrom": "ubeyidah.omaclock"
+  }
+}

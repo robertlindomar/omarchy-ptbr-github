@@ -18,6 +18,7 @@ O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **override
 | Central de notificações e histórico | `robertlindomar.omarchy-ptbr.notification-center` |
 | Aplicativos e favoritos (SUPER+ESPAÇO) | `robertlindomar.omarchy-ptbr.app-launcher` |
 | Notificações / Calendário | `robertlindomar.omarchy-ptbr.notifications`, `robertlindomar.omarchy-ptbr.clock` |
+| Relógio da área de trabalho | `robertlindomar.omarchy-ptbr.omaclock` |
 | Indicadores da barra | `robertlindomar.omarchy-ptbr.indicators` |
 | Atalhos (SUPER+K) | `omarchy-menu-keybindings` + `keybindings-labels-ptbr.awk` |
 | Capturas de tela | `omarchy-capture-screenshot` |
