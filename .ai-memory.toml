@@ -1,0 +1,49 @@
+workspace = "pessoal"
+project = "omarchy-ptbr"
+
+[recall]
+default_global = false
+
+[briefing]
+inject_on_session_start = false
+max_chars = 1800
+
+[profile]
+contribute = false
+consume = true
+
+[capture]
+ignore_paths = [
+  ".env",
+  ".env.*",
+  "**/.env",
+  "**/.env.*",
+  ".npmrc",
+  "**/.npmrc",
+  ".netrc",
+  ".pypirc",
+  "credentials*",
+  "**/credentials*",
+  "*token*",
+  "**/*token*",
+  "*.key",
+  "**/*.key",
+  "*.pem",
+  "**/*.pem",
+  "private/**",
+  "secrets/**",
+  "*.sql",
+  "**/*.sql",
+  "*.db",
+  "**/*.db",
+  "*.sqlite",
+  "**/*.sqlite",
+  "~/.ssh/**",
+  "~/.aws/**",
+  "~/.kube/**",
+  "~/.gnupg/**",
+  "~/.config/gcloud/**",
+  "~/.codex/auth.json",
+  "~/.cursor/**/auth*",
+  "~/.local/share/ai-memory/auth-tokens/**",
+]
