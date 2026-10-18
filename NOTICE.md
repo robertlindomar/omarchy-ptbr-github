@@ -32,3 +32,11 @@ Antes de adicionar `LICENSE` na raiz, confirme a licença global do projeto Omar
 - `bindings.lua` pessoal (atalhos customizados)
 - Arquivos `.bak` de extensões
 - Históricos, logs e credenciais
+
+## Plugins comunitários incluídos
+
+- Central de notificações: Jankees van Woezik — https://github.com/jankeesvw/omarchy-notification-center (MIT).
+- App Launcher: Tyr Solutions — https://github.com/Tyrsolution/omarchy-app-launcher (MIT).
+
+As cópias PT-BR preservam os arquivos LICENSE originais. O launcher inclui os
+ajustes locais de tradução e favoritos manuais; a central inclui a tradução pt-BR.

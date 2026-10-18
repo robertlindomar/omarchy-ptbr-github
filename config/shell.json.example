@@ -5,7 +5,11 @@
       "center": [
         {
           "id": "robertlindomar.omarchy-ptbr.indicators",
-          "pinned": ["StayAwake", "Dnd", "Reminder"]
+          "pinned": [
+            "StayAwake",
+            "Dnd",
+            "Reminder"
+          ]
         },
         {
           "id": "robertlindomar.omarchy-ptbr.clock",
@@ -15,35 +19,89 @@
           "birthYear": 0,
           "lifeExpectancy": 80
         },
-        { "id": "omarchy.keyboard-layout" },
-        { "id": "robertlindomar.omarchy-ptbr.weather" },
-        { "id": "robertlindomar.omarchy-ptbr.plugin-manager" },
-        { "id": "omarchy.system-update" }
+        {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.weather"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.plugin-manager"
+        },
+        {
+          "id": "omarchy.system-update"
+        }
       ],
       "left": [
-        { "id": "robertlindomar.omarchy-ptbr.menu" },
-        { "id": "omarchy.workspaces" }
+        {
+          "id": "robertlindomar.omarchy-ptbr.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.app-launcher"
+        }
       ],
       "right": [
-        { "id": "omarchy.tray" },
-        { "id": "omarchy.tailscale" },
-        { "id": "robertlindomar.omarchy-ptbr.agents" },
-        { "id": "robertlindomar.omarchy-ptbr.bluetooth" },
-        { "id": "robertlindomar.omarchy-ptbr.network" },
-        { "id": "robertlindomar.omarchy-ptbr.audio" },
-        { "id": "robertlindomar.omarchy-ptbr.monitor" },
-        { "id": "robertlindomar.omarchy-ptbr.power" }
+        {
+          "id": "robertlindomar.omarchy-ptbr.notification-center"
+        },
+        {
+          "id": "omarchy.tray"
+        },
+        {
+          "id": "omarchy.tailscale"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.agents"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.bluetooth"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.network"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.audio"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.monitor"
+        },
+        {
+          "id": "robertlindomar.omarchy-ptbr.power"
+        }
       ]
     }
   },
   "plugins": [
-    { "id": "robertlindomar.omarchy-ptbr.lock" },
-    { "id": "robertlindomar.omarchy-ptbr.polkit" },
-    { "id": "robertlindomar.omarchy-ptbr.clipboard" },
-    { "id": "robertlindomar.omarchy-ptbr.reminders" },
-    { "id": "robertlindomar.omarchy-ptbr.speedtest" },
-    { "id": "robertlindomar.omarchy-ptbr.disk-speedtest" },
-    { "id": "robertlindomar.omarchy-ptbr.notifications" }
+    {
+      "id": "robertlindomar.omarchy-ptbr.lock"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.polkit"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.clipboard"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.reminders"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.speedtest"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.disk-speedtest"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.notifications"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.notification-center"
+    },
+    {
+      "id": "robertlindomar.omarchy-ptbr.app-launcher"
+    }
   ],
   "disabledPlugins": [
     "omarchy.menu",
@@ -53,7 +111,9 @@
     "omarchy.reminders",
     "omarchy.speedtest",
     "omarchy.disk-speedtest",
-    "omarchy.notifications"
+    "omarchy.notifications",
+    "jankeesvw.notification-center",
+    "tyrsolution.app-launcher"
   ],
   "cloneSourceRestores": [
     "robertlindomar.omarchy-ptbr.menu",
@@ -63,6 +123,8 @@
     "robertlindomar.omarchy-ptbr.reminders",
     "robertlindomar.omarchy-ptbr.speedtest",
     "robertlindomar.omarchy-ptbr.disk-speedtest",
-    "robertlindomar.omarchy-ptbr.notifications"
+    "robertlindomar.omarchy-ptbr.notifications",
+    "robertlindomar.omarchy-ptbr.notification-center",
+    "robertlindomar.omarchy-ptbr.app-launcher"
   ]
 }

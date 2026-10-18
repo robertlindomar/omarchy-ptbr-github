@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.app-launcher",
+  "name": "Aplicativos e favoritos",
+  "version": "0.2.0",
+  "author": "Tyrsolution",
+  "license": "MIT",
+  "description": "Lançador de aplicativos com busca, agentes e favoritos manuais (Ctrl+F)",
+  "kinds": [
+    "overlay",
+    "bar-widget",
+    "menu"
+  ],
+  "entryPoints": {
+    "overlay": "AppGrid.qml",
+    "menu": "AppGrid.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Aplicativos e favoritos",
+    "description": "Abrir aplicativos e favoritos",
+    "category": "Launcher",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  },
+  "omarchy": {
+    "clonedFrom": "tyrsolution.app-launcher"
+  },
+  "homepage": "https://github.com/Tyrsolution/omarchy-app-launcher"
+}

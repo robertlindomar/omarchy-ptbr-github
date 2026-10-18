@@ -15,10 +15,28 @@ O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **override
 | Lembretes | `robertlindomar.omarchy-ptbr.reminders` + `omarchy-reminder` |
 | Rede / Bluetooth / Energia / Clima / Áudio | `robertlindomar.omarchy-ptbr.network`, `robertlindomar.omarchy-ptbr.bluetooth`, `robertlindomar.omarchy-ptbr.power`, `robertlindomar.omarchy-ptbr.weather`, `robertlindomar.omarchy-ptbr.audio` |
 | Speed test / Disco / Agentes | `robertlindomar.omarchy-ptbr.speedtest`, `robertlindomar.omarchy-ptbr.disk-speedtest`, `robertlindomar.omarchy-ptbr.agents` |
+| Central de notificações e histórico | `robertlindomar.omarchy-ptbr.notification-center` |
+| Aplicativos e favoritos (SUPER+ESPAÇO) | `robertlindomar.omarchy-ptbr.app-launcher` |
 | Notificações / Calendário | `robertlindomar.omarchy-ptbr.notifications`, `robertlindomar.omarchy-ptbr.clock` |
 | Indicadores da barra | `robertlindomar.omarchy-ptbr.indicators` |
 | Atalhos (SUPER+K) | `omarchy-menu-keybindings` + `keybindings-labels-ptbr.awk` |
 | Capturas de tela | `omarchy-capture-screenshot` |
+
+## Aplicativos e histórico de notificações
+
+O instalador inclui a central de notificações em português e o lançador de aplicativos
+com favoritos manuais. `SUPER + ESPAÇO` abre o lançador; `Ctrl+F` ou o menu de contexto
+adiciona ou remove o aplicativo dos favoritos. A seção de favoritos aparece acima
+da lista alfabética e a busca continua disponível.
+
+Os favoritos são gravados em `~/.local/state/omarchy/app-launcher/favorites.json`.
+Esse arquivo pessoal não é distribuído. A instalação preserva o estado local existente.
+O atalho anterior de `SUPER + ESPAÇO` é substituído por um bloco identificado em
+`bindings.lua`; a desinstalação remove esse bloco. O instalador guarda backup antes de alterar o arquivo.
+
+As versões PT-BR substituem `jankeesvw.notification-center` e
+`tyrsolution.app-launcher`, preservando os plugins originais e seus créditos MIT.
+O daemon de notificações PT-BR continua sendo um componente separado da central.
 
 ## Repositórios individuais dos plugins
 

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.notification-center",
+  "name": "Central de notificações",
+  "version": "1.1.0",
+  "author": "Jankees van Woezik",
+  "description": "Histórico de notificações recebidas, salvas para consultar depois",
+  "homepage": "https://github.com/jankeesvw/omarchy-notification-center",
+  "license": "MIT",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Central de notificações",
+    "description": "Histórico de notificações recebidas, salvas para consultar depois",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "panelWidth": 420,
+      "listHeight": 0,
+      "badge": "Dot",
+      "keepDays": 30,
+      "maxItems": 1000,
+      "clickAction": "Auto",
+      "showBody": true,
+      "showPreview": true
+    },
+    "schema": [
+      {
+        "key": "badge",
+        "type": "enum",
+        "label": "Marcar notificações não lidas",
+        "options": [
+          "Dot",
+          "Highlight",
+          "Count",
+          "None"
+        ],
+        "defaultValue": "Dot",
+        "description": "Escolha como indicar notificações não lidas: ponto, destaque no sino, contador ou nenhum indicador."
+      },
+      {
+        "key": "keepDays",
+        "type": "integer",
+        "label": "Manter notificações por",
+        "min": 1,
+        "max": 365,
+        "step": 1,
+        "defaultValue": 30,
+        "description": "Prazo em dias. Após esse período, a notificação e seu ícone são excluídos. Vale o limite atingido primeiro: prazo ou quantidade."
+      },
+      {
+        "key": "maxItems",
+        "type": "integer",
+        "label": "Limite de notificações salvas",
+        "min": 50,
+        "max": 10000,
+        "step": 50,
+        "defaultValue": 1000,
+        "description": "Quantidade máxima de notificações no histórico, independentemente da data."
+      },
+      {
+        "key": "clickAction",
+        "type": "enum",
+        "label": "Ao clicar em uma notificação",
+        "options": [
+          "Auto",
+          "Focus the app",
+          "Nothing"
+        ],
+        "defaultValue": "Auto",
+        "description": "O modo automático abre a imagem da notificação ou foca o aplicativo. As outras opções permitem apenas focar o aplicativo ou desativar a ação do clique."
+      },
+      {
+        "key": "showBody",
+        "type": "boolean",
+        "label": "Mostrar o texto da mensagem",
+        "defaultValue": true,
+        "description": "Quando desativado, mostra apenas o remetente e o título."
+      },
+      {
+        "key": "showPreview",
+        "type": "boolean",
+        "label": "Mostrar imagens",
+        "defaultValue": true,
+        "description": "Exibe imagens no painel. Quando desativado, novas imagens também deixam de ser copiadas para o histórico."
+      },
+      {
+        "key": "panelWidth",
+        "type": "integer",
+        "label": "Largura do painel",
+        "min": 320,
+        "max": 900,
+        "step": 20,
+        "defaultValue": 420,
+        "description": "Em unidades de espaçamento do shell, limitada à largura da tela."
+      },
+      {
+        "key": "listHeight",
+        "type": "integer",
+        "label": "Altura da lista",
+        "min": 0,
+        "max": 1200,
+        "step": 20,
+        "defaultValue": 0,
+        "description": "Em unidades de espaçamento do shell. Use 0 para ocupar o espaço disponível até a parte inferior da tela."
+      }
+    ]
+  },
+  "omarchy": {
+    "clonedFrom": "jankeesvw.notification-center"
+  }
+}

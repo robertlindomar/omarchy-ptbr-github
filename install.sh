@@ -9,6 +9,7 @@ BACKUP_DIR="${STATE_DIR}/backups/$(date +%Y%m%d-%H%M%S)"
 MARKER="${STATE_DIR}/installed"
 
 PLUGINS=(
+  robertlindomar.omarchy-ptbr.notification-center robertlindomar.omarchy-ptbr.app-launcher
   robertlindomar.omarchy-ptbr.menu robertlindomar.omarchy-ptbr.lock robertlindomar.omarchy-ptbr.polkit robertlindomar.omarchy-ptbr.clipboard robertlindomar.omarchy-ptbr.reminders
   robertlindomar.omarchy-ptbr.network robertlindomar.omarchy-ptbr.bluetooth robertlindomar.omarchy-ptbr.power robertlindomar.omarchy-ptbr.weather robertlindomar.omarchy-ptbr.audio robertlindomar.omarchy-ptbr.monitor
   robertlindomar.omarchy-ptbr.speedtest robertlindomar.omarchy-ptbr.disk-speedtest robertlindomar.omarchy-ptbr.agents robertlindomar.omarchy-ptbr.notifications robertlindomar.omarchy-ptbr.clock robertlindomar.omarchy-ptbr.indicators robertlindomar.omarchy-ptbr.plugin-manager
@@ -188,6 +189,28 @@ merge_shell_json() {
   mv "$tmp" "$target"
 }
 
+install_launcher_binding() {
+  local target="$HOME/.config/hypr/bindings.lua"
+  local tmp
+  backup_if_exists "$target"
+  if [[ $DRY_RUN -eq 1 ]]; then
+    log "Configurar SUPER + SPACE para Aplicativos e favoritos"
+    return 0
+  fi
+  mkdir -p "$(dirname "$target")"
+  tmp="$(mktemp)"
+  if [[ -f $target ]]; then
+    awk '/^-- omarchy-ptbr: launcher begin$/{skip=1;next} /^-- omarchy-ptbr: launcher end$/{skip=0;next} !skip' "$target" > "$tmp"
+  fi
+  cat >> "$tmp" <<'LUA'
+-- omarchy-ptbr: launcher begin
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "Aplicativos e favoritos", "omarchy-shell shell toggle robertlindomar.omarchy-ptbr.app-launcher '{}'")
+-- omarchy-ptbr: launcher end
+LUA
+  mv "$tmp" "$target"
+}
+
 enable_plugins() {
   local plugin
   for plugin in "${PLUGINS[@]}"; do
@@ -221,6 +244,7 @@ install_bin_overrides
 install_omarchy_overrides
 install_hypr_envs
 merge_shell_json
+install_launcher_binding
 enable_plugins
 
 if [[ $DRY_RUN -eq 0 ]]; then
