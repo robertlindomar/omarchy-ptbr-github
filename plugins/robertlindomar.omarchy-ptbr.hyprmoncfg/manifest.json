@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.hyprmoncfg",
+  "name": "Monitores — hyprmoncfg PT-BR",
+  "version": "2.10.0",
+  "author": "Carmine Paolino",
+  "license": "MIT",
+  "description": "Gerenciador visual de monitores com perfis automáticos identificados por fabricante, modelo e número de série. Configure disposição, brilho, escala, nitidez, cores, HDR, espelhamento, rotação e áreas de trabalho.",
+  "kinds": [
+    "bar-widget",
+    "service"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "service": "PreviewGuard.qml"
+  },
+  "barWidget": {
+    "displayName": "Monitores",
+    "description": "Disposições de monitores com troca automática ao conectar telas e abrir ou fechar a tampa.",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "schema": [
+      {
+        "key": "showBarIcon",
+        "type": "boolean",
+        "label": "Mostrar ícone na barra",
+        "description": "Oculte o ícone ao abrir as disposições por um menu de monitores personalizado. O painel e o serviço de prévia continuam disponíveis.",
+        "defaultValue": true
+      }
+    ],
+    "defaults": {
+      "showBarIcon": true
+    }
+  },
+  "hyprmoncfg": {
+    "package": "hyprmoncfg",
+    "minimumVersion": "1.24.0",
+    "protocolVersion": 1
+  },
+  "omarchy": {
+    "clonedFrom": "crmne.hyprmoncfg"
+  }
+}

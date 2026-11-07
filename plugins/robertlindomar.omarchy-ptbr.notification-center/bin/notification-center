@@ -2,16 +2,10 @@
 #
 # The store behind the notification center.
 #
-# Omarchy's notification service already writes every notification to disk: one
-# JSON file per popup under ~/.local/state/omarchy/notifications/, moved into
-# history/ when it leaves the screen. That directory is not a history you can
-# read back, though. It keeps ten files and deletes the eleventh, and the icon
-# it points at is deleted along with it.
-#
-# So this copies each file out of there the moment it appears, into an archive
-# that is kept for as long as you asked for, with its icon copied beside it so
-# the entry still has a face in a month. Nothing here writes to the service's
-# own directories: it only reads them and gets out of the way.
+# Read Omarchy's current array stores (live.json/history.json) and legacy
+# one-file-per-popup stores. Keep an independent archive and never modify
+# notification-service state. Incoming executable actions are never archived.
+# quiet.json is service configuration, not a notification.
 #
 # Every subcommand prints JSON, one object or one array, including failures, so
 # nothing that goes wrong reaches the panel as a parse error.
@@ -215,10 +209,51 @@ preview_source() {
 # by key. The catch-up sync passes 0 instead, or starting the shell would
 # replay the whole archive at both of them.
 ingest_file() {
-  local file=$1 announce_existing=${2:-0}
-  local key entry app_icon image_src exec_src icon_copy image_copy file_src preview_copy
-  key=$(basename -- "$file"); key=${key%.json}
-  [[ -n $key ]] || return 0
+  local file=$1 announce_existing=${2:-0} name size row key
+  [[ -s $file ]] || return 0
+  size=$(stat -c%s -- "$file" 2>/dev/null) || return 0
+  (( size <= 8388608 )) || return 0
+  name=$(basename -- "$file")
+  [[ $name != quiet.json ]] || return 0
+  if [[ $name == live.json || $name == history.json ]]; then
+    # Whole JSON arrays are replaced atomically in Omarchy 4.5. Each keyed
+    # row has ts in seconds; our archive and legacy files use milliseconds.
+    # Bound rows and fields before passing them through the existing image
+    # validation/copy path. A malformed or half-written store is ignored.
+    while IFS= read -r row; do
+      key=$(printf '%s' "$row" | jq -r '.key')
+      local temporary
+      temporary=$(mktemp "$store/.incoming.XXXXXX") || return 0
+      printf '%s' "$row" > "$temporary"
+      ingest_record "$temporary" "$key" "$announce_existing"
+      rm -f -- "$temporary"
+    done < <(jq -c '
+      if type == "array" then .[:1000] | sort_by(if type == "object" then (.ts // 0) else 0 end) | .[] else empty end
+      | select(type == "object")
+      | select(.transient != true)
+      | select((.key | type) == "string")
+      | select(.key | test("^[A-Za-z0-9_-]{1,120}$"))
+      | select((.ts | type) == "number" and .ts > 0 and .ts < 100000000000)
+      | .timestamp = (.ts * 1000 | floor)
+      | .app = (if (.app | type) == "string" then .app[:256] else "" end)
+      | .summary = (if (.summary | type) == "string" then .summary[:4096] else "" end)
+      | .body = (if (.body | type) == "string" then .body[:16384] else "" end)
+      | .appIcon = (if (.appIcon | type) == "string" then .appIcon[:4096] else "" end)
+      | .image = (if (.image | type) == "string" then .image[:4096] else "" end)
+      | .execArgv = (if (.execArgv | type) == "string" then .execArgv[:16384] else "" end)
+      | .glyph = (if (.glyph | type) == "string" then .glyph[:16] else "" end)
+      | .urgency = (if (.urgency | type) == "number" then .urgency else 1 end)
+    ' "$file" 2>/dev/null)
+  else
+    key=${name%.json}
+    ingest_record "$file" "$key" "$announce_existing"
+  fi
+}
+
+ingest_record() {
+  local file=$1 key=$2 announce_existing=${3:-0}
+  local entry app_icon image_src exec_src icon_copy image_copy file_src preview_copy
+  [[ $key =~ ^[A-Za-z0-9_-]{1,120}$ ]] || return 0
   if is_dismissed "$key"; then
     return 0
   fi
@@ -226,7 +261,7 @@ ingest_file() {
     (( announce_existing )) && grep -F "\"key\":\"$key\"" "$archive" | head -n 1
     return 0
   fi
-  [[ -s $file ]] || return 0
+  [[ -r $file ]] || return 0
 
   # A file caught mid-write parses as nothing; it will be caught again on the
   # move into history, or by the next sync.
@@ -420,16 +455,14 @@ remove_key() {
   grep -vF "\"key\":\"$key\"" "$archive" > "$archive.tmp" 2>/dev/null || : > "$archive.tmp"
   mv -f "$archive.tmp" "$archive"
   rm -f -- "$images/$key-appIcon" "$images/$key-image" "$images/$key-preview"
-  # Both directories, not only history: a notification dismissed while its
-  # toast is still on screen is sitting in the popup directory, and leaving it
-  # there means the move into history archives it again a moment later.
-  rm -f -- "$src_history/$key.json" "$src_dir/$key.json"
+  # Dismissal belongs to this archive. The service still owns its live and
+  # history stores, and our dismissed-key marker prevents reimporting a row.
 }
 
 cmd_remove() {
   ensure_store
   local key=$1
-  [[ -n $key ]] || die "remove needs a key"
+  [[ $key =~ ^[A-Za-z0-9_-]{1,120}$ ]] || die "remove needs a valid key"
   with_lock remove_key "$key"
   printf '{"ok":true,"removed":%s}\n' "$(printf '%s' "$key" | jq -Rs .)"
 }
@@ -439,10 +472,7 @@ clear_all() {
   : > "$archive"
   : > "$dismissed_file"
   rm -f -- "$images"/*
-  for f in "$src_history"/*.json; do
-    [[ -e $f ]] || continue
-    rm -f -- "$f"
-  done
+  # Keep the service's source files intact; cleared_at prevents reimport.
 }
 
 cmd_clear() {

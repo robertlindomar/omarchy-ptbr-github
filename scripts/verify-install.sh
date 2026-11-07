@@ -3,6 +3,9 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ -f /usr/share/omarchy/default/i18n/pt-BR/shell.json && $(cat "${XDG_CONFIG_HOME:-$HOME/.config}/omarchy/language" 2>/dev/null) == pt-BR ]]; then
+  exec python3 "$ROOT/scripts/verify-native.py"
+fi
 FAIL=0
 
 PLUGINS=(

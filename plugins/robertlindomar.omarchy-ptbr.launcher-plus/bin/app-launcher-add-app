@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# Adicionar um aplicativo ao iniciador by writing a real desktop entry.
+#
+# Deliberately not a launcher-private list: a .desktop file in
+# ~/.local/share/applications is the system's own registry, so the app shows up
+# in this launcher, Omarchy's Apps menu, and anything else that reads XDG
+# entries. The launcher watches those directories, so it appears immediately.
+
+set -euo pipefail
+
+APPS_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+
+fail() {
+  echo "app-launcher-add-app: $*" >&2
+  exit 1
+}
+
+command -v gum >/dev/null || fail "gum é necessário"
+
+echo
+gum style --bold "Adicionar um aplicativo ao iniciador"
+echo
+
+name=$(gum input --prompt "Nome exibido no bloco: " --placeholder "Antigravity") || fail "cancelado"
+[[ -n ${name//[[:space:]]/} ]] || fail "um nome é necessário"
+
+exec_line=$(gum input --prompt "Comando a executar: " --placeholder "/opt/antigravity/antigravity %U") || fail "cancelado"
+[[ -n ${exec_line//[[:space:]]/} ]] || fail "um comando é necessário"
+
+# shellcheck disable=SC2206
+argv=($exec_line)
+binary="${argv[0]}"
+if [[ $binary != /* ]] && ! command -v "$binary" >/dev/null 2>&1; then
+  echo
+  gum style --foreground 3 "⚠  '$binary' não está no PATH e não é um caminho absoluto."
+  echo
+  gum confirm "Adicionar mesmo assim?" || fail "cancelado"
+elif [[ $binary == /* && ! -x $binary ]]; then
+  echo
+  gum style --foreground 3 "⚠  '$binary' não é um arquivo executável."
+  echo
+  gum confirm "Adicionar mesmo assim?" || fail "cancelado"
+fi
+
+icon=$(gum input --prompt "Caminho do ícone ou nome no tema (opcional): " --placeholder "utilities-terminal") || fail "cancelado"
+comment=$(gum input --prompt "Descrição curta (opcional): ") || fail "cancelado"
+
+terminal=false
+gum confirm "Executa em um terminal?" --default=false && terminal=true
+
+category=$(gum choose --header="Categoria" \
+  "Utilitários" "Desenvolvimento" "Internet" "Gráficos" "Áudio e vídeo" "Escritório" "Sistema" "Jogos") || fail "cancelado"
+case "$category" in
+  Utilitários) category=Utility ;;
+  Desenvolvimento) category=Development ;;
+  Internet) category=Network ;;
+  Gráficos) category=Graphics ;;
+  "Áudio e vídeo") category=AudioVideo ;;
+  Escritório) category=Office ;;
+  Sistema) category=System ;;
+  Jogos) category=Game ;;
+esac
+
+slug=$(echo "$name" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-*//; s/-*$//')
+[[ -n $slug ]] || slug="custom-app"
+target="$APPS_DIR/$slug.desktop"
+
+if [[ -e $target ]]; then
+  echo
+  gum style --foreground 3 "⚠  $target já existe."
+  echo
+  gum confirm "Substituir?" || fail "cancelado"
+fi
+
+echo
+gum style --bold "Será criado:"
+printf '  %s\n  Exec=%s\n\n' "$target" "$exec_line"
+gum confirm "Criar esta entrada?" || fail "cancelado"
+
+mkdir -p "$APPS_DIR"
+{
+  echo "[Desktop Entry]"
+  echo "Type=Application"
+  echo "Name=$name"
+  [[ -n $comment ]] && echo "Comment=$comment"
+  echo "Exec=$exec_line"
+  [[ -n $icon ]] && echo "Icon=$icon"
+  echo "Terminal=$terminal"
+  echo "Categories=$category;"
+} >"$target"
+chmod 644 "$target"
+
+# Keeps the MIME/desktop cache honest for tools that read it; the launcher
+# itself watches the directory and does not need this.
+command -v update-desktop-database >/dev/null && update-desktop-database "$APPS_DIR" 2>/dev/null || true
+
+echo
+gum style --foreground 2 "✓ $name adicionado — aparece no iniciador imediatamente."
+echo "  $target"

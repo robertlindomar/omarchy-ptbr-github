@@ -520,7 +520,7 @@ BarWidget {
                 spacing: Style.space(6)
 
                 Button {
-                    text: "Auto"
+                    text: "Automático"
                     selected: root.mode === "auto"
                     foreground: Color.popups.text
                     horizontalPadding: Style.space(10)

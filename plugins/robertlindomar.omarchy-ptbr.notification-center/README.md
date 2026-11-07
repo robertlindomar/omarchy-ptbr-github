@@ -1,3 +1,28 @@
+# Central de notificações — PT-BR
+
+A versão 1.2 acompanha o formato do Omarchy 4.5: lê os arrays `live.json` e
+`history.json`, além dos arquivos individuais das versões antigas. `quiet.json`
+é configuração de Não perturbe e não entra no histórico. A importação mantém as
+chaves e converte os horários em segundos para os milissegundos do arquivo local.
+
+O histórico já arquivado continua em `~/.local/state/omarchy-notification-center/`.
+Excluir uma notificação ou limpar a central afeta somente esse arquivo próprio;
+o estado do serviço oficial fica intacto. Marcadores de exclusão impedem que o
+próximo sync faça notificações excluídas reaparecerem. Ações executáveis recebidas
+não são arquivadas nem executadas. As opções do painel têm rótulos em português,
+preservando os valores internos e as configurações existentes.
+
+Validação isolada, sem ler notificações pessoais:
+
+```bash
+python3 tests/storage.py
+```
+
+O teste cobre os dois formatos, ordenação, duplicatas, exclusão e limpeza,
+JSON incompleto e atualizações observadas por `inotifywait`.
+
+---
+
 # Notification Center
 
 An [Omarchy](https://omarchy.org) bar widget that keeps the notifications you

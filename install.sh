@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DRY_RUN=0
-NATIVE=0
+NATIVE=auto
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy-ptbr"
 BACKUP_DIR="${STATE_DIR}/backups/$(date +%Y%m%d-%H%M%S)"
 MARKER="${STATE_DIR}/installed"
@@ -36,10 +36,12 @@ run() {
 
 usage() {
   cat <<'EOF'
-Uso: ./install.sh [--dry-run] [--native]
+Uso: ./install.sh [--dry-run] [--native|--legacy]
 
---native: ativa PT-BR nativo e migra o primeiro lote de widgets/painéis.
-Preserva o layout e os plugins complexos; não instala clones antigos.
+--native: migra oficiais para PT-BR nativo e atualiza traduções comunitárias.
+É o padrão quando o Omarchy possui catálogo nativo PT-BR.
+--legacy: usa os clones e overrides antigos (Omarchy anterior ao i18n nativo).
+Preserva layout, favoritos e configurações existentes no modo nativo.
 
 Instala tradução pt-BR do Omarchy em ~/.config e ~/.local/bin.
 Não modifica /usr/share/omarchy.
@@ -50,15 +52,28 @@ for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=1 ;;
     --native) NATIVE=1 ;;
+    --legacy) NATIVE=0 ;;
     -h|--help) usage; exit 0 ;;
     *) die "Argumento desconhecido: $arg" ;;
   esac
 done
 
+if [[ $NATIVE == auto ]]; then
+  NATIVE=0
+  [[ ! -f /usr/share/omarchy/default/i18n/pt-BR/shell.json ]] || NATIVE=1
+fi
 if [[ $NATIVE -eq 1 ]]; then
-  args=(--plugins clock,indicators,audio,bluetooth,network,power,weather,monitor)
+  args=()
   [[ $DRY_RUN -eq 1 ]] || args+=(--apply)
-  exec python3 "$ROOT/scripts/migrate-native.py" "${args[@]}"
+  # Atualize a central antes da troca do daemon (formato Notifications 2.0).
+  python3 "$ROOT/scripts/install-community.py" "${args[@]}"
+  python3 "$ROOT/scripts/migrate-native.py" --all-reviewed --retire-overrides "${args[@]}"
+  if [[ $DRY_RUN -eq 0 ]]; then
+    omarchy restart shell
+    hyprctl reload
+    hyprctl configerrors
+  fi
+  exit 0
 fi
 
 command -v omarchy >/dev/null 2>&1 || die "Omarchy não encontrado. Instale o Omarchy antes de continuar."

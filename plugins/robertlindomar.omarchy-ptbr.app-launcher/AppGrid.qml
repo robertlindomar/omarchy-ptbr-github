@@ -62,6 +62,45 @@ Item {
 
   property bool opened: false
   property string filterText: ""
+  property string category: "Todos"
+  readonly property var categories: ["Todos", "Agentes", "Desenvolvimento", "Internet", "Escritório", "Mídia", "Jogos", "Sistema", "Utilitários", "Outros", "Configurações"]
+  readonly property var settings: [
+    {id:"setting:wifi", name:"Wi-Fi", keywords:"wifi rede internet conexao", panel:"network"},
+    {id:"setting:bluetooth", name:"Bluetooth", keywords:"fone dispositivos", panel:"bluetooth"},
+    {id:"setting:sound", name:"Som", keywords:"audio volume microfone", panel:"audio"},
+    {id:"setting:display", name:"Monitor", keywords:"tela brilho display", panel:"monitor"},
+    {id:"setting:power", name:"Energia", keywords:"bateria desligar reiniciar", panel:"power"}
+  ]
+  function normalized(value) { return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() }
+  function matchScore(name, extra, query) {
+    var n = normalized(name), q = normalized(query).trim()
+    if (!q) return 0
+    if (n === q) return 0
+    if (n.indexOf(q) === 0) return 1
+    if (n.split(/[\s_.-]+/).some(function(w) { return w.indexOf(q) === 0 })) return 2
+    if (n.indexOf(q) >= 0) return 3
+    if (normalized(extra).indexOf(q) >= 0) return 4
+    return -1
+  }
+  function categoryOf(entry) {
+    var cats = entry.categories || []
+    var rules = [["Desenvolvimento", "Development", "IDE"], ["Escritório", "Office"], ["Mídia", "AudioVideo", "Audio", "Video", "Graphics"], ["Internet", "Network", "WebBrowser", "Email", "Chat"], ["Jogos", "Game"], ["Sistema", "System", "Settings"], ["Utilitários", "Utility"]]
+    for (var i=0; i<rules.length; i++)
+      for (var j=1; j<rules[i].length; j++) if (cats.indexOf(rules[i][j]) >= 0) return rules[i][0]
+    return "Outros"
+  }
+  function setCategory(value) {
+    root.category = value
+    contextMenu.hide()
+    root.rebuild()
+    root.resetSelection()
+    allGrid.positionViewAtBeginning()
+    keyCatcher.forceActiveFocus()
+  }
+  function cycleCategory(direction) {
+    var i = root.categories.indexOf(root.category)
+    root.setCategory(root.categories[(i + direction + root.categories.length) % root.categories.length])
+  }
   property var allRows: []
   // Coding agents (claude, codex, gemini, …) launched into a terminal. Probed
   // on open so an agent installed since last time shows up.
@@ -132,6 +171,7 @@ Item {
     if (payload.fontFamily) root.fontFamily = payload.fontFamily
     if (Number(payload.iconScale) > 0) root.iconScale = Number(payload.iconScale)
 
+    root.category = "Todos"
     root.filterText = String(payload.query || "")
     contextMenu.hide()
     root.opened = true
@@ -188,7 +228,7 @@ Item {
     // sortedEntries returns search rows ({ entry, score, key, name }), not the
     // DesktopEntry itself — the entry is one level down. With no query it is
     // already alphabetical; with one it is ranked by the shell's fuzzy matcher.
-    var matches = root.appLibrary.sortedEntries(root.filterText)
+    var matches = root.appLibrary.sortedEntries("")
     var now = Date.now()
     var out = []
     for (var i = 0; i < matches.length; i++) {
@@ -197,6 +237,8 @@ Item {
       if (!id) continue
       out.push({
         id: id,
+        category: root.categoryOf(entry),
+        searchExtra: [entry.genericName || "", entry.comment || "", (entry.keywords || []).join(" "), id].join(" "),
         kind: "app",
         name: root.appLibrary.entryName(entry),
         subtext: root.appLibrary.entrySubtext(entry),
@@ -208,23 +250,22 @@ Item {
       })
     }
 
-    var agents = root.agentRows()
-    // Unfiltered, agents interleave alphabetically with apps (sortedEntries
-    // orders apps by lowercased name, so re-sorting the merge reproduces it).
-    // Filtered, matching agents lead: they are few, and typing "cla" should put
-    // Claude Code in front rather than three rows down.
-    if (root.searching) {
-      out = Agents.sortMatches(agents, root.filterText).concat(out)
-    } else {
-      out = agents.concat(out)
-      out.sort(function(a, b) {
-        var an = String(a.name || "").toLowerCase()
-        var bn = String(b.name || "").toLowerCase()
-        if (an < bn) return -1
-        if (an > bn) return 1
-        return 0
-      })
+    out = root.agentRows().map(function(row) { row.category = "Agentes"; return row }).concat(out)
+    if (root.searching || root.category === "Configurações") {
+      out = out.concat(root.settings.map(function(item) {
+        return { id:item.id, kind:"setting", name:item.name, category:"Configurações", searchExtra:item.keywords,
+          command:["omarchy-shell", "shell", "toggle", "omarchy." + item.panel],
+          icon:"preferences-system", iconUrl:"", monogram:"", subtext:"Configuração do sistema", isNew:false }
+      }))
     }
+    out = out.filter(function(row) {
+      if (root.category !== "Todos" && row.category !== root.category) return false
+      row.searchRank = root.matchScore(row.name, row.searchExtra || row.subtext || "", root.filterText)
+      return row.searchRank >= 0
+    })
+    out.sort(function(a,b) {
+      return a.searchRank - b.searchRank || String(a.name).localeCompare(String(b.name), "pt-BR")
+    })
 
     root.allRows = out
     root.favoritePool = root.pickFavorites(out)
@@ -402,6 +443,7 @@ Item {
 
   function launch(row) {
     if (!row) return
+    if (row.kind === "setting") { Quickshell.execDetached(row.command); root.dismiss(); return }
     if (row.kind === "agent") { root.launchAgent(row); return }
     var id = String(row.id || "")
     var name = String(row.name || "")
@@ -504,7 +546,7 @@ Item {
   }
 
   function toggleFavorite(row) {
-    if (!row) return
+    if (!row || row.kind === "setting") return
     var next = ({})
     for (var id in root.favorites) next[id] = true
     if (next[row.id]) delete next[row.id]
@@ -686,7 +728,11 @@ Item {
             event.accepted = true
           } else if (event.key === Qt.Key_Escape) {
             if (root.filterText) root.setFilter("")
+            else if (root.category !== "Todos") root.setCategory("Todos")
             else root.dismiss()
+            event.accepted = true
+          } else if (event.key === Qt.Key_Tab || event.key === Qt.Key_Backtab) {
+            root.cycleCategory((event.modifiers & Qt.ShiftModifier) || event.key === Qt.Key_Backtab ? -1 : 1)
             event.accepted = true
           } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
             root.launchSelected()
@@ -734,7 +780,7 @@ Item {
             id: query
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             width: parent.width - counter.width - Style.spacing.lg
-            text: root.filterText || "Buscar aplicativos…"
+            text: root.filterText || "Buscar aplicativos e configurações…"
             color: root.foreground
             opacity: root.filterText ? 1 : 0.5
             font.family: root.fontFamily
@@ -778,9 +824,41 @@ Item {
           }
         }
 
+        Flickable {
+          id: categoryBar
+          anchors { top: header.bottom; left: parent.left; right: parent.right }
+          height: Style.space(42)
+          contentWidth: categoryRow.width
+          clip: true
+          boundsBehavior: Flickable.StopAtBounds
+          Row {
+            id: categoryRow
+            spacing: Style.space(6)
+            Repeater {
+              model: root.categories
+              delegate: Rectangle {
+                required property string modelData
+                width: categoryText.implicitWidth + Style.space(18)
+                height: Style.space(30)
+                radius: Style.space(8)
+                color: root.category === modelData ? root.accent : "transparent"
+                Text {
+                  id: categoryText
+                  anchors.centerIn: parent
+                  text: modelData
+                  color: root.category === parent.modelData ? root.background : root.foreground
+                  font.family: root.fontFamily
+                  font.pixelSize: Style.font.caption
+                }
+                MouseArea { anchors.fill: parent; onClicked: root.setCategory(parent.modelData) }
+              }
+            }
+          }
+        }
+
         Rectangle {
           id: headerRule
-          anchors { top: header.bottom; left: parent.left; right: parent.right }
+          anchors { top: categoryBar.bottom; left: parent.left; right: parent.right }
           height: Math.max(1, Style.space(1))
           color: root.foreground
           opacity: 0.12
@@ -940,7 +1018,7 @@ Item {
         Text {
           anchors.centerIn: allArea
           visible: root.allRows.length === 0
-          text: root.filterText ? "Nenhum aplicativo encontrado para “" + root.filterText + "”" : "Nenhum aplicativo encontrado"
+          text: root.filterText ? "Nenhum resultado para “" + root.filterText + "”" : "Nenhum aplicativo nesta categoria"
           color: root.foreground
           opacity: 0.5
           font.family: root.fontFamily
@@ -956,7 +1034,7 @@ Item {
 
           Text {
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-            text: "digite para buscar · ↵ abrir · Ctrl+F favoritar/desfavoritar · esc fechar"
+            text: "Tab categorias · ↵ abrir · Ctrl+F favoritos · Esc voltar/fechar"
             color: root.foreground
             opacity: 0.35
             font.family: root.fontFamily
@@ -1151,6 +1229,7 @@ Item {
           function buildFor(target) {
             contextMenu.row = target
             var entries = [{ label: "Abrir " + target.name, kind: "launch", action: null }]
+            if (target.kind === "setting") { contextMenu.items = entries; return }
 
             entries.push({ label: root.favorites[target.id] ? "Remover dos favoritos (Ctrl+F)" : "Adicionar aos favoritos (Ctrl+F)", kind: "favorite", action: null })
 

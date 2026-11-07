@@ -1,0 +1,175 @@
+import QtQuick
+import qs.Commons
+import qs.Commons as Commons
+import qs.Ui
+
+// Direction B: Keep/Revert shows what is being kept. A miniature stage of the
+// previewed layout sits above the question, so the decision is about the
+// arrangement on screen, not a profile name. The deadline drains below it.
+// Keys stay in PreviewGuard; this only draws and emits.
+BorderSurface {
+  id: root
+
+  property string stage: "confirm"
+  property string profileName: ""
+  property int seconds: 0
+  property int totalSeconds: 30
+  property bool saveOnCommit: false
+  property bool draftApply: false
+  property bool actionPending: false
+  property string actionError: ""
+  property string errorMessage: ""
+  property var layoutProfile: null
+  signal keepRequested()
+  signal revertRequested()
+  signal closeRequested()
+
+  readonly property bool hasAutoRotation: {
+    var outputs = root.layoutProfile ? root.layoutProfile.outputs || [] : []
+    for (var i = 0; i < outputs.length; i++) {
+      if (outputs[i].enabled && outputs[i].rotation_auto && !outputs[i].mirror_of) return true
+    }
+    return false
+  }
+
+  readonly property real remaining: root.totalSeconds > 0
+    ? Math.max(0, Math.min(1, root.seconds / root.totalSeconds)) : 0
+
+  width: Style.space(480)
+  height: content.implicitHeight + contentTopInset + contentBottomInset
+  color: Commons.Color.popups.background
+  borderSpec: Border.surfaceSpec("popups", "border", Commons.Color.accent, Math.max(1, Style.space(2)))
+  radius: Style.cornerRadius
+  padding: Style.space(20)
+
+  MouseArea { anchors.fill: parent; onClicked: function(mouse) { mouse.accepted = true } }
+
+  Column {
+    id: content
+    x: root.contentLeftInset
+    y: root.contentTopInset
+    width: root.width - root.contentLeftInset - root.contentRightInset
+    spacing: Style.space(10)
+
+    DisplayCanvas {
+      visible: root.stage === "confirm" && !!root.layoutProfile
+      width: parent.width
+      height: Style.space(132)
+      profile: root.layoutProfile || ({ outputs: [] })
+      interactive: false
+      detailed: true
+      framed: true
+      foreground: Commons.Color.foreground
+      accent: Commons.Color.accent
+    }
+
+    Item {
+      width: parent.width
+      height: Math.max(title.implicitHeight, countdown.implicitHeight)
+
+      Text {
+        id: title
+        textFormat: Text.PlainText
+        anchors.left: parent.left
+        anchors.right: countdown.left
+        anchors.rightMargin: Style.space(12)
+        anchors.verticalCenter: parent.verticalCenter
+        text: root.stage === "applying"
+          ? "Aplicando prévia dos monitores…"
+          : (root.stage === "error"
+            ? "Não foi possível visualizar esta disposição"
+            : (root.saveOnCommit ? "Manter e salvar esta disposição?"
+              : (root.draftApply ? "Manter esta disposição?" : "Manter este perfil?")))
+        color: root.stage === "error" ? Commons.Color.urgent : Commons.Color.foreground
+        font.family: Style.font.family
+        font.pixelSize: Style.font.heading
+        font.bold: true
+        wrapMode: Text.WordWrap
+      }
+
+      Text {
+        id: countdown
+        textFormat: Text.PlainText
+        visible: root.stage === "confirm"
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        text: root.seconds + "s"
+        color: Commons.Color.accent
+        font.family: Style.font.family
+        font.pixelSize: Style.font.heading
+        font.bold: true
+      }
+    }
+
+    Text {
+      textFormat: Text.PlainText
+      width: parent.width
+      text: root.stage === "applying"
+        ? "Esta confirmação permanece aberta enquanto seus monitores são reconfigurados."
+        : (root.stage === "error"
+          ? root.errorMessage
+          : (root.actionError !== ""
+            ? root.actionError
+            : root.profileName + " · a disposição anterior retorna em " + root.seconds + " segundos"
+              + (root.hasAutoRotation ? "\nA rotação automática é retomada após Manter." : "")))
+      color: root.stage === "error" || root.actionError !== "" ? Commons.Color.urgent : Commons.Color.foreground
+      opacity: 0.68
+      font.family: Style.font.family
+      font.pixelSize: Style.font.body
+      wrapMode: Text.WordWrap
+    }
+
+    Rectangle {
+      visible: root.stage === "confirm"
+      width: parent.width
+      height: Style.space(3)
+      radius: height / 2
+      color: Qt.rgba(Commons.Color.foreground.r, Commons.Color.foreground.g, Commons.Color.foreground.b, 0.12)
+
+      Rectangle {
+        width: parent.width * root.remaining
+        height: parent.height
+        radius: parent.radius
+        color: Commons.Color.accent
+        Behavior on width { NumberAnimation { duration: 240 } }
+      }
+    }
+
+    Item { width: 1; height: Style.space(2) }
+
+    Row {
+      visible: root.stage === "confirm"
+      anchors.right: parent.right
+      spacing: Style.space(10)
+
+      Button {
+        text: root.actionPending ? "Processando…" : "Reverter"
+        bordered: true
+        enabled: !root.actionPending
+        foreground: Commons.Color.foreground
+        fontFamily: Style.font.family
+        onClicked: root.revertRequested()
+      }
+
+      Button {
+        text: root.saveOnCommit ? "Manter e salvar" : "Manter"
+        selected: true
+        bordered: true
+        enabled: !root.actionPending
+        foreground: Commons.Color.foreground
+        fontFamily: Style.font.family
+        onClicked: root.keepRequested()
+      }
+    }
+
+    Button {
+      visible: root.stage === "error"
+      anchors.right: parent.right
+      text: "Fechar"
+      bordered: true
+      foreground: Commons.Color.foreground
+      fontFamily: Style.font.family
+      onClicked: root.closeRequested()
+    }
+  }
+}

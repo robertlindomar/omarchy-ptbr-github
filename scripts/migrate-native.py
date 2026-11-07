@@ -11,6 +11,7 @@ import shutil
 import tempfile
 
 SIMPLE = 'clock indicators audio bluetooth network power weather monitor speedtest disk-speedtest reminders'.split()
+REVIEWED = SIMPLE + 'clipboard polkit menu notifications lock agents'.split()
 PREFIX = 'robertlindomar.omarchy-ptbr.'
 
 
@@ -25,7 +26,11 @@ def migrate(config, names):
             if isinstance(item, str):
                 items[index] = mapping.get(item, item)
             elif isinstance(item, dict) and isinstance(item.get('id'), str):
-                item['id'] = mapping.get(item['id'], item['id'])
+                previous_id = item['id']
+                item['id'] = mapping.get(previous_id, previous_id)
+                if previous_id == PREFIX + 'agents' and 'agents' in names:
+                    # O clone anterior ocultava Cursor CLI; preserve a preferência.
+                    item.setdefault('providers', {}).setdefault('cursor', {}).setdefault('enabled', False)
 
     if 'plugins' in result:
         entries(result['plugins'])
@@ -67,6 +72,8 @@ def atomic_write(path, content):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--all-reviewed', action='store_true', help='migra todos os plugins oficiais revisados')
+    parser.add_argument('--retire-overrides', action='store_true', help='arquiva overrides legados idênticos aos do repo')
     parser.add_argument('--apply', action='store_true', help='grava após criar backups')
     parser.add_argument('--plugins', nargs='*', default=[], metavar='NOME',
                         help='nomes simples separados por espaços ou vírgulas; padrão: somente idioma')
@@ -76,7 +83,8 @@ def main():
                         default=Path(os.environ.get('OMARCHY_PATH', '/usr/share/omarchy')))
     args = parser.parse_args()
     names = list(dict.fromkeys(name for item in args.plugins for name in item.split(',') if name))
-    unknown = set(names) - set(SIMPLE)
+    names = REVIEWED[:] if args.all_reviewed else names
+    unknown = set(names) - set(REVIEWED)
     if unknown:
         parser.error('plugins não permitidos: ' + ', '.join(sorted(unknown)))
     try:
@@ -99,13 +107,26 @@ def main():
         new_shell = json.dumps(updated, ensure_ascii=False, indent=2) + '\n' if updated != config else old_shell
         old_language = language.read_text(encoding='utf-8') if language.exists() else ''
         changes = [(language, old_language, 'pt-BR\n'), (shell, old_shell, new_shell)]
+        retired = []
+        if args.retire_overrides:
+            repo = Path(__file__).resolve().parent.parent
+            for name in ('omarchy-menu-keybindings', 'omarchy-capture-screenshot', 'omarchy-reminder', 'omarchy-agent-usage-update', 'omarchy-agent-usage-cursor'):
+                target = Path.home() / '.local/bin' / name
+                source = repo / 'overrides/bin' / name
+                official = Path('/usr/bin') / name
+                if target.is_file() and source.is_file() and (official.exists() or name == 'omarchy-agent-usage-cursor'):
+                    if target.read_bytes() == source.read_bytes():
+                        retired.append(target)
+                        print('Arquivar override legado: ' + str(target))
+                    else:
+                        print('Preservado override personalizado: ' + str(target))
         for path, before, after in changes:
             print(''.join(difflib.unified_diff(before.splitlines(True), after.splitlines(True),
                                              fromfile=str(path), tofile=str(path) + ' (proposto)')), end='')
         if not args.apply:
             print('\nSimulação: nenhum arquivo alterado. Use --apply para gravar.')
             return
-        if all(before == after for _, before, after in changes):
+        if not retired and all(before == after for _, before, after in changes):
             print('Configuração já está no estado solicitado.')
             return
         stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
@@ -116,9 +137,13 @@ def main():
                 shutil.copy2(path, backup)
             else:
                 backup.with_name(backup.name + '.absent').touch(exist_ok=False)
+        for path in retired:
+            shutil.copy2(path, path.with_name(path.name + '.bak.' + stamp))
         for path, before, after in changes:
             if before != after:
                 atomic_write(path, after)
+        for path in retired:
+            path.unlink()
         print('\nAplicado. Backups: *.bak.' + stamp + ' (ou .absent).')
     except (OSError, ValueError, TypeError, AttributeError) as error:
         parser.exit(1, 'Erro: ' + str(error) + '\n')

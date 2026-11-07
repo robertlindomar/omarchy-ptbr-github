@@ -1,64 +1,90 @@
-# Migração gradual para o PT-BR nativo
+# PT-BR nativo no Omarchy 4.5
 
-O Omarchy 4.5 lê `~/.config/omarchy/language` e observa mudanças em tempo real.
-`pt-BR` seleciona o catálogo oficial `default/i18n/pt-BR/shell.json`; textos
-ausentes usam o inglês como fallback. Isso configura o idioma da shell,
-sem alterar o locale global do sistema.
+O modo recomendado usa os plugins oficiais atualizados e o catálogo PT-BR do
+próprio Omarchy. Não modifica `/usr/share/omarchy`. O idioma da shell muda ao vivo;
+o locale global do sistema e o idioma de aplicativos já abertos não são alterados.
 
-1. **Idioma e plugins já oficiais:** começar só pelo idioma, conferir Elsewhen,
-   workspaces, tray, teclado e demais componentes que já usam os IDs oficiais.
-2. **Widgets simples:** migrar clock e indicators. Conferir formato do relógio,
-   calendário, posição central e indicadores fixados.
-3. **Painéis simples:** audio, bluetooth, network, power, weather e monitor.
-   Conferir cada painel e suas ações. Esse é o limite do primeiro lote.
-   Speedtest, disk-speedtest e reminders ficam para uma rodada posterior,
-   embora o script já aceite esses nomes.
-4. **Clipboard, polkit e menu:** revisar os clones e suas diferenças funcionais
-   antes de trocar os IDs. Estes não são aceitos pelo script.
-5. **Terceiros:** Omaclock, launcher, notification-center, HODL e outros precisam
-   de seus próprios catálogos `i18n/pt-BR.json` e `Commons.Translations`.
-   Ativar o idioma não traduz automaticamente textos fixos desses plugins.
-6. **Notifications e lock:** comparar comportamento e integrações, testar
-   notificações e o bloqueio antes de migrar; fora do script.
-7. **Agents:** deixar por último, devido às integrações e customizações do clone.
-   Comparar recursos e testar todos os fluxos antes de substituir.
+## Ordem de execução e resultado
 
-## Uso
+1. Idioma, Elsewhen e demais componentes oficiais: PT-BR ativado.
+2. Relógio e indicadores: migrados, preservando formato, posição e itens fixados.
+3. Áudio, Bluetooth, rede, energia, clima, monitor, testes de velocidade e lembretes: migrados.
+4. Clipboard, polkit e menu: migrados para as implementações oficiais atuais.
+5. Terceiros: OmaClock, gerenciador, aplicativos/favoritos e hyprmoncfg revisados;
+   HODL e Launcher Plus incluídos no repo com tradução e licenças preservadas.
+6. Notificações e bloqueio: migrados; a central foi adaptada ao armazenamento
+   Notifications 2.0 antes de trocar o daemon.
+7. Agentes: migrado para a versão oficial com todos os novos provedores.
+   A preferência do clone de ocultar Cursor é mantida; escolha explícita do usuário prevalece.
 
-Na pasta que contém o script:
+Os clones nativos antigos ficam no disco, desabilitados, para comparação. O estado
+pessoal de favoritos, agentes, carteiras e histórico continua nas mesmas pastas;
+não é distribuído neste repositório. Não são habilitados serviços externos novos
+nem configuradas contas de terceiros.
+
+## Instalação e verificação
 
 ```bash
-# Apenas prévia do idioma; nunca grava por padrão
-python3 migrate-native.py
-
-# Prévia do primeiro lote completo
-python3 migrate-native.py --plugins clock indicators audio bluetooth network power weather monitor
-
-# Aplicar só o idioma
-python3 migrate-native.py --apply
-
-# Aplicar um grupo pequeno depois de conferir a prévia
-python3 migrate-native.py --plugins clock indicators --apply
+./install.sh --dry-run
+./install.sh
+./scripts/verify-install.sh
 ```
 
-`--plugins` aceita nomes separados por espaços ou vírgulas. Sem nomes, nenhuma
-substituição de plugin acontece. Outros IDs são rejeitados. `--config-dir` e
-`--omarchy-path` permitem validar uma cópia de configuração ou outra instalação.
+Quando existe o catálogo `/usr/share/omarchy/default/i18n/pt-BR/shell.json`, o
+instalador escolhe o modo nativo automaticamente. `--native` o exige; `--legacy`
+é reservado à implementação antiga, anterior à tradução nativa.
 
-O script confirma a existência do catálogo PT-BR e dos manifests oficiais.
-Troca somente IDs selecionados em `plugins`, `bar.layout` e `centerAnchor`;
-mantém as outras propriedades de cada item, inclusive formatos e cidades.
-Remove os originais selecionados de `disabledPlugins`, acrescenta seus clones
-nessa lista e remove esses clones de `cloneSourceRestores`. Os arquivos dos
-clones continuam disponíveis para comparação e retorno.
+Ao aplicar, o instalador reinicia a shell para liberar os serviços antigos e
+recarrega o Hyprland. O modo nativo atualiza sete plugins comunitários e mapeia referências existentes
+para seus clones PT-BR. Preserva todas as seções da barra e suas configurações.
+Redireciona apenas os IDs dos plugins nos atalhos existentes; não impõe um novo
+atalho de launcher. Os clones disponíveis mas sem referência não são ativados.
 
-Antes de gravar, cria backups dos dois arquivos com o mesmo timestamp UTC.
-Se `language` não existia, um arquivo `.absent` registra essa condição.
-As gravações individuais usam arquivo temporário e substituição atômica;
-os dois arquivos não formam uma transação única. Para reverter, restaurar os
-dois backups correspondentes, ou apagar `language` quando havia `.absent`.
-O JSON pode ganhar nova indentação; suas propriedades e valores são preservados.
+Os overrides legados de capturas, atalhos, lembretes e uso de agentes só são
+arquivados se seus bytes forem idênticos à cópia deste repo e houver comando
+oficial correspondente. O coletor antigo exclusivo de Cursor também é arquivado.
+Overrides personalizados diferentes são preservados e informados no relatório.
 
-Após cada grupo, conferir visualmente barra e painéis, incluindo traduções
-ausentes e diferenças funcionais dos clones. `shell.json` recarrega ao salvar;
-não há reinício automático no script.
+Para uma migração parcial, sem instalar os plugins comunitários:
+
+```bash
+python3 scripts/migrate-native.py --plugins clock indicators       # simulação
+python3 scripts/migrate-native.py --plugins clock indicators --apply
+```
+
+Sem `--apply`, os scripts Python não gravam. Sem `--plugins`, migrate-native.py
+seleciona apenas o idioma. `--all-reviewed` inclui os 17 plugins nativos revisados;
+`--retire-overrides` habilita o arquivamento dos comandos legados conhecidos.
+
+## Backups e reversão
+
+A instalação comunitária guarda cópias dos plugins, shell.json e bindings.lua em
+`~/.local/state/omarchy-ptbr/backups/native-<timestamp>/` (respeita XDG_STATE_HOME).
+O script nativo cria `shell.json.bak.<timestamp>` e `language.bak.<timestamp>` ao
+lado dos arquivos originais. `.absent` registra que o arquivo ainda não existia.
+Os overrides arquivados permanecem como `<comando>.bak.<timestamp>` na mesma pasta.
+
+Para reverter, restaure as cópias do lote correspondente, incluindo os plugins e
+bindings.lua quando houver alteração. Se language tinha marcador `.absent`, remova
+apenas o arquivo language criado pela migração. Recarregue plugins e Hyprland.
+A escrita de cada configuração é atômica; a instalação completa não é transacional.
+
+O `uninstall.sh` antigo é específico do modo legado e não deve ser usado como
+reversor da migração nativa; use os backups descritos acima.
+
+## Validação e limites
+
+Foram verificados os manifests, sintaxe dos scripts, preservação da configuração,
+idempotência, favoritos/carteiras e o fluxo de armazenamento da central com fixtures.
+A central suporta arquivos legados e arrays live/history, evita duplicatas e mantém
+exclusões sem modificar as fontes oficiais. Um envio real confirmou a entrada no histórico.
+
+Os painéis de Elsewhen, Agentes, central e launcher foram conferidos visualmente.
+Bloqueio/autenticação, pagamentos, instalações e remoções de aplicativos não foram
+acionados como testes. Os textos de notícias, nomes de aplicativos, cidades e
+mensagens de serviços externos continuam no idioma da fonte. As traduções oficiais
+são mantidas pelo Omarchy; sugestões de redação devem ser feitas no catálogo upstream.
+
+O catálogo do gerenciador cresceu além do antigo limite de 8 MiB. O helper novo
+baixa de HTTPS com limite de 32 MiB e prazo de 25 segundos, e entrega ao QML
+apenas os metadados dos selos (cerca de 2 MiB na verificação desta rodada).

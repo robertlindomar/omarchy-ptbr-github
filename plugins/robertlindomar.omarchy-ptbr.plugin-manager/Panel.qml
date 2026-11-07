@@ -814,14 +814,13 @@ Panel {
     root.updateSummary = message || "Atualização interrompida. Verifique novamente."
   }
 
-  // Fetches the public marketplace catalog (capped at 2 MB like every other
-  // retained output) and builds the id -> {verified} map.
+  // Fetch bounded metadata through a helper: the full catalog exceeds 8 MiB.
+  // Only the compact badge metadata is retained by QML.
   function fetchMarketplace() {
     if (root.marketplaceFetching) return
     root.marketplaceFetching = true
     root.marketplaceFetchFailed = false
-    marketplaceProcess.command = ["curl", "-fsSL", "--max-time", "20", "--max-filesize", "8388608",
-      "https://plugins.omarchy.org/catalog.json"]
+    marketplaceProcess.command = ["python3", decodeURIComponent(Qt.resolvedUrl("bin/fetch-catalog").toString().replace(/^file:\/\//, ""))]
     marketplaceProcess.running = true
   }
 
@@ -1512,8 +1511,8 @@ Panel {
 
               Button {
                 id: marketplaceButton
-                text: "\udb86\ude6f  Marketplace"
-                tooltipText: "Abrir o marketplace de plugins do Omarchy"
+                text: "\udb86\ude6f  Catálogo"
+                tooltipText: "Abrir o catálogo de plugins do Omarchy"
                 bordered: true
                 foreground: root.contentForeground
                 accent: Color.accent

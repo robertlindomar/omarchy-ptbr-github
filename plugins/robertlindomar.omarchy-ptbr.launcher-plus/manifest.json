@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.launcher-plus",
+  "name": "Launcher Plus",
+  "version": "0.1.0",
+  "author": "Robert Lindomar; baseado em Tyrsolution e maajix",
+  "license": "MIT",
+  "description": "Grade de aplicativos com busca local de arquivos, janelas, clipboard, cálculos e web; sem IA.",
+  "kinds": [
+    "overlay",
+    "menu"
+  ],
+  "entryPoints": {
+    "overlay": "AppGrid.qml",
+    "menu": "AppGrid.qml"
+  },
+  "omarchy": {
+    "clonedFrom": "robertlindomar.launcher-plus"
+  }
+}

@@ -4,6 +4,24 @@ Tradução **não oficial** do [Omarchy](https://omarchy.org) para português br
 
 O projeto usa **clones de plugins** em `~/.config/omarchy/plugins/` e **overrides** em `~/.local/bin/`, sem modificar `/usr/share/omarchy`.
 
+## Instalação recomendada — Omarchy 4.5 ou superior
+
+O projeto agora usa **PT-BR nativo nos plugins oficiais** e mantém traduções dos
+plugins comunitários. A instalação detecta o catálogo nativo automaticamente,
+preserva o layout e arquiva overrides antigos conhecidos com backup.
+
+```bash
+./install.sh --dry-run
+./install.sh
+./scripts/verify-install.sh
+```
+
+Veja [a migração completa, a ordem dos lotes e os backups](docs/MIGRACAO-NATIVA.md).
+HODL e Launcher Plus também estão disponíveis em PT-BR. Favoritos e carteiras
+permanecem nos caminhos existentes; nenhum dado pessoal é incluído no repo.
+`--legacy` seleciona os clones antigos. As tabelas e instruções abaixo documentam
+essa implementação legada; para Omarchy atual, use o fluxo acima.
+
 ## Componentes traduzidos
 
 | Área | Clone / override |

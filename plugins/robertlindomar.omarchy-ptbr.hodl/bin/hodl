@@ -1,0 +1,1006 @@
+#!/usr/bin/env python3
+"""hodl — bitcoin price, your positions, and the daily digest.
+
+One fetcher for two surfaces: the Omarchy shell plugin shells out to this for
+every number it shows, and the same commands work in a terminal. Every source
+is cached on disk with its own TTL, so the shell can poll once a minute
+without hammering an API that only changes hourly, and a cold panel paints
+last-known values instead of dashes.
+
+Public APIs, no keys, stdlib only.
+"""
+
+import argparse
+import hashlib
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+
+HOME = os.path.expanduser("~")
+DATA_DIR = os.environ.get("HODL_DATA_DIR", os.path.join(HOME, ".local", "share", "omarchy-hodl"))
+STATE_DIR = os.environ.get("HODL_STATE_DIR", os.path.join(HOME, ".local", "state", "omarchy-hodl"))
+POSITIONS_FILE = os.path.join(DATA_DIR, "positions.json")
+
+USER_AGENT = "omarchy-hodl/1.0 (+https://omarchy.org)"
+TIMEOUT = 12
+
+# Per-source TTLs, each set to the speed of the thing it describes. The price
+# ticks all day; the fear & greed index is published once every 24h; a block
+# arrives every ten minutes; a year of candles does not change in an hour.
+TTL_MARKET = 45
+TTL_FNG = 3600
+TTL_NETWORK = 600
+TTL_NEWS = 1800
+
+# Candles by window. Switching ranges twice in a row must not cost two
+# requests — that is what burns a free rate limit.
+TTL_CANDLES = {1: 300, 7: 900, 14: 1800, 30: 3600, 90: 21600, 180: 43200, 365: 43200}
+
+def candles_ttl(days):
+    return TTL_CANDLES.get(int(days), 3600)
+
+# CoinGecko's free tier is a handful of calls per minute per IP, shared with
+# every other tool on this machine. Two guards: never fire two calls at the
+# same host back to back, and stand down for a while once it says 429.
+MIN_SPACING = {"api.coingecko.com": 4.0}
+BACKOFF_STEPS = [45, 120, 300, 600, 900]
+
+
+class RateLimited(Exception):
+    """The host asked us to stop. Carries how long is left on the clock."""
+
+    def __init__(self, host, seconds):
+        super().__init__("rate limited by %s, %ds left" % (host, seconds))
+        self.host = host
+        self.seconds = int(seconds)
+
+SATS = 100_000_000
+HALVING_INTERVAL = 210_000
+
+FEEDS = [
+    ("Cointelegraph", "https://cointelegraph.com/rss/tag/bitcoin", False),
+    ("Decrypt", "https://decrypt.co/feed", True),
+    ("Bitcoin.com", "https://news.bitcoin.com/feed/", True),
+    ("Bitcoin Magazine", "https://bitcoinmagazine.com/feed", False),
+]
+
+# Feeds that cover the whole market get filtered down to the stories that are
+# actually about bitcoin. Even a bitcoin-tagged feed carries the occasional
+# altcoin story, so a headline that names another coin without naming bitcoin
+# is dropped everywhere — this digest has one subject.
+BTC_WORDS = re.compile(r"\b(bitcoin|btc|satoshi|sats|halving|lightning|mempool|hashrate|miner|mining|ordinals?|taproot|microstrategy|strategy|saylor|self-custody)\b", re.I)
+ALT_WORDS = re.compile(r"\b(xrp|ripple|solana|sol|ethereum|eth|dogecoin|doge|cardano|ada|zcash|zec|bnb|tron|trx|shiba|memecoins?|altcoins?|nft|stablecoins?)\b", re.I)
+
+
+def is_bitcoin_story(title):
+    names_btc = re.search(r"\b(bitcoin|btc|satoshi|sats?)\b", title, re.I)
+    if ALT_WORDS.search(title) and not names_btc:
+        return False
+    return bool(BTC_WORDS.search(title))
+
+
+# ------------------------------------------------------------------ plumbing
+
+def ensure_dirs():
+    os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(STATE_DIR, exist_ok=True)
+
+
+def cooldown_state():
+    return read_json(cache_path("cooldown"), {}) or {}
+
+
+def host_of(url):
+    return urllib.parse.urlparse(url).netloc
+
+
+def check_cooldown(url):
+    """Raise instead of calling a host that is still serving a penalty."""
+    host = host_of(url)
+    entry = cooldown_state().get(host)
+    if not entry:
+        return
+    left = float(entry.get("until", 0)) - time.time()
+    if left > 0:
+        raise RateLimited(host, left)
+
+
+def note_rate_limited(url, retry_after=None):
+    host = host_of(url)
+    state = cooldown_state()
+    entry = state.get(host) or {}
+    level = min(int(entry.get("level", 0)), len(BACKOFF_STEPS) - 1)
+    wait = float(retry_after) if retry_after else BACKOFF_STEPS[level]
+    state[host] = {"until": time.time() + wait, "level": min(level + 1, len(BACKOFF_STEPS) - 1),
+                   "last": time.time()}
+    atomic_write(cache_path("cooldown"), json.dumps(state))
+    return wait
+
+
+def note_success(url):
+    host = host_of(url)
+    state = cooldown_state()
+    entry = state.get(host) or {}
+    if entry.get("level"):
+        entry["level"] = 0
+        entry["until"] = 0
+    entry["last"] = time.time()
+    state[host] = entry
+    atomic_write(cache_path("cooldown"), json.dumps(state))
+
+
+def too_soon(url):
+    """Seconds still owed to a host's minimum spacing, or 0."""
+    host = host_of(url)
+    spacing = MIN_SPACING.get(host)
+    if not spacing:
+        return 0
+    last = float((cooldown_state().get(host) or {}).get("last", 0))
+    return max(0, spacing - (time.time() - last))
+
+
+def http_get(url, accept="application/json", max_bytes=None):
+    check_cooldown(url)
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            if max_bytes:
+                declared = resp.headers.get("Content-Length")
+                if declared and int(declared) > max_bytes:
+                    return b""
+                body = resp.read(max_bytes + 1)
+                if len(body) > max_bytes:
+                    return b""
+            else:
+                body = resp.read()
+    except urllib.error.HTTPError as exc:
+        if exc.code == 429:
+            wait = note_rate_limited(url, exc.headers.get("Retry-After"))
+            raise RateLimited(host_of(url), wait) from None
+        raise
+    note_success(url)
+    return body
+
+
+def get_json(url):
+    data = json.loads(http_get(url).decode("utf-8", "replace"))
+    # CoinGecko answers a throttled request with HTTP 200 and the 429 buried
+    # in the body, so the status line alone never sees the rate limit.
+    if isinstance(data, dict) and isinstance(data.get("status"), dict):
+        code = data["status"].get("error_code")
+        if code in (429, "429"):
+            wait = note_rate_limited(url)
+            raise RateLimited(host_of(url), wait)
+    return data
+
+
+def atomic_write(path, text):
+    ensure_dirs()
+    tmp = path + ".tmp.%d" % os.getpid()
+    with open(tmp, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    os.replace(tmp, path)
+
+
+def read_json(path, fallback=None):
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return fallback
+
+
+def cache_path(name):
+    return os.path.join(STATE_DIR, name + ".json")
+
+
+def cached(name, ttl, producer, force=False, url_hint=None):
+    """Return a producer's value, reusing disk cache while it is fresh.
+
+    A failed refresh falls back to the stale entry rather than propagating the
+    error: a panel showing a five-minute-old price beats a panel showing an
+    exception, and `error` carries the reason for anyone who cares.
+    """
+    path = cache_path(name)
+    entry = read_json(path)
+    now = time.time()
+    has_cache = isinstance(entry, dict) and entry.get("value") is not None
+    if not force and has_cache and now - entry.get("fetched_at", 0) < ttl:
+        return entry["value"], entry.get("fetched_at", 0), ""
+    # Back-to-back calls to a spacing-limited host serve the stale copy rather
+    # than spend a request that would probably come back 429 anyway.
+    if has_cache and url_hint and too_soon(url_hint):
+        return entry["value"], entry.get("fetched_at", 0), ""
+    try:
+        value = producer()
+        atomic_write(path, json.dumps({"fetched_at": now, "value": value}))
+        return value, now, ""
+    except Exception as exc:  # noqa: BLE001 - any failure degrades to cache
+        if isinstance(entry, dict) and entry.get("value") is not None:
+            return entry["value"], entry.get("fetched_at", 0), describe_error(exc)
+        return None, 0, describe_error(exc)
+
+
+def describe_error(exc):
+    if isinstance(exc, RateLimited):
+        return "limite de consultas, tente novamente em %ds" % exc.seconds
+    if isinstance(exc, urllib.error.HTTPError):
+        return "HTTP %s" % exc.code
+    if isinstance(exc, urllib.error.URLError):
+        return "sem conexão"
+    return exc.__class__.__name__
+
+
+# ------------------------------------------------------------------- sources
+
+def fetch_market(currency):
+    url = ("https://api.coingecko.com/api/v3/coins/markets?vs_currency=%s&ids=bitcoin"
+           "&price_change_percentage=1h,24h,7d,30d" % urllib.parse.quote(currency))
+    rows = get_json(url)
+    if not rows:
+        raise ValueError("resposta de mercado vazia")
+    row = rows[0]
+    return {
+        "currency": currency,
+        "price": row.get("current_price"),
+        "change1h": row.get("price_change_percentage_1h_in_currency"),
+        "change24h": row.get("price_change_percentage_24h_in_currency"),
+        "change7d": row.get("price_change_percentage_7d_in_currency"),
+        "change30d": row.get("price_change_percentage_30d_in_currency"),
+        "high24h": row.get("high_24h"),
+        "low24h": row.get("low_24h"),
+        "ath": row.get("ath"),
+        "athChangePct": row.get("ath_change_percentage"),
+        "athDate": row.get("ath_date"),
+        "marketCap": row.get("market_cap"),
+        "volume24h": row.get("total_volume"),
+        "supply": row.get("circulating_supply"),
+        "lastUpdated": row.get("last_updated"),
+    }
+
+
+def fetch_fng():
+    data = get_json("https://api.alternative.me/fng/?limit=2")
+    rows = data.get("data") or []
+    if not rows:
+        raise ValueError("resposta de sentimento vazia")
+    out = {
+        "value": int(rows[0].get("value", 0)),
+        "label": rows[0].get("value_classification", ""),
+        "timestamp": int(rows[0].get("timestamp", 0)),
+        "nextUpdate": int(rows[0].get("time_until_update", 0) or 0),
+        "yesterday": None,
+    }
+    if len(rows) > 1:
+        out["yesterday"] = int(rows[1].get("value", 0))
+    return out
+
+
+def fetch_network():
+    out = {}
+    # Independent endpoints: one being down should not blank the other three.
+    try:
+        out["height"] = int(http_get("https://mempool.space/api/blocks/tip/height", "text/plain").decode().strip())
+    except Exception:
+        out["height"] = None
+    try:
+        fees = get_json("https://mempool.space/api/v1/fees/recommended")
+        out["feeFast"] = fees.get("fastestFee")
+        out["feeHalfHour"] = fees.get("halfHourFee")
+        out["feeHour"] = fees.get("hourFee")
+    except Exception:
+        pass
+    try:
+        adj = get_json("https://mempool.space/api/v1/difficulty-adjustment")
+        out["difficultyChange"] = adj.get("difficultyChange")
+        out["remainingBlocks"] = adj.get("remainingBlocks")
+        out["estimatedRetargetDate"] = adj.get("estimatedRetargetDate")
+    except Exception:
+        pass
+    try:
+        hr = get_json("https://mempool.space/api/v1/mining/hashrate/3d")
+        out["hashrate"] = hr.get("currentHashrate")
+        out["difficulty"] = hr.get("currentDifficulty")
+    except Exception:
+        pass
+    if not out:
+        raise ValueError("mempool indisponível")
+    return out
+
+
+def fetch_candles(currency, days):
+    url = ("https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=%s&days=%d"
+           % (urllib.parse.quote(currency), int(days)))
+    rows = get_json(url)
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("resposta de candles vazia")
+    return rows
+
+
+THUMB_DIR = os.path.join(STATE_DIR, "thumbs")
+# Publishers ship 1.5MB article covers for a 44px thumbnail. Accept up to a
+# couple of megabytes, then shrink on disk when ImageMagick is around so the
+# cache stays small and the panel decodes instantly.
+MAX_THUMB_BYTES = 2_500_000
+THUMB_WIDTH = 200
+THUMB_MAX_AGE = 14 * 86400
+THUMB_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".gif")
+
+
+def item_image(item):
+    """The artwork a feed hangs off an item, in the order publishers use it."""
+    for node in item.iter():
+        tag = node.tag.split("}")[-1]
+        url = node.get("url") or node.get("href")
+        if not url:
+            continue
+        if tag == "thumbnail":
+            return url
+        kind = node.get("type", "") or ""
+        if tag in ("content", "enclosure") and (kind.startswith("image") or node.get("medium") == "image"):
+            return url
+    # Otherwise the first inline image in the summary markup.
+    for node in item.iter():
+        if node.tag.split("}")[-1] not in ("description", "encoded", "summary", "content"):
+            continue
+        markup = "".join(node.itertext())
+        match = re.search(r'<img[^>]+src=["\']([^"\']+)', markup)
+        if match:
+            return match.group(1)
+    return ""
+
+
+def prune_thumbs():
+    try:
+        cutoff = time.time() - THUMB_MAX_AGE
+        for name in os.listdir(THUMB_DIR):
+            path = os.path.join(THUMB_DIR, name)
+            if os.path.getmtime(path) < cutoff:
+                os.remove(path)
+    except OSError:
+        pass
+
+
+def cache_thumb(url):
+    """Download a headline image once and hand back a local path.
+
+    The shell never fetches anything itself, images included: it gets a file
+    to show or an empty string, and a feed with a dead CDN costs one silent
+    failure rather than a broken box in the panel.
+    """
+    if not url or not url.startswith(("http://", "https://")):
+        return ""
+    ext = os.path.splitext(urllib.parse.urlparse(url).path)[1].lower()
+    if ext not in THUMB_EXTS:
+        ext = ".jpg"
+    path = os.path.join(THUMB_DIR, hashlib.sha1(url.encode()).hexdigest()[:16] + ext)
+    if os.path.exists(path) and os.path.getsize(path) > 0:
+        return path
+    try:
+        os.makedirs(THUMB_DIR, exist_ok=True)
+        data = http_get(url, accept="image/*", max_bytes=MAX_THUMB_BYTES)
+        if not data:
+            return ""
+        tmp = path + ".tmp"
+        with open(tmp, "wb") as fh:
+            fh.write(data)
+        shrink_thumb(tmp)
+        os.replace(tmp, path)
+        return path
+    except Exception:
+        return ""
+
+
+def shrink_thumb(path):
+    """Best effort: a 1.5MB cover becomes a 200px thumbnail, or stays as it
+    is when there is no ImageMagick on the box."""
+    try:
+        import subprocess
+        subprocess.run(["magick", path, "-resize", "%dx>" % THUMB_WIDTH, "-strip", path],
+                       check=True, timeout=10,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception:
+        pass
+
+
+MAX_FEED_BYTES = 4_000_000
+
+
+def parse_feed(name, url, needs_filter):
+    raw = http_get(url, "application/rss+xml, application/xml, text/xml",
+                   max_bytes=MAX_FEED_BYTES)
+    # ElementTree expands internal entities, which is the whole trick behind
+    # a billion-laughs payload. No legitimate news feed declares entities, so
+    # one that does is simply not parsed.
+    if b"<!ENTITY" in raw[:8192]:
+        raise ValueError("feed declara entidades XML")
+    root = ET.fromstring(raw)
+    items = []
+    for item in root.iter():
+        tag = item.tag.split("}")[-1]
+        if tag not in ("item", "entry"):
+            continue
+        title = ""
+        link = ""
+        published = ""
+        for child in item:
+            ctag = child.tag.split("}")[-1]
+            if ctag == "title":
+                title = "".join(child.itertext()).strip()
+            elif ctag == "link":
+                link = (child.text or child.get("href") or "").strip()
+            elif ctag in ("pubDate", "published", "updated", "date"):
+                published = (child.text or "").strip()
+        if not title:
+            continue
+        if not is_bitcoin_story(title) and (needs_filter or ALT_WORDS.search(title)):
+            continue
+        items.append({"source": name, "title": clean_text(title), "link": link,
+                      "image": item_image(item),
+                      "published": published, "ts": parse_date(published)})
+    return items
+
+
+def clean_text(text):
+    text = re.sub(r"<[^>]+>", "", text)
+    for entity, char in (("&amp;", "&"), ("&#39;", "'"), ("&quot;", '"'), ("&lt;", "<"),
+                         ("&gt;", ">"), ("&nbsp;", " "), ("&#8217;", "'"), ("&#8216;", "'"),
+                         ("&hellip;", "…"), ("&#8230;", "…"), ("&#8211;", "–")):
+        text = text.replace(entity, char)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def parse_date(value):
+    value = (value or "").strip()
+    if not value:
+        return 0
+    for fmt in ("%a, %d %b %Y %H:%M:%S %z", "%a, %d %b %Y %H:%M:%S %Z",
+                "%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%d %H:%M:%S"):
+        try:
+            dt = datetime.strptime(value.replace("GMT", "+0000"), fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.timestamp()
+        except ValueError:
+            continue
+    return 0
+
+
+def fetch_headlines():
+    seen = set()
+    items = []
+    for name, url, needs_filter in FEEDS:
+        try:
+            for item in parse_feed(name, url, needs_filter):
+                key = re.sub(r"[^a-z0-9]", "", item["title"].lower())[:60]
+                if key in seen:
+                    continue
+                seen.add(key)
+                items.append(item)
+        except Exception:
+            continue  # a dead feed is not a dead newsletter
+    items.sort(key=lambda i: i["ts"], reverse=True)
+    return items[:12]
+
+
+# ------------------------------------------------------------------ snapshot
+
+COINGECKO = "https://api.coingecko.com/"
+
+ALL_SOURCES = ("market", "fng", "network")
+
+
+def read_cached(name):
+    entry = read_json(cache_path(name))
+    if isinstance(entry, dict) and entry.get("value") is not None:
+        return entry["value"], entry.get("fetched_at", 0)
+    return None, 0
+
+
+def snapshot(currency, force=False, sources=None):
+    """Merged view of every source. `sources` limits what is actually
+    refreshed; anything left out is read straight off disk at whatever age it
+    has, so a price-only poll still returns a complete snapshot and the panel
+    never has to blank a section it was not refreshing."""
+    want = set(sources) if sources else set(ALL_SOURCES)
+
+    market_key = "market-" + currency
+    if "market" in want:
+        market, market_at, market_err = cached(market_key, TTL_MARKET,
+                                               lambda: fetch_market(currency), force,
+                                               url_hint=COINGECKO)
+    else:
+        market, market_at = read_cached(market_key)
+        market_err = ""
+
+    if "fng" in want:
+        fng, fng_at, _ = cached("fng", TTL_FNG, fetch_fng, force)
+    else:
+        fng, fng_at = read_cached("fng")
+
+    if "network" in want:
+        network, net_at, _ = cached("network", TTL_NETWORK, fetch_network, force)
+    else:
+        network, net_at = read_cached("network")
+
+    return {
+        "currency": currency,
+        "refreshed": sorted(want),
+        "market": market or {},
+        "marketAt": market_at,
+        "error": market_err if not market else "",
+        "fng": fng or {},
+        "fngAt": fng_at,
+        "network": network or {},
+        "networkAt": net_at,
+        "now": time.time(),
+    }
+
+
+# ----------------------------------------------------------------- portfolio
+
+def load_positions():
+    doc = read_json(POSITIONS_FILE)
+    if not isinstance(doc, dict):
+        return {"version": 1, "positions": []}
+    doc.setdefault("version", 1)
+    if not isinstance(doc.get("positions"), list):
+        doc["positions"] = []
+    return doc
+
+
+def save_positions(doc):
+    atomic_write(POSITIONS_FILE, json.dumps(doc, indent=2) + "\n")
+
+
+def new_id():
+    return "%x" % int(time.time() * 1000)
+
+
+def position_metrics(pos, price):
+    cost = pos["amount"] * pos["price"] + pos.get("fee", 0)
+    value = pos["amount"] * price
+    pl = value - cost
+    return {"cost": cost, "value": value, "pl": pl, "plPct": (pl / cost * 100) if cost else 0.0}
+
+
+def totals(positions, price):
+    btc = sum(p["amount"] for p in positions)
+    cost = sum(p["amount"] * p["price"] + p.get("fee", 0) for p in positions)
+    value = btc * price
+    pl = value - cost
+    return {"btc": btc, "cost": cost, "value": value, "pl": pl,
+            "plPct": (pl / cost * 100) if cost else 0.0,
+            "avgPrice": (cost / btc) if btc else 0.0, "count": len(positions)}
+
+
+# ----------------------------------------------------------------- formatting
+
+SYMBOLS = {"usd": "$", "eur": "€", "gbp": "£", "jpy": "¥", "chf": "CHF ", "cad": "C$",
+           "aud": "A$", "mxn": "MX$", "ars": "AR$", "brl": "R$"}
+
+USE_COLOR = sys.stdout.isatty() and os.environ.get("NO_COLOR") is None
+GREEN, RED, DIM, BOLD, RESET = ("\033[32m", "\033[31m", "\033[2m", "\033[1m", "\033[0m") if USE_COLOR else ("",) * 5
+
+
+def sym(currency):
+    return SYMBOLS.get(currency, currency.upper() + " ")
+
+
+def money(value, currency, decimals=None):
+    if value is None:
+        return "—"
+    if decimals is None:
+        decimals = 0 if abs(value) >= 1000 else 2
+    return "%s%s%s" % ("-" if value < 0 else "", sym(currency), fmt_num(abs(value), decimals))
+
+
+def fmt_num(value, decimals=2):
+    return ("{:,.%df}" % decimals).format(value)
+
+
+def pct(value, decimals=2):
+    if value is None:
+        return "—"
+    return "%+.*f%%" % (decimals, value)
+
+
+def tint(text, value):
+    if not USE_COLOR or value is None:
+        return text
+    return (GREEN if value >= 0 else RED) + text + RESET
+
+
+def fmt_hashrate(value):
+    if not value:
+        return "—"
+    units = ["H/s", "kH/s", "MH/s", "GH/s", "TH/s", "PH/s", "EH/s", "ZH/s"]
+    n, i = float(value), 0
+    while n >= 1000 and i < len(units) - 1:
+        n /= 1000
+        i += 1
+    return "%.0f %s" % (n, units[i]) if n >= 100 else "%.1f %s" % (n, units[i])
+
+
+def halving(height):
+    if not height:
+        return None
+    block = (height // HALVING_INTERVAL + 1) * HALVING_INTERVAL
+    left = block - height
+    return {"block": block, "blocksLeft": left, "days": round(left * 10 / 1440),
+            "subsidy": 50 / (2 ** (height // HALVING_INTERVAL + 1))}
+
+
+def mantra_bank():
+    """Read the phrase bank out of Mantras.js so the CLI and the panel quote
+    the same scripture. Parsing beats duplicating: the arrays are plain JSON
+    once the JS comments and trailing commas are gone."""
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Mantras.js")
+    banks = {}
+    try:
+        src = open(path, encoding="utf-8").read()
+        for match in re.finditer(r"^var ([A-Z_]+) = \[(.*?)^\]", src, re.S | re.M):
+            name, body = match.group(1), match.group(2)
+            lines = re.findall(r'"((?:[^"\\]|\\.)*)"', body)
+            banks[name] = [line.encode().decode("unicode_escape") for line in lines]
+    except OSError:
+        pass
+    return banks
+
+
+def pick_mantra(regime, fng_value, seed=None):
+    banks = mantra_bank()
+    if seed is None:
+        seed = int(time.time() // 3600)
+    order = {"moon": "MOON", "up": "UP", "flat": "FLAT", "down": "DOWN", "crash": "CRASH"}
+    if fng_value is not None and fng_value >= 80 and seed % 3 == 1:
+        bank = banks.get("EXTREME_GREED", [])
+    elif fng_value is not None and fng_value <= 20 and seed % 3 == 1:
+        bank = banks.get("EXTREME_FEAR", [])
+    elif seed % 3 == 2:
+        bank = banks.get("HODL", [])
+    else:
+        bank = banks.get(order.get(regime, "FLAT"), [])
+    if not bank:
+        return "HODL."
+    return bank[seed % len(bank)]
+
+
+def regime_of(change24h):
+    if change24h is None:
+        return "flat"
+    if change24h >= 5:
+        return "moon"
+    if change24h >= 1:
+        return "up"
+    if change24h > -1:
+        return "flat"
+    if change24h > -5:
+        return "down"
+    return "crash"
+
+
+# ------------------------------------------------------------------ newsletter
+
+def build_news(currency, force=False):
+    snap = snapshot(currency, force)
+    headlines, _, _ = cached("news", TTL_NEWS, fetch_headlines, force)
+    headlines = headlines or []
+    # Every headline the panel lists, not just the first screenful — at ~20KB
+    # each after shrinking, the whole day's set costs less than one untouched
+    # article cover.
+    prune_thumbs()
+    for item in headlines:
+        item["imageFile"] = cache_thumb(item.get("image", ""))
+    market = snap["market"]
+    fng = snap["fng"]
+    net = snap["network"]
+    price = market.get("price") or 0
+    doc = load_positions()
+    positions = [p for p in doc["positions"] if isinstance(p, dict) and p.get("amount")]
+    book = totals(positions, price) if positions else None
+
+    return {
+        "date": datetime.now().strftime("%Y-%m-%d"),
+        "generatedAt": time.time(),
+        "currency": currency,
+        "market": market,
+        "fng": fng,
+        "network": net,
+        "halving": halving(net.get("height")),
+        "portfolio": book,
+        "regime": regime_of(market.get("change24h")),
+        "mantra": pick_mantra(regime_of(market.get("change24h")), fng.get("value")),
+        "headlines": headlines,
+    }
+
+
+def news_text(news, width=72):
+    c = news["currency"]
+    m = news["market"]
+    fng = news["fng"]
+    net = news["network"]
+    out = []
+    out.append("%s₿ BITCOIN — %s%s" % (BOLD, news["date"], RESET))
+    out.append("─" * width)
+    out.append("  %s%s%s   %s   24h %s  7d %s  30d %s" % (
+        BOLD, money(m.get("price"), c), RESET,
+        tint(pct(m.get("change24h")), m.get("change24h")),
+        tint(pct(m.get("change24h")), m.get("change24h")),
+        tint(pct(m.get("change7d")), m.get("change7d")),
+        tint(pct(m.get("change30d")), m.get("change30d"))))
+    if m.get("high24h"):
+        out.append("  %srange %s – %s   ATH %s (%s)%s" % (
+            DIM, money(m.get("low24h"), c), money(m.get("high24h"), c),
+            money(m.get("ath"), c), pct(m.get("athChangePct"), 1), RESET))
+    if fng.get("value") is not None:
+        delta = ""
+        if fng.get("yesterday") is not None:
+            delta = " (%+d vs yesterday)" % (fng["value"] - fng["yesterday"])
+        out.append("  Sentiment  %s / 100 — %s%s" % (fng.get("value"), fng.get("label", ""), delta))
+    if news["portfolio"]:
+        b = news["portfolio"]
+        out.append("")
+        out.append("  %sYour book%s  %s BTC · cost %s · now %s" % (
+            BOLD, RESET, fmt_num(b["btc"], 8).rstrip("0").rstrip("."), money(b["cost"], c), money(b["value"], c)))
+        out.append("  %sUnrealized%s %s (%s)   break-even %s" % (
+            BOLD, RESET,
+            tint(("%s%s" % ("+" if b["pl"] >= 0 else "", money(b["pl"], c, 2))), b["pl"]),
+            tint(pct(b["plPct"]), b["plPct"]), money(b["avgPrice"], c)))
+    out.append("")
+    bits = []
+    if net.get("height"):
+        bits.append("block %s" % fmt_num(net["height"], 0))
+    if net.get("feeFast"):
+        bits.append("fee %s sat/vB" % net["feeFast"])
+    if net.get("hashrate"):
+        bits.append("hashrate %s" % fmt_hashrate(net["hashrate"]))
+    if net.get("difficultyChange") is not None:
+        bits.append("difficulty %+.1f%%" % net["difficultyChange"])
+    if bits:
+        out.append("  %sNetwork%s    %s" % (BOLD, RESET, " · ".join(bits)))
+    if news.get("halving"):
+        h = news["halving"]
+        out.append("  %sHalving%s    %s blocks (~%s days) to block %s" % (
+            BOLD, RESET, fmt_num(h["blocksLeft"], 0), fmt_num(h["days"], 0), fmt_num(h["block"], 0)))
+    if news["headlines"]:
+        out.append("")
+        out.append("  %sWHAT HAPPENED%s" % (BOLD, RESET))
+        for item in news["headlines"][:6]:
+            title = item["title"]
+            if len(title) > width - 6:
+                title = title[:width - 7].rstrip() + "…"
+            out.append("  • %s %s(%s)%s" % (title, DIM, item["source"], RESET))
+    out.append("")
+    out.append("  %s%s%s" % (BOLD, news["mantra"], RESET))
+    out.append("")
+    return "\n".join(out)
+
+
+# -------------------------------------------------------------------- status
+
+def status_text(currency, force=False):
+    snap = snapshot(currency, force)
+    m = snap["market"]
+    price = m.get("price") or 0
+    doc = load_positions()
+    positions = sorted([p for p in doc["positions"] if isinstance(p, dict) and p.get("amount")],
+                       key=lambda p: p.get("date", ""), reverse=True)
+    out = []
+    out.append("%s₿ %s%s  %s   %s" % (
+        BOLD, money(price, currency), RESET,
+        tint(pct(m.get("change24h")), m.get("change24h")),
+        "%s%s%s" % (DIM, snap["fng"].get("label", ""), RESET)))
+    if positions:
+        book = totals(positions, price)
+        out.append("")
+        out.append("  %-12s %-12s %-12s %-11s %s" % ("DATE", "AMOUNT", "ENTRY", "VALUE", "P/L"))
+        for p in positions:
+            met = position_metrics(p, price)
+            out.append("  %-12s %-12s %-12s %-11s %s  %s" % (
+                p.get("date", "?"),
+                fmt_num(p["amount"], 8).rstrip("0").rstrip("."),
+                money(p["price"], currency),
+                money(met["value"], currency),
+                tint("%s%s" % ("+" if met["pl"] >= 0 else "", money(met["pl"], currency, 2)), met["pl"]),
+                tint(pct(met["plPct"], 1), met["plPct"])))
+        out.append("")
+        out.append("  %sTOTAL%s %s BTC   cost %s   value %s   %s %s" % (
+            BOLD, RESET, fmt_num(book["btc"], 8).rstrip("0").rstrip("."),
+            money(book["cost"], currency), money(book["value"], currency),
+            tint("%s%s" % ("+" if book["pl"] >= 0 else "", money(book["pl"], currency, 2)), book["pl"]),
+            tint(pct(book["plPct"]), book["plPct"])))
+        out.append("  %sbreak-even %s%s" % (DIM, money(book["avgPrice"], currency), RESET))
+    else:
+        out.append("  %sNo positions yet — hodl add 0.01 62000 2025-03-14%s" % (DIM, RESET))
+    out.append("")
+    out.append("  %s%s%s" % (BOLD, pick_mantra(regime_of(m.get("change24h")), snap["fng"].get("value")), RESET))
+    return "\n".join(out)
+
+
+# ------------------------------------------------------------------ commands
+
+def cmd_fetch(args):
+    sources = None
+    if args.sources:
+        sources = [s.strip() for s in args.sources.split(",") if s.strip() in ALL_SOURCES]
+    snap = snapshot(args.currency, args.force, sources)
+    print(json.dumps(snap))
+    return 0 if snap["market"] else 1
+
+
+def cmd_candles(args):
+    rows, fetched_at, err = cached("candles-%s-%d" % (args.currency, args.days),
+                                   candles_ttl(args.days),
+                                   lambda: fetch_candles(args.currency, args.days), args.force,
+                                   url_hint=COINGECKO)
+    print(json.dumps({"days": args.days, "currency": args.currency, "fetchedAt": fetched_at,
+                      "error": "" if rows else err, "candles": rows or []}))
+    return 0 if rows else 1
+
+
+def cmd_news(args):
+    news = build_news(args.currency, args.force)
+    atomic_write(cache_path("newsletter"), json.dumps(news))
+    if args.json:
+        print(json.dumps(news))
+    else:
+        print(news_text(news))
+    return 0
+
+
+def cmd_status(args):
+    if args.json:
+        snap = snapshot(args.currency, args.force)
+        price = snap["market"].get("price") or 0
+        doc = load_positions()
+        positions = [p for p in doc["positions"] if isinstance(p, dict) and p.get("amount")]
+        snap["portfolio"] = totals(positions, price)
+        snap["positions"] = positions
+        print(json.dumps(snap))
+    else:
+        print(status_text(args.currency, args.force))
+    return 0
+
+
+def cmd_price(args):
+    snap = snapshot(args.currency, args.force)
+    m = snap["market"]
+    if not m:
+        print("—")
+        return 1
+    print("%s %s" % (money(m.get("price"), args.currency), pct(m.get("change24h"))))
+    return 0
+
+
+def cmd_add(args):
+    price = args.price
+    if price is None:
+        snap = snapshot(args.currency)
+        price = snap["market"].get("price")
+        if not price:
+            print("No live price available; pass the entry price explicitly.", file=sys.stderr)
+            return 1
+    date = args.date or datetime.now().strftime("%Y-%m-%d")
+    if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
+        print("Date must be YYYY-MM-DD", file=sys.stderr)
+        return 1
+    doc = load_positions()
+    entry = {"id": new_id(), "date": date, "amount": float(args.amount), "price": float(price),
+             "currency": args.currency, "fee": float(args.fee or 0), "note": args.note or ""}
+    doc["positions"].append(entry)
+    save_positions(doc)
+    print("Added %s BTC @ %s on %s (id %s)" % (
+        fmt_num(entry["amount"], 8).rstrip("0").rstrip("."), money(entry["price"], args.currency), date, entry["id"]))
+    return 0
+
+
+def cmd_rm(args):
+    doc = load_positions()
+    before = len(doc["positions"])
+    doc["positions"] = [p for p in doc["positions"] if str(p.get("id")) != str(args.id)]
+    if len(doc["positions"]) == before:
+        print("No position with id %s" % args.id, file=sys.stderr)
+        return 1
+    save_positions(doc)
+    print("Removed %s" % args.id)
+    return 0
+
+
+def cmd_list(args):
+    doc = load_positions()
+    if args.json:
+        print(json.dumps(doc))
+        return 0
+    if not doc["positions"]:
+        print("No positions yet.")
+        return 0
+    for p in sorted(doc["positions"], key=lambda p: p.get("date", "")):
+        print("%-10s %-14s %-12s %s" % (p.get("id", "?"), p.get("date", "?"),
+                                        fmt_num(p.get("amount", 0), 8).rstrip("0").rstrip("."),
+                                        money(p.get("price"), p.get("currency", args.currency))))
+    return 0
+
+
+def cmd_mantra(args):
+    snap = snapshot(args.currency)
+    print(pick_mantra(regime_of(snap["market"].get("change24h")), snap["fng"].get("value"), args.seed))
+    return 0
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(prog="hodl", description=__doc__.splitlines()[0])
+    parser.add_argument("--currency", default=os.environ.get("HODL_CURRENCY", "usd"),
+                        help="fiat currency code (default: usd)")
+    parser.add_argument("--force", action="store_true", help="bypass the disk cache")
+
+    # The same two flags after the subcommand, where anyone would type them.
+    # SUPPRESS keeps an unused flag here from clobbering the value parsed
+    # before the subcommand.
+    common = argparse.ArgumentParser(add_help=False)
+    common.add_argument("--currency", default=argparse.SUPPRESS)
+    common.add_argument("--force", action="store_true", default=argparse.SUPPRESS)
+
+    sub = parser.add_subparsers(dest="command")
+
+    p = sub.add_parser("status", parents=[common], help="price plus your positions and P/L")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_status)
+
+    p = sub.add_parser("fetch", parents=[common], help="merged market/sentiment/network snapshot as JSON")
+    p.add_argument("--sources", default="",
+                   help="comma-separated subset to refresh (market,fng,network); the rest is read from cache")
+    p.set_defaults(func=cmd_fetch)
+
+    p = sub.add_parser("candles", parents=[common], help="OHLC candles as JSON")
+    p.add_argument("--days", type=int, default=7)
+    p.set_defaults(func=cmd_candles)
+
+    p = sub.add_parser("news", parents=[common], help="today's bitcoin digest")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_news)
+
+    p = sub.add_parser("price", parents=[common], help="one-line price")
+    p.set_defaults(func=cmd_price)
+
+    p = sub.add_parser("add", parents=[common], help="record a buy")
+    p.add_argument("amount", type=float, help="amount in BTC")
+    p.add_argument("price", type=float, nargs="?", help="entry price (default: live price)")
+    p.add_argument("date", nargs="?", help="YYYY-MM-DD (default: today)")
+    p.add_argument("--fee", type=float, default=0)
+    p.add_argument("--note", default="")
+    p.set_defaults(func=cmd_add)
+
+    p = sub.add_parser("rm", parents=[common], help="remove a position by id")
+    p.add_argument("id")
+    p.set_defaults(func=cmd_rm)
+
+    p = sub.add_parser("list", parents=[common], help="list stored positions")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_list)
+
+    p = sub.add_parser("mantra", parents=[common], help="print one bitcoin truth")
+    p.add_argument("--seed", type=int, default=None)
+    p.set_defaults(func=cmd_mantra)
+
+    args = parser.parse_args(argv)
+    args.currency = args.currency.lower()
+    ensure_dirs()
+    if not getattr(args, "command", None):
+        args.func = cmd_status
+        args.json = False
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(130)

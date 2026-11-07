@@ -36,9 +36,13 @@ Antes de adicionar `LICENSE` na raiz, confirme a licença global do projeto Omar
 ## Plugins comunitários incluídos
 
 - Central de notificações: Jankees van Woezik — https://github.com/jankeesvw/omarchy-notification-center (MIT).
+- Gerenciador de monitores hyprmoncfg: Carmine Paolino — https://github.com/crmne/omarchy-hyprmoncfg (MIT).
 - App Launcher: Tyr Solutions — https://github.com/Tyrsolution/omarchy-app-launcher (MIT).
 
 As cópias PT-BR preservam os arquivos LICENSE originais. O launcher inclui os
 ajustes locais de tradução e favoritos manuais; a central inclui a tradução pt-BR.
 
 - OmaClock: ubeyidah — https://github.com/ubeyidah/omaclock (MIT). Clone PT-BR com tradução do painel e correção da leitura do tamanho. Licenças das fontes incluídas em `fonts/`.
+
+- HODL: Alvaro Enrique — https://github.com/AlvaroEDS/omarchy-hodl (MIT). Tradução local preserva cálculos e caminhos de estado.
+- Launcher Plus: derivado do App Launcher de Tyr Solutions (MIT), com extensões locais; créditos adicionais em `THIRD-PARTY.md`.

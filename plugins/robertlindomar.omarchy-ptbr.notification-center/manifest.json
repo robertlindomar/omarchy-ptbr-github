@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "robertlindomar.omarchy-ptbr.notification-center",
   "name": "Central de notificações",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Jankees van Woezik",
   "description": "Histórico de notificações recebidas, salvas para consultar depois",
   "homepage": "https://github.com/jankeesvw/omarchy-notification-center",
@@ -37,10 +37,22 @@
         "type": "enum",
         "label": "Marcar notificações não lidas",
         "options": [
-          "Dot",
-          "Highlight",
-          "Count",
-          "None"
+          {
+            "value": "Dot",
+            "label": "Ponto"
+          },
+          {
+            "value": "Highlight",
+            "label": "Destaque"
+          },
+          {
+            "value": "Count",
+            "label": "Contador"
+          },
+          {
+            "value": "None",
+            "label": "Nenhum"
+          }
         ],
         "defaultValue": "Dot",
         "description": "Escolha como indicar notificações não lidas: ponto, destaque no sino, contador ou nenhum indicador."
@@ -70,9 +82,18 @@
         "type": "enum",
         "label": "Ao clicar em uma notificação",
         "options": [
-          "Auto",
-          "Focus the app",
-          "Nothing"
+          {
+            "value": "Auto",
+            "label": "Automático"
+          },
+          {
+            "value": "Focus the app",
+            "label": "Focar aplicativo"
+          },
+          {
+            "value": "Nothing",
+            "label": "Nenhuma ação"
+          }
         ],
         "defaultValue": "Auto",
         "description": "O modo automático abre a imagem da notificação ou foca o aplicativo. As outras opções permitem apenas focar o aplicativo ou desativar a ação do clique."

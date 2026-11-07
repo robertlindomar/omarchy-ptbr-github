@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "id": "robertlindomar.omarchy-ptbr.hodl",
+  "name": "HODL",
+  "version": "1.0.0",
+  "author": "Alvaro Enrique",
+  "license": "MIT",
+  "description": "Bitcoin na barra do Omarchy: preço ao vivo, suas posições e P/L, candles, índice de medo e ganância, resumo diário — e um plugin que não para de dizer para HODL.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "HODL",
+    "description": "Preço do bitcoin ao vivo mais sua carteira: preço médio, P/L não realizado por posição e total, candlesticks, sentimento e resumo diário de bitcoin.",
+    "category": "Info",
+    "aliases": [
+      "bitcoin",
+      "btc",
+      "hodl"
+    ],
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "currency": "USD",
+      "refreshSeconds": 60,
+      "barDisplay": "Price + change",
+      "colors": "Green / red",
+      "alertPercent": 5,
+      "hodlReminderHours": 6,
+      "newsletterHour": 9,
+      "notifications": true,
+      "sections": {
+        "chart": true,
+        "book": true,
+        "sentiment": true,
+        "network": true
+      }
+    },
+    "schema": [
+      {
+        "key": "currency",
+        "type": "enum",
+        "label": "Moeda",
+        "options": [
+          "USD",
+          "EUR",
+          "GBP",
+          "CHF",
+          "JPY",
+          "CAD",
+          "AUD",
+          "MXN",
+          "ARS",
+          "BRL"
+        ],
+        "defaultValue": "USD"
+      },
+      {
+        "key": "barDisplay",
+        "type": "enum",
+        "label": "Barra exibe",
+        "options": [
+          {
+            "value": "Price",
+            "label": "Preço"
+          },
+          {
+            "value": "Price + change",
+            "label": "Preço e variação"
+          },
+          {
+            "value": "Change only",
+            "label": "Somente variação"
+          },
+          {
+            "value": "Profit / loss",
+            "label": "Lucro / prejuízo"
+          },
+          {
+            "value": "Portfolio value",
+            "label": "Valor da carteira"
+          }
+        ],
+        "defaultValue": "Price + change"
+      },
+      {
+        "key": "colors",
+        "type": "enum",
+        "label": "Cores alta / baixa",
+        "options": [
+          {
+            "value": "Green / red",
+            "label": "Verde / vermelho"
+          },
+          {
+            "value": "Theme",
+            "label": "Tema"
+          }
+        ],
+        "defaultValue": "Green / red",
+        "description": "Tema usa as cores accent e urgent do tema Omarchy atual em vez de verde e vermelho literais."
+      },
+      {
+        "key": "refreshSeconds",
+        "type": "integer",
+        "label": "Atualização de preço (segundos)",
+        "min": 30,
+        "max": 3600,
+        "step": 15,
+        "defaultValue": 60
+      },
+      {
+        "key": "alertPercent",
+        "type": "integer",
+        "label": "Alertar quando movimento 24h exceder (%)",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "defaultValue": 5,
+        "description": "0 desativa alertas de movimento."
+      },
+      {
+        "key": "hodlReminderHours",
+        "type": "integer",
+        "label": "Lembrete HODL a cada (horas)",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "defaultValue": 6,
+        "description": "0 desativa o lembrete. Você vai se arrepender de desativar o lembrete."
+      },
+      {
+        "key": "newsletterHour",
+        "type": "integer",
+        "label": "Hora do resumo diário",
+        "min": 0,
+        "max": 23,
+        "step": 1,
+        "defaultValue": 9
+      },
+      {
+        "key": "notifications",
+        "type": "boolean",
+        "label": "Notificações na área de trabalho",
+        "defaultValue": true
+      }
+    ]
+  },
+  "homepage": "https://github.com/alvaroeds/omarchy-hodl",
+  "repository": "https://github.com/alvaroeds/omarchy-hodl",
+  "omarchy": {
+    "clonedFrom": "io.github.alvaroeds.hodl"
+  }
+}

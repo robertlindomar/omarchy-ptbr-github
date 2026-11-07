@@ -1,0 +1,6 @@
+# Nothing this plugin generates belongs in the repo: caches, downloaded
+# thumbnails and the portfolio all live under ~/.local.
+*.pyc
+__pycache__/
+*.bak.*
+.DS_Store
