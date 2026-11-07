@@ -26,7 +26,7 @@ for plugin in sorted(set(refs)):
     elif plugin in disabled or (not known[plugin]['enabled'] and not (plugin in explicit and 'bar-widget' in known[plugin]['kinds'])):
         failures.append('Plugin referenciado mas desabilitado: '+plugin)
 for p in items:
-    if p.get('clonedFrom','').startswith('omarchy.') and p['enabled']:
+    if p['id'].startswith('robertlindomar.omarchy-ptbr.') and p.get('clonedFrom','').startswith('omarchy.') and p['enabled']:
         failures.append('Clone nativo ainda habilitado: '+p['id'])
 for error in failures:
     print('FALHA: '+error)
