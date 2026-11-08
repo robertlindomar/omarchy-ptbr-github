@@ -25,12 +25,12 @@ class SearchTests(unittest.TestCase):
         self.assertIn(r'contrato\.pdf',calls[0])
         self.assertEqual(calls[0][0],'fd')
     def test_clipboard_results_do_not_contain_full_text(self):
-        secret='documento '*100
-        with patch.object(m,'history',return_value=[secret,secret]):
+        long_content='documento '*100
+        with patch.object(m,'history',return_value=[long_content,long_content]):
             rows=m.search('cb: documento')['rows']
             self.assertEqual(len(rows),1)
-            self.assertNotIn(secret,json.dumps(rows))
-            self.assertEqual(rows[0]['hash'],m.digest(secret))
+            self.assertNotIn(long_content,json.dumps(rows))
+            self.assertEqual(rows[0]['hash'],m.digest(long_content))
     def test_clipboard_reidentifies_after_reordering(self):
         with patch.object(m,'history',return_value=['novo','anterior']),patch.object(m,'copy_text') as copy:
             m.action(['clipboard',m.digest('anterior')]);copy.assert_called_once_with('anterior')
