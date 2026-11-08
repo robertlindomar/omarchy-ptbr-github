@@ -2,6 +2,26 @@
 
 Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
 
+## Prévia e atalho
+
+![Launcher Plus em português brasileiro](preview.png)
+
+A imagem mostra este plugin, `robertlindomar.omarchy-ptbr.launcher-plus`, com busca de
+aplicativos, arquivos e janelas e painel de detalhes. Ele é diferente do plugin
+`robertlindomar.omarchy-ptbr.app-launcher`, que mantém o lançador anterior com favoritos.
+A lista de aplicativos e favoritos da captura é ilustrativa e não é distribuída como configuração.
+
+Para abrir este Launcher Plus com `SUPER + SPACE`, adicione manualmente em
+`~/.config/hypr/bindings.lua`:
+
+```lua
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "Launcher Plus", "omarchy-shell shell toggle robertlindomar.omarchy-ptbr.launcher-plus '{}'")
+```
+
+Isso substitui a atribuição anterior desse atalho. O instalador nativo preserva a escolha
+existente; instalar apenas o plugin não aplica o atalho automaticamente.
+
 ## Instalar este clone PT-BR
 
 ```bash

@@ -17,6 +17,7 @@ preserva o layout e arquiva overrides antigos conhecidos com backup.
 ```
 
 Veja [a migração completa, a ordem dos lotes e os backups](docs/MIGRACAO-NATIVA.md).
+O [relógio mundial Elsewhen em português](docs/ELSEWHEN-PTBR.md) também está documentado, com imagem e instruções de ativação.
 HODL e Launcher Plus também estão disponíveis em PT-BR. Favoritos e carteiras
 permanecem nos caminhos existentes; nenhum dado pessoal é incluído no repo.
 `--legacy` seleciona os clones antigos. As tabelas e instruções abaixo documentam

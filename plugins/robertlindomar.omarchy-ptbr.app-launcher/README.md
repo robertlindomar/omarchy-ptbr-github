@@ -1,3 +1,13 @@
+## Qual lançador escolher?
+
+Este repositório mantém o **App Launcher com favoritos**. A interface com a busca
+“Buscar apps, arquivos, janelas ou calcular…” é o **Launcher Plus**, disponível em
+[omarchy-ptbr-launcher-plus](https://github.com/robertlindomar/omarchy-ptbr-launcher-plus).
+Para usar a interface da imagem abaixo e o atalho `SUPER + SPACE`, siga as instruções
+desse outro repositório; instalar este App Launcher não o transforma no Launcher Plus.
+
+![Launcher Plus — disponível no repositório indicado acima](https://raw.githubusercontent.com/robertlindomar/omarchy-ptbr-launcher-plus/main/preview.png)
+
 # Instalação independente — robertlindomar.omarchy-ptbr.app-launcher
 
 Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.

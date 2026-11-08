@@ -7,6 +7,7 @@ o locale global do sistema e o idioma de aplicativos já abertos não são alter
 ## Ordem de execução e resultado
 
 1. Idioma, Elsewhen e demais componentes oficiais: PT-BR ativado.
+   Veja a [prévia e a origem do relógio mundial Elsewhen](ELSEWHEN-PTBR.md).
 2. Relógio e indicadores: migrados, preservando formato, posição e itens fixados.
 3. Áudio, Bluetooth, rede, energia, clima, monitor, testes de velocidade e lembretes: migrados.
 4. Clipboard, polkit e menu: migrados para as implementações oficiais atuais.
