@@ -1,3 +1,32 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.notification-center
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-notification-center.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.notification-center
+omarchy plugin remove robertlindomar.omarchy-ptbr.notification-center --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy 4.5/Quickshell para os formatos atuais de notificações; `bash`, `jq`, `timeout` (coreutils) e `inotifywait` (inotify-tools) para armazenamento e watcher. ImageMagick é opcional para imagens. O serviço oficial de notificações deve estar disponível.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # Central de notificações — PT-BR
 
 A versão 1.2 acompanha o formato do Omarchy 4.5: lê os arrays `live.json` e
@@ -37,7 +66,7 @@ minutes later, in the middle of something else: *what did that say?*
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/jankeesvw/omarchy-notification-center.git --enable
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-notification-center.git --enable
 ```
 
 Needs `jq` and `inotifywait`, both of which Omarchy already has. Leave the bell

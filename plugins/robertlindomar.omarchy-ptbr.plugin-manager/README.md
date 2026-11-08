@@ -1,8 +1,36 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.plugin-manager
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-plugin-manager.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.plugin-manager
+omarchy plugin remove robertlindomar.omarchy-ptbr.plugin-manager --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy/Quickshell, `git`, `jq`, `python3` (catálogo HTTPS), CLI `omarchy` e coreutils (`setsid`, `nohup`, `timeout`, `sed`). Consultas de catálogo e atualizações precisam de rede.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # 🧩 Omaplug
 
 **A small tool for managing your Omarchy plugins.**
 
-[![Marketplace](https://img.shields.io/badge/Omarchy_Marketplace-listed-blue)](https://plugins.omarchy.org/plugin.html?id=omaplug) [![Verified](https://img.shields.io/badge/Automated_Security_Baseline-verified-brightgreen)](https://github.com/omacom/omarchy-plugin-marketplace/blob/main/SECURITY.md#automated-security-baseline)
 
 Access it right from the Omarchy bar — it gives you a centralized place to view and organize the plugins you have installed. Here are a few things you can use it for:
 
@@ -11,7 +39,7 @@ Access it right from the Omarchy bar — it gives you a centralized place to vie
 - Remove plugins individually, or several in one go.
 - Jump straight to each plugin's repo, or browse the [Omarchy marketplace](https://plugins.omarchy.org).
 
-Omaplug is listed on the marketplace: [plugins.omarchy.org/plugin.html?id=omaplug](https://plugins.omarchy.org/plugin.html?id=omaplug)
+Omaplug é o projeto de origem; seu status no marketplace não se transfere a este clone PT-BR.
 
 ## Screenshots
 
@@ -54,13 +82,13 @@ Omaplug is listed on the marketplace: [plugins.omarchy.org/plugin.html?id=omaplu
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/fross100/omaplug --enable
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-plugin-manager.git --enable
 ```
 
 ## Remove
 
 ```bash
-omarchy plugin remove omaplug
+omarchy plugin remove robertlindomar.omarchy-ptbr.plugin-manager
 ```
 
 ## Remove manually
@@ -70,10 +98,10 @@ No terminal? No problem — or maybe you just like doing things the hands-on way
 1. Delete the plugin folder:
 
 ```bash
-rm -rf ~/.config/omarchy/plugins/omaplug
+rm -rf ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.plugin-manager
 ```
 
-2. Remove the `"id": "omaplug"` entry from the bar layout in `~/.config/omarchy/shell.json`.
+2. Remove the `"id": "robertlindomar.omarchy-ptbr.plugin-manager"` entry from the bar layout in `~/.config/omarchy/shell.json`.
 
 3. Restart the shell to apply:
 

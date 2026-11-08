@@ -1,6 +1,35 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.app-launcher
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-app-launcher.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.app-launcher
+omarchy plugin remove robertlindomar.omarchy-ptbr.app-launcher --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy/Quickshell, Hyprland e os comandos de aplicativos/agentes do próprio Omarchy. As ações de remoção podem abrir um terminal e solicitar autorização do gerenciador de pacotes.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # Versão PT-BR com favoritos manuais
 
-Esta variante adiciona favoritos por Ctrl+F ou menu de contexto, exibidos acima da lista alfabética. O pacote Omarchy PT-BR configura SUPER + ESPAÇO. Favoritos persistem em `~/.local/state/omarchy/app-launcher/favorites.json`.
+Esta variante adiciona favoritos por Ctrl+F ou menu de contexto, exibidos acima da lista alfabética. No modo nativo, o instalador preserva o atalho escolhido; o exemplo atual de SUPER + ESPAÇO é para o Launcher Plus, um plugin separado. Favoritos persistem em `~/.local/state/omarchy/app-launcher/favorites.json`.
 
 O README upstream abaixo descreve também recursos e atalhos da versão original.
 
@@ -31,10 +60,10 @@ separate because a plugin cannot write to those files on your behalf.
 
 ```bash
 # 1. the plugin
-omarchy plugin add https://github.com/Tyrsolution/omarchy-app-launcher.git --enable --yes
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-app-launcher.git --enable --yes
 
 # (or by hand)
-# git clone https://github.com/Tyrsolution/omarchy-app-launcher.git \
+# git clone https://github.com/robertlindomar/omarchy-ptbr-app-launcher.git \
 #     ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.app-launcher
 # omarchy-shell shell rescanPlugins
 # omarchy plugin enable robertlindomar.omarchy-ptbr.app-launcher left

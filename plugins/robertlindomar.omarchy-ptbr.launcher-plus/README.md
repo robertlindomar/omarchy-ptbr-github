@@ -1,3 +1,32 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.launcher-plus
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-launcher-plus.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.launcher-plus
+omarchy plugin remove robertlindomar.omarchy-ptbr.launcher-plus --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy/Quickshell, Hyprland (`hyprctl`), `python3` para a busca local, `wl-copy`, `notify-send`, `pacman` para análise de pacotes e os comandos de aplicativos/agentes do Omarchy. As ações de remoção dependem do tipo de instalação e podem solicitar autorização no terminal.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # Versão em português brasileiro
 
 Origem: cópia local instalada de `robertlindomar.launcher-plus`, sem download de fontes.
@@ -68,6 +97,6 @@ Ctrl+H abre/fecha o guia de três páginas: atalhos, buscas e SSH/remoção. Use
 
 ## Código e instalação
 
-A versão personalizada está na branch `personal/launcher-plus` de https://github.com/robertlindomar/omarchy-app-launcher. Não depende da instalação do plugin Spotlight.
+A versão anterior está arquivada como referência na branch `personal/launcher-plus` de https://github.com/robertlindomar/omarchy-app-launcher; essa branch não é a fonte de instalação deste clone PT-BR. Não depende da instalação do plugin Spotlight.
 
-Clone a branch em `~/.config/omarchy/plugins/robertlindomar.launcher-plus`, execute `omarchy-shell shell rescanPlugins` e `omarchy plugin enable robertlindomar.launcher-plus`. Vincule o atalho ao comando `omarchy-shell shell toggle robertlindomar.launcher-plus '{}'`. Os nomes dos painéis de configurações usam os plugins pessoais em português.
+Para instalar esta edição PT-BR, use o repositório e o ID da seção acima. Os nomes dos painéis de configurações usam os plugins pessoais em português.

@@ -1,3 +1,32 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.hyprmoncfg
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-hyprmoncfg.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.hyprmoncfg
+omarchy plugin remove robertlindomar.omarchy-ptbr.hyprmoncfg --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy/Quickshell, Hyprland e o serviço externo `hyprmoncfg` 1.24.0 ou superior. O serviço deve estar instalado e em execução; não é incluído neste repositório.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # Monitores — hyprmoncfg PT-BR
 
 Tradução brasileira do painel [omarchy-hyprmoncfg](https://github.com/crmne/omarchy-hyprmoncfg), de Carmine Paolino, versão 2.10.0, distribuída como clone independente no pacote Omarchy PT-BR.

@@ -1,3 +1,32 @@
+# Instalação independente — robertlindomar.omarchy-ptbr.hodl
+
+Esta é uma tradução comunitária não oficial. O código e os créditos originais estão preservados; veja `LICENSE` e a documentação abaixo. Publicação no GitHub não representa aprovação ou selo Verified do marketplace.
+
+## Instalar este clone PT-BR
+
+```bash
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-hodl.git --enable
+```
+
+Não habilite simultaneamente o clone e o plugin de origem com a mesma função. Instalar o clone não configura atalhos de teclado.
+
+## Remover este clone PT-BR
+
+```bash
+omarchy plugin disable robertlindomar.omarchy-ptbr.hodl
+omarchy plugin remove robertlindomar.omarchy-ptbr.hodl --yes
+```
+
+Remova também os atalhos manuais que apontem para este ID, se houver. Não apague pastas pessoais de estado para apenas desinstalar o plugin.
+
+## Requisitos e dependências desta edição
+
+Omarchy/Quickshell e `python3` com biblioteca padrão. ImageMagick (`magick`) e `xdg-open` são opcionais. Consulta APIs públicas e feeds externos, descritos abaixo; não exige chaves ou contas.
+
+## Documentação e créditos de origem
+
+Os exemplos de outros atalhos abaixo são opcionais, não configurações aplicadas automaticamente.
+
 # Versão em português brasileiro
 
 Origem: cópia local instalada de `io.github.alvaroeds.hodl`, sem download de fontes.
@@ -22,7 +51,6 @@ Manchetes vindas de serviços externos mantêm o idioma da fonte.
 </p>
 
 <p align="center">
-  <a href="https://plugins.omarchy.org/plugin.html?id=io.github.alvaroeds.hodl"><img alt="On plugins.omarchy.org" src="https://img.shields.io/badge/plugins.omarchy.org-listed-8b5cf6"></a>
   <a href="https://github.com/alvaroeds/omarchy-hodl/tags"><img alt="Latest tag" src="https://img.shields.io/github/v/tag/alvaroeds/omarchy-hodl?label=version"></a>
   <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
 </p>
@@ -79,7 +107,7 @@ The screenshots use a sample portfolio. Yours never leaves your machine.
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/alvaroeds/omarchy-hodl.git --enable --yes
+omarchy plugin add https://github.com/robertlindomar/omarchy-ptbr-hodl.git --enable --yes
 ```
 
 Then bind it to a key — `~/.config/hypr/bindings.lua`:
@@ -93,7 +121,7 @@ Requires Omarchy 4.x.
 ### Removing it
 
 ```bash
-omarchy plugin remove io.github.alvaroeds.hodl --yes
+omarchy plugin remove robertlindomar.omarchy-ptbr.hodl --yes
 ```
 
 That takes the widget out of the bar and deletes the checkout. Your book and
@@ -167,7 +195,7 @@ same number. A BTC amount never treats a dot as a thousands separator —
 `bin/hodl` is the same brain the panel uses, and it works on its own:
 
 ```bash
-ln -s ~/.config/omarchy/plugins/io.github.alvaroeds.hodl/bin/hodl ~/.local/bin/hodl
+ln -s ~/.config/omarchy/plugins/robertlindomar.omarchy-ptbr.hodl/bin/hodl ~/.local/bin/hodl
 ```
 
 ```
