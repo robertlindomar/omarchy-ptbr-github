@@ -1,0 +1,4 @@
+-- Exemplo para adicionar manualmente a ~/.config/hypr/bindings.lua.
+-- A instalacao nativa preserva o atalho escolhido; nao aplica este exemplo automaticamente.
+hl.unbind("SUPER + SPACE")
+o.bind("SUPER + SPACE", "Launcher Plus", "omarchy-shell shell toggle robertlindomar.omarchy-ptbr.launcher-plus '{}'")

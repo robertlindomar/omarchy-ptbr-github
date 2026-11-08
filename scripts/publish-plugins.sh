@@ -89,7 +89,7 @@ friendly_name() {
 
 discover_plugins() {
   local dir slug
-  for dir in "$PLUGINS_DIR"/*/; do
+  for dir in "$PLUGINS_DIR"/robertlindomar.omarchy-ptbr.*/; do
     [[ -f "$dir/manifest.json" ]] || continue
     slug="$(plugin_slug "$dir")"
     [[ -n "$FILTER" && "$slug" != "$FILTER" ]] && continue
@@ -122,6 +122,8 @@ scan_secrets() {
 write_gitignore() {
   cat >"$1/.gitignore" <<'EOF'
 *.bak
+*.bak-*
+.backup-*
 *.tmp
 *.log
 *~
@@ -251,8 +253,10 @@ prepare_workdir() {
   # preview.png (Marketplace) é incluído quando presente na raiz do plugin.
   # Artefatos temporários / aliases de preview NÃO são publicados.
   rsync -a \
-    --exclude='*.bak' --exclude='*.tmp' --exclude='*.log' \
-    --exclude='.env' --exclude='.env.*' --exclude='README.md' \
+    --exclude='*.bak' --exclude='*.bak-*' --exclude='.backup-*' \
+    --exclude='backups' --exclude='__pycache__' --exclude='*.pyc' \
+    --exclude='*.tmp' --exclude='*.log' \
+    --exclude='.env' --exclude='.env.*' \
     --exclude='preview1.png' \
     --exclude='preview-old.png' \
     --exclude='preview.bak.png' \
@@ -275,8 +279,9 @@ prepare_workdir() {
   fi
 
   write_gitignore "$work"
-  write_license "$work"
-  write_readme "$work" "$plugin_dir"
+  # Preserva os créditos e instruções já fornecidos pelo plugin.
+  [[ -f "$work/LICENSE" ]] || write_license "$work"
+  [[ -f "$work/README.md" ]] || write_readme "$work" "$plugin_dir"
 }
 
 validate_plugin() {

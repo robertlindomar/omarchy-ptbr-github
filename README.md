@@ -22,6 +22,18 @@ permanecem nos caminhos existentes; nenhum dado pessoal é incluído no repo.
 `--legacy` seleciona os clones antigos. As tabelas e instruções abaixo documentam
 essa implementação legada; para Omarchy atual, use o fluxo acima.
 
+## Launcher Plus e SUPER + SPACE no modo nativo
+
+O código do Launcher Plus PT-BR está em
+`plugins/robertlindomar.omarchy-ptbr.launcher-plus/`. A instalação nativa inclui
+esse plugin, mas preserva a escolha de atalho existente. Para usar `SUPER + SPACE`
+com ele, aplique manualmente o exemplo em
+[config/launcher-plus.bindings.lua.example](config/launcher-plus.bindings.lua.example)
+ao seu `~/.config/hypr/bindings.lua`. Isso substitui a atribuição anterior desse atalho.
+Não é necessário copiar as demais configurações pessoais.
+
+As referências ao lançador de aplicativos nas seções abaixo descrevem o modo legado.
+
 ## Componentes traduzidos
 
 | Área | Clone / override |

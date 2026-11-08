@@ -13,3 +13,9 @@ secrets/
 *~
 docs/UPDATE-REPORT-*.md
 .local/
+
+# Material local de centralização e backups de plugins
+CENTRALIZACAO.json
+LEIA-ME-CENTRALIZACAO.md
+*.bak-*
+.backup-*/
